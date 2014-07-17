@@ -24,7 +24,7 @@ namespace InnaTourWebService
         [WebMethod]
         public string CreateDogovor()
         {
-            return "Hello World";
+            return "Hello World!";
         }
 
 
@@ -35,7 +35,7 @@ namespace InnaTourWebService
         [WebMethod]
         public string CreateDogovorPayment()
         {
-            return "Hello World";
+            return "Hello World!";
         }
 
 
