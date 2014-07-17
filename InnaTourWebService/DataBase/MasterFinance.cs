@@ -33,7 +33,7 @@ namespace InnaTourWebService.DataBase
 
                 var rows = result["dataSet"] as DataSet;
 
-                if (rows.Tables[0].Columns.Contains("DEP_VALUE"))
+                if((rows.Tables.Count>0) && (rows.Tables[0].Columns.Contains("DEP_VALUE")))
                 {
                     foreach (DataRow row in rows.Tables[0].Rows)
                         resp.Add(new DepositInfo() { 
