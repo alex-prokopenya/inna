@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using InnaTourWebService.Models;
 
 namespace InnaTourWebService
 {
@@ -44,9 +45,11 @@ namespace InnaTourWebService
         /// </summary>
         /// <returns></returns>
         [WebMethod]
-        public string GetDepositAndReceivable()
+        public DepositInfo[] GetDepositAndReceivable(int partnerId)
         {
-            return "Hello World";
+            var masterFinance = new DataBase.MasterFinance();
+
+            return masterFinance.CallDepositGetValue(partnerId);
         }
     }
 }
