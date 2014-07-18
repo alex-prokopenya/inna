@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Services;
 using InnaTourWebService.Models;
+using InnaTourWebService.DataBase;
 
 namespace InnaTourWebService
 {
@@ -34,9 +35,22 @@ namespace InnaTourWebService
         /// </summary>
         /// <returns>PaymentId -- идентификатор созданной проводки</returns>
         [WebMethod]
-        public string CreateDogovorPayment()
+        public string CreateDogovorPayment(string dogovorCode, int paymentType, string paymentSys, decimal paidSum, string paymentId)
         {
-            return "Hello World!";
+            var masterHelper = new MasterTour();
+
+            var dogovor = masterHelper.GetDogovorByCode(dogovorCode);
+
+            if (dogovor == null)
+                throw new Exception(String.Format( "Dogovor '{0}' not founded", dogovorCode));
+
+
+            if (dogovor.PartnerKey > 0)  // если заказ агентский
+            { }                 //платим депозитом
+            else //иначе
+            { } // сохраняем платеж по карте
+
+                return "success";
         }
 
 

@@ -39,6 +39,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MasterSoft.Finance.DataAccess">
+      <HintPath>..\..\..\..\..\..\Temp\innatour\MasterSoft.Finance.DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.Common.BusinessRules">
+      <HintPath>..\..\..\..\..\..\Temp\innatour\Megatec.Common.BusinessRules.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.Common.Model">
+      <HintPath>..\..\..\..\..\..\Temp\innatour\Megatec.Common.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="megatec.mastertour.businessrules">
+      <HintPath>..\..\..\..\..\..\Temp\innatour\megatec.mastertour.businessrules.dll</HintPath>
+    </Reference>
+    <Reference Include="megatec.mastertour.dataaccess">
+      <HintPath>..\..\..\..\..\..\Temp\innatour\megatec.mastertour.dataaccess.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -68,6 +83,7 @@
     </Compile>
     <Compile Include="DataBase\DataBaseProvider.cs" />
     <Compile Include="DataBase\MasterFinance.cs" />
+    <Compile Include="DataBase\MasterTour.cs" />
     <Compile Include="ErrorCodes.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Models\DepositInfo.cs" />

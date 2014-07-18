@@ -73,8 +73,31 @@ namespace InnaTourWebService.DataBase
             result.Add("dataSet", dataSet);         //пакуем ответ
             result.Add("output", outputValues);     
 
+
             return result;
         }
+
+        /// <summary>
+        /// Добавляет в запись в таблицу
+        /// </summary>
+        /// <param name="tableName">имя таблицы</param>
+        /// <param name="values">набор присваиваемых знацений</param>
+        /// <returns>id новой строки</returns>
+        public int InsertLineToTable(string tableName, Dictionary<string, object> values)
+        {
+            string comString = string.Format("insert into {0}({1}) values(@{2})", tableName, string.Join(", ", values.Keys),  string.Join(",@", values.Keys));
+
+            var cmd = new SqlCommand(comString, this.myConnection);
+
+            //add params
+
+
+            cmd.Parameters.Add("@ID", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
+            cmd.ExecuteNonQuery();
+
+            return 0;
+        }
+
         #endregion
 
         #region private methods
@@ -93,5 +116,10 @@ namespace InnaTourWebService.DataBase
             }
         }
         #endregion
+
+         public static string SafeSqlLiteral(string inputSQL)
+         {
+            return inputSQL.Replace("'", "''");
+         }
     }
 }
