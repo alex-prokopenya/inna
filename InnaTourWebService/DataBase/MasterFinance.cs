@@ -71,7 +71,6 @@ namespace InnaTourWebService.DataBase
 
             var result = this.db.CallStoredProcedure("FIN_DepositPayDogovor", inpParams, new string[] { "p_nErrorCode", "p_sErrorString" });
 
-
             if (result.ContainsKey("output"))
             {
                 var output = result["output"] as Dictionary<string, object>;
@@ -81,11 +80,19 @@ namespace InnaTourWebService.DataBase
             }
         }
 
+        /// <summary>
+        /// создает проводку к путевке
+        /// </summary>
+        /// <param name="dgCode">код путевки</param>
+        /// <param name="paymentType">код способа оплаты: 0 - оплата по карте</param>
+        /// <param name="paymentSys">название платежной системы</param>
+        /// <param name="paidSum">оплаченная сумма</param>
+        /// <param name="paymentId">идентификатор платежа</param>
         public void PayDogovor(string dgCode, int paymentType, string paymentSys, decimal paidSum, string paymentId)
         {
             var db = new DataBaseProvider();
 
-            var inpParams = new Dictionary<string, object>(); 
+            var inpParams = new Dictionary<string, object>();  //собираем параметры для сохранения новой строки в таблице оплат
             inpParams.Add("DP_TXN_ID", paymentId);
             inpParams.Add("DP_TXN_DATE", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             inpParams.Add("DP_DGCOD", dgCode);
@@ -94,7 +101,9 @@ namespace InnaTourWebService.DataBase
             inpParams.Add("DP_RESULT", 0);
             inpParams.Add("DP_PAYMENTSYS", paymentSys);
 
-            db.InsertLineToTable("FIN_DOGOVOR_PAID", inpParams);
+            db.InsertLineToTable("FIN_DOGOVOR_PAID", inpParams); //сохраняем запись в БД
+
+            
         }
     }
 }

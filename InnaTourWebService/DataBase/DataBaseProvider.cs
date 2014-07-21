@@ -33,7 +33,7 @@ namespace InnaTourWebService.DataBase
             //создаем подключение к базе
             this.myConnection = new SqlConnection(ConfigurationManager.AppSettings["connectionString"]);
 
-            this.OpenConnection();
+            this.OpenSqlConnection();
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace InnaTourWebService.DataBase
         /// <returns>возвращает Dictionary c ключами dataSet и output</returns>
         public Dictionary<string, object> CallStoredProcedure(string procName, Dictionary<string, object> procParams, string[] outputParams)
         {
-            this.OpenConnection(); //открываем соединение
+            this.OpenSqlConnection(); //открываем соединение
 
             var com = new SqlCommand(procName, myConnection); //создаем команду вызова хранимки
 
@@ -85,23 +85,31 @@ namespace InnaTourWebService.DataBase
         /// <returns>id новой строки</returns>
         public int InsertLineToTable(string tableName, Dictionary<string, object> values)
         {
-            string comString = string.Format("insert into {0}({1}) values(@{2})", tableName, string.Join(", ", values.Keys),  string.Join(",@", values.Keys));
+            OpenSqlConnection();
 
-            var cmd = new SqlCommand(comString, this.myConnection);
+            string comString = string.Format("insert into {0}({1}) values(@{2}) ", tableName, string.Join(", ", values.Keys),  string.Join(",@", values.Keys)); //"рыба" для запроса на добавление записси
+
+            comString = SafeSqlLiteral(comString); //экранируем одинарные кавычки
+
+            Добавить вывод id
+
+            var cmd = new SqlCommand(comString, this.myConnection); //создем объект SqlCommand
 
             //add params
+            foreach (string key in values.Keys) //добавляем параметры
+                cmd.Parameters.Add(new SqlParameter(key, values[key]));
 
+            cmd.Parameters.Add("@ID", SqlDbType.Int, 4).Direction = ParameterDirection.Output; //
 
-            cmd.Parameters.Add("@ID", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
             cmd.ExecuteNonQuery();
 
-            return 0;
+            return Convert.ToInt32(cmd.Parameters["ID"].Value);
         }
 
         #endregion
 
         #region private methods
-        private void OpenConnection()
+        private void OpenSqlConnection()
         {
             try
             {
@@ -117,6 +125,11 @@ namespace InnaTourWebService.DataBase
         }
         #endregion
 
+        /// <summary>
+        /// экранирует одинарные кавычки -- защита от инъекции
+        /// </summary>
+        /// <param name="inputSQL">sql - запрос</param>
+        /// <returns></returns>
          public static string SafeSqlLiteral(string inputSQL)
          {
             return inputSQL.Replace("'", "''");

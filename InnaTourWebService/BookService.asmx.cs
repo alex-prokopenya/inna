@@ -38,19 +38,23 @@ namespace InnaTourWebService
         public string CreateDogovorPayment(string dogovorCode, int paymentType, string paymentSys, decimal paidSum, string paymentId)
         {
             var masterHelper = new MasterTour();
+            var masterFinanceHelper = new MasterFinance();
 
-            var dogovor = masterHelper.GetDogovorByCode(dogovorCode);
+            var dogovor = masterHelper.GetDogovorByCode(dogovorCode); //ищем путевку по коду
 
             if (dogovor == null)
                 throw new Exception(String.Format( "Dogovor '{0}' not founded", dogovorCode));
 
-
             if (dogovor.PartnerKey > 0)  // если заказ агентский
-            { }                 //платим депозитом
+                masterFinanceHelper.DepositPayDogovor(dogovor.PartnerKey, dogovor.Key); //платим депозитом
             else //иначе
-            { } // сохраняем платеж по карте
+                masterFinanceHelper.PayDogovor( dogovor.Code,
+                                                paymentType,
+                                                paymentSys,
+                                                paidSum,
+                                                paymentId); // сохраняем платеж по карте
 
-                return "success";
+            return "success";
         }
 
 
