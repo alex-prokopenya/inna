@@ -87,11 +87,11 @@ namespace InnaTourWebService.DataBase
         {
             OpenSqlConnection();
 
-            string comString = string.Format("insert into {0}({1}) values(@{2}) ", tableName, string.Join(", ", values.Keys),  string.Join(",@", values.Keys)); //"рыба" для запроса на добавление записси
+            string comString = string.Format("insert into {0}({1}) values(@{2}) SET @ID = SCOPE_IDENTITY();", tableName, string.Join(", ", values.Keys),  string.Join(",@", values.Keys)); //"рыба" для запроса на добавление записси
 
             comString = SafeSqlLiteral(comString); //экранируем одинарные кавычки
 
-            Добавить вывод id
+          //  Добавить вывод id
 
             var cmd = new SqlCommand(comString, this.myConnection); //создем объект SqlCommand
 

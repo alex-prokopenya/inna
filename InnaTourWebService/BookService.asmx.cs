@@ -18,7 +18,6 @@ namespace InnaTourWebService
     // [System.Web.Script.Services.ScriptService]
     public class BookService : System.Web.Services.WebService
     {
-
         /// <summary>
         /// Созздает бронь в Мастер-Туре.
         /// </summary>
@@ -28,7 +27,6 @@ namespace InnaTourWebService
         {
             return "Hello World!";
         }
-
 
         /// <summary>
         /// Проводит платеж брони
@@ -56,7 +54,6 @@ namespace InnaTourWebService
 
             return "success";
         }
-
 
         /// <summary>
         /// Возвращает информацию о депозите и кредитном лимите агента
