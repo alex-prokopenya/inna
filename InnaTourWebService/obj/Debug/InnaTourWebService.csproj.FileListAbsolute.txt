@@ -7,7 +7,6 @@ c:\users\svs\documents\visual studio 2013\Projects\InnaTourWebService\InnaTourWe
 C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\bin\InnaTourWebService.dll.config
 C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\bin\InnaTourWebService.dll
 C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\bin\InnaTourWebService.pdb
-C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\obj\Debug\InnaTourWebService.csprojResolveAssemblyReference.cache
 C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\obj\Debug\InnaTourWebService.dll
 C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\obj\Debug\InnaTourWebService.pdb
 C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\bin\MasterSoft.Finance.DataAccess.dll
@@ -15,3 +14,5 @@ C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\bin\Megatec.Common.Busines
 C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\bin\Megatec.Common.Model.dll
 C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\bin\megatec.mastertour.businessrules.dll
 C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\bin\megatec.mastertour.dataaccess.dll
+C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\bin\InnaTourWebService.dll.CodeAnalysisLog.xml
+C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\bin\InnaTourWebService.dll.lastcodeanalysissucceeded

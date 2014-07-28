@@ -1,0 +1,7 @@
+C:\Users\svs\Documents\GitHub\inna\ServiceTest\bin\Debug\ServiceTest.exe.config
+C:\Users\svs\Documents\GitHub\inna\ServiceTest\bin\Debug\ServiceTest.exe
+C:\Users\svs\Documents\GitHub\inna\ServiceTest\bin\Debug\ServiceTest.pdb
+C:\Users\svs\Documents\GitHub\inna\ServiceTest\obj\Debug\ServiceTest.exe
+C:\Users\svs\Documents\GitHub\inna\ServiceTest\obj\Debug\ServiceTest.pdb
+C:\Users\svs\Documents\GitHub\inna\ServiceTest\bin\Debug\ServiceTest.exe.CodeAnalysisLog.xml
+C:\Users\svs\Documents\GitHub\inna\ServiceTest\bin\Debug\ServiceTest.exe.lastcodeanalysissucceeded

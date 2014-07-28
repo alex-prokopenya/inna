@@ -38,7 +38,5 @@ namespace InnaTourWebService.DataBase
             else
                 return null;
         }
-
-
     }
 }

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="CreateDogovor">
+        <s:complexType />
+      </s:element>
+      <s:element name="CreateDogovorResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateDogovorResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateDogovorPayment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="dogovorCode" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="paymentType" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="paymentSys" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="paidSum" type="s:decimal" />
+            <s:element minOccurs="0" maxOccurs="1" name="paymentId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateDogovorPaymentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateDogovorPaymentResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDepositAndReceivable">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="partnerId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDepositAndReceivableResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDepositAndReceivableResult" type="tns:ArrayOfDepositInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDepositInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DepositInfo" nillable="true" type="tns:DepositInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DepositInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Deposit" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="RateIsoCode" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="CreateDogovorSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateDogovor" />
+  </wsdl:message>
+  <wsdl:message name="CreateDogovorSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateDogovorResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateDogovorPaymentSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateDogovorPayment" />
+  </wsdl:message>
+  <wsdl:message name="CreateDogovorPaymentSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateDogovorPaymentResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDepositAndReceivableSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDepositAndReceivable" />
+  </wsdl:message>
+  <wsdl:message name="GetDepositAndReceivableSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDepositAndReceivableResponse" />
+  </wsdl:message>
+  <wsdl:portType name="BookServiceSoap">
+    <wsdl:operation name="CreateDogovor">
+      <wsdl:input message="tns:CreateDogovorSoapIn" />
+      <wsdl:output message="tns:CreateDogovorSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateDogovorPayment">
+      <wsdl:input message="tns:CreateDogovorPaymentSoapIn" />
+      <wsdl:output message="tns:CreateDogovorPaymentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDepositAndReceivable">
+      <wsdl:input message="tns:GetDepositAndReceivableSoapIn" />
+      <wsdl:output message="tns:GetDepositAndReceivableSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BookServiceSoap" type="tns:BookServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CreateDogovor">
+      <soap:operation soapAction="http://tempuri.org/CreateDogovor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateDogovorPayment">
+      <soap:operation soapAction="http://tempuri.org/CreateDogovorPayment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepositAndReceivable">
+      <soap:operation soapAction="http://tempuri.org/GetDepositAndReceivable" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="BookServiceSoap12" type="tns:BookServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CreateDogovor">
+      <soap12:operation soapAction="http://tempuri.org/CreateDogovor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateDogovorPayment">
+      <soap12:operation soapAction="http://tempuri.org/CreateDogovorPayment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepositAndReceivable">
+      <soap12:operation soapAction="http://tempuri.org/GetDepositAndReceivable" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BookService">
+    <wsdl:port name="BookServiceSoap" binding="tns:BookServiceSoap">
+      <soap:address location="http://localhost:6512/BookService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="BookServiceSoap12" binding="tns:BookServiceSoap12">
+      <soap12:address location="http://localhost:6512/BookService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
