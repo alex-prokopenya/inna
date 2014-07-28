@@ -8,32 +8,11 @@ using System.Data;
 
 namespace InnaTourWebService.DataBase
 {
-    public class MasterFinance:IDisposable
+    public class MasterFinance
     {
-        bool disposed = false;
-
-        // Public implementation of Dispose pattern callable by consumers. 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        // Protected implementation of Dispose pattern. 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposed)
-                return;
-
-            if (disposing)
-            {
-                this.db.Dispose();
-            }
-
-            disposed = true;
-        }
-
         private DataBaseProvider db = new DataBaseProvider();
+
+
         /// <summary>
         /// запрашиваем размер депозита по id агента
         /// </summary>
@@ -97,7 +76,7 @@ namespace InnaTourWebService.DataBase
                 var output = result["output"] as Dictionary<string, object>;
 
                 if (Convert.ToInt32( output["p_nErrorCode"] ) > 0)
-                    throw new Exception(String.Format("Pay deposit exception. Recieved code {0}. Error text '{1}'.", output["p_nErrorCode"], output["p_sErrorString"]));
+                    throw new Exception(String.Format("Pay deposit exception. Recieved code {0}. Error text '{}'.", output["p_nErrorCode"], output["p_sErrorString"]));
             }
         }
 
@@ -123,6 +102,8 @@ namespace InnaTourWebService.DataBase
             inpParams.Add("DP_PAYMENTSYS", paymentSys);
 
             db.InsertLineToTable("FIN_DOGOVOR_PAID", inpParams); //сохраняем запись в БД
+
+            
         }
     }
 }

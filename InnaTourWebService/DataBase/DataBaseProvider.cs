@@ -21,29 +21,10 @@ namespace InnaTourWebService.DataBase
         SqlConnection myConnection = null;
         #endregion
 
-
-        bool disposed = false;
-
-        // Public implementation of Dispose pattern callable by consumers. 
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        // Protected implementation of Dispose pattern. 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposed)
-                return;
-
-            if (disposing)
-            {
-                if ((this.myConnection.State != System.Data.ConnectionState.Broken) && (this.myConnection.State != System.Data.ConnectionState.Broken))
-                    this.myConnection.Close();
-            }
-
-            disposed = true;
+            if ((this.myConnection.State != System.Data.ConnectionState.Broken) && (this.myConnection.State != System.Data.ConnectionState.Broken))
+                this.myConnection.Close();
         }
         
         #region public methods
