@@ -40,10 +40,24 @@
       <s:element name="GetDepositAndReceivableResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetDepositAndReceivableResult" type="tns:ArrayOfDepositInfo" />
+            <s:element minOccurs="0" maxOccurs="1" name="GetDepositAndReceivableResult" type="tns:Response" />
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:complexType name="Response">
+        <s:sequence>
+          <s:choice minOccurs="1" maxOccurs="1">
+            <s:element minOccurs="0" maxOccurs="1" name="Tourist" type="tns:InTourist" />
+            <s:element minOccurs="0" maxOccurs="1" name="value" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Deposits" type="tns:ArrayOfDepositInfo" />
+          </s:choice>
+          <s:element minOccurs="1" maxOccurs="1" name="hasErrors" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="errorMessage" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="InTourist">
+        <s:attribute name="name" type="s:string" />
+      </s:complexType>
       <s:complexType name="ArrayOfDepositInfo">
         <s:sequence>
           <s:element minOccurs="0" maxOccurs="unbounded" name="DepositInfo" nillable="true" type="tns:DepositInfo" />
@@ -55,6 +69,20 @@
           <s:element minOccurs="0" maxOccurs="1" name="RateIsoCode" type="s:string" />
         </s:sequence>
       </s:complexType>
+      <s:element name="TestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="partnerId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TestResponseResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TestResponseResult" type="tns:Response" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="CreateDogovorSoapIn">
@@ -75,6 +103,12 @@
   <wsdl:message name="GetDepositAndReceivableSoapOut">
     <wsdl:part name="parameters" element="tns:GetDepositAndReceivableResponse" />
   </wsdl:message>
+  <wsdl:message name="TestResponseSoapIn">
+    <wsdl:part name="parameters" element="tns:TestResponse" />
+  </wsdl:message>
+  <wsdl:message name="TestResponseSoapOut">
+    <wsdl:part name="parameters" element="tns:TestResponseResponse" />
+  </wsdl:message>
   <wsdl:portType name="BookServiceSoap">
     <wsdl:operation name="CreateDogovor">
       <wsdl:input message="tns:CreateDogovorSoapIn" />
@@ -87,6 +121,10 @@
     <wsdl:operation name="GetDepositAndReceivable">
       <wsdl:input message="tns:GetDepositAndReceivableSoapIn" />
       <wsdl:output message="tns:GetDepositAndReceivableSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TestResponse">
+      <wsdl:input message="tns:TestResponseSoapIn" />
+      <wsdl:output message="tns:TestResponseSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BookServiceSoap" type="tns:BookServiceSoap">
@@ -118,6 +156,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="TestResponse">
+      <soap:operation soapAction="http://tempuri.org/TestResponse" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="BookServiceSoap12" type="tns:BookServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -141,6 +188,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetDepositAndReceivable">
       <soap12:operation soapAction="http://tempuri.org/GetDepositAndReceivable" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestResponse">
+      <soap12:operation soapAction="http://tempuri.org/TestResponse" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

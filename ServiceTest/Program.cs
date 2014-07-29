@@ -12,7 +12,15 @@ namespace ServiceTest
         {
             var client = new ServiceTest.InnaService.BookServiceSoapClient();
 
-            Console.WriteLine(client.CreateDogovorPayment("123", 1, "1", 1m, "1"));
+            var resp = client.GetDepositAndReceivable(1);
+
+            if (resp.Item is InnaService.InTourist)
+                Console.WriteLine((resp.Item as InnaService.InTourist).name);
+
+            else
+                if (resp.Item is InnaService.DepositInfo[])
+                    Console.WriteLine((resp.Item as InnaService.DepositInfo[])[0].Deposit);
+
             Console.ReadKey();
         }
     }

@@ -9,11 +9,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ServiceTest</RootNamespace>
     <AssemblyName>ServiceTest</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -54,16 +55,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Service References\InnaService\BookService.wsdl" />
-    <None Include="Service References\InnaService\ServiceTest.InnaService.CreateDogovorPaymentResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\InnaService\ServiceTest.InnaService.CreateDogovorResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\InnaService\ServiceTest.InnaService.DepositInfo.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\InnaService\ServiceTest.InnaService.GetDepositAndReceivableResponse.datasource">
+    <None Include="Service References\InnaService\ServiceTest.InnaService.Response.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
   </ItemGroup>

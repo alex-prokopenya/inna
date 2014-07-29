@@ -91,7 +91,10 @@
     <Compile Include="Models\DepositInfo.cs" />
     <Compile Include="Models\InService.cs" />
     <Compile Include="Models\InTourist.cs" />
+    <Compile Include="Models\PasportType.cs" />
     <Compile Include="Models\Response.cs" />
+    <Compile Include="Models\ServiceType.cs" />
+    <Compile Include="Models\Sex.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\TestClass.cs" />

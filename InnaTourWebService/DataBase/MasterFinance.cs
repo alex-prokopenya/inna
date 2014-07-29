@@ -43,7 +43,7 @@ namespace InnaTourWebService.DataBase
         {
             var inpParams = new Dictionary<string, object>(); //составляем список параметров
 
-            inpParams.Add("p_nPartner", partnerId);
+            inpParams.Add("p_nPartner", partnerId); 
             inpParams.Add("p_nErrorCode", "");
             inpParams.Add("p_sErrorString", "");
 

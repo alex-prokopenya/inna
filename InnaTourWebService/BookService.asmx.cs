@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Services;
 using InnaTourWebService.Models;
 using InnaTourWebService.DataBase;
+using InnaTourWebService.Helpers;
 
 namespace InnaTourWebService
 {
@@ -23,18 +24,47 @@ namespace InnaTourWebService
         /// </summary>
         /// <returns>DogovorCode -- код созданной брони</returns>
         [WebMethod]
-        public string CreateDogovor()
+        public Response CreateDogovor(InTourist[] turists, UserInfo userInfo, InService[] services)
         {
-            return "Hello World!";
+            try
+            {
+                //verify
+                turists.All(item => item.Validate());
+
+                userInfo.Validate();
+
+                services.All(item => item.Validate(turists.Length));
+
+                //создание путевки
+                var mtHelper = new MasterTour();
+
+                return new Response()
+                {
+                    value = mtHelper.CreateNewDogovor(turists, userInfo, services)
+                };
+            }
+            catch (Exception ex)
+            {
+                Logger.ReportException(ex); //пишем в лог ошибки
+
+                return new Response() //отдаем ответ с ошибкой
+                {
+                    hasErrors = true,
+                    errorMessage = ex.Message + " " + ex.StackTrace
+                };
+            }
         }
+
 
         /// <summary>
         /// Проводит платеж брони
         /// </summary>
         /// <returns>PaymentId -- идентификатор созданной проводки</returns>
         [WebMethod]
-        public string CreateDogovorPayment(string dogovorCode, int paymentType, string paymentSys, decimal paidSum, string paymentId)
+        public Response CreateDogovorPayment(string dogovorCode, int paymentType, string paymentSys, decimal paidSum, string paymentId)
         {
+            try
+            {
                 var masterHelper = new MasterTour();
                 var masterFinanceHelper = new MasterFinance();
 
@@ -51,8 +81,23 @@ namespace InnaTourWebService
                                                     paymentSys,
                                                     paidSum,
                                                     paymentId); // сохраняем платеж по карте
-                
-            return  "success";
+
+                return new Response()
+                {
+                    value =  "success"
+                };
+            }
+            catch (Exception ex) 
+            {
+                Logger.ReportException(ex);
+
+                return new Response()
+                {
+                    hasErrors = true,
+                    errorMessage = ex.Message + " " + ex.StackTrace
+                };
+            }
+
         }
 
         /// <summary>
@@ -60,11 +105,30 @@ namespace InnaTourWebService
         /// </summary>
         /// <returns></returns>
         [WebMethod]
-        public DepositInfo[] GetDepositAndReceivable(int partnerId)
+        public Response GetDepositAndReceivable(int partnerId)
         {
-                var masterFinance = new DataBase.MasterFinance();
+            //return new Response()
+            //{
+            //    value = new DepositInfo[] { new DepositInfo(){Deposit=112, RateIsoCode="BYR"}}
+            //};
 
-                return masterFinance.CallDepositGetValue(partnerId);
+                try{
+                    var masterFinance = new DataBase.MasterFinance();
+
+                    return new Response(){ 
+                     value = masterFinance.CallDepositGetValue(partnerId)
+                    };
+                }
+                catch(Exception ex)
+                {
+                    Logger.ReportException(ex);
+                    
+                    return new Response(){ 
+                     hasErrors = true,
+                     errorMessage = ex.Message + " " + ex.StackTrace
+                    };
+                }
         }
+
     }
 }

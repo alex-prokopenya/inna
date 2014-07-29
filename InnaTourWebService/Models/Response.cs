@@ -9,13 +9,14 @@ namespace InnaTourWebService.Models
 {
     public class Response
     {
-        [XmlElement("value")]
+        [XmlElement(Type = typeof(String), ElementName = "result")]
+        [XmlElement(Type = typeof(DepositInfo[]), ElementName = "Deposits")]
         public object value;
 
         [XmlElement("hasErrors")]
-        public bool hasErrors;
+        public bool hasErrors = false;
 
         [XmlElement("errorMessage")]
-        public string errorMessage;
+        public string errorMessage = "";
     }
 }
