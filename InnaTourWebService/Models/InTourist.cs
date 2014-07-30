@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 using System.IO;
 using System.Globalization;
 using System.Text.RegularExpressions;
-
+using System.Configuration;
 namespace InnaTourWebService.Models
 {
     [XmlRoot("InTourist")]
@@ -57,7 +57,7 @@ namespace InnaTourWebService.Models
             //проверяем дату рождения
             DateTime dateRes = DateTime.Today;
 
-            if (DateTime.TryParseExact(BirthDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateRes))
+            if (DateTime.TryParseExact(BirthDate, ConfigurationManager.AppSettings["DatesFormat"], CultureInfo.InvariantCulture, DateTimeStyles.None, out dateRes))
             {
                 if (dateRes>= DateTime.Today)
                     errors.Add("invalid BirthDate");
@@ -66,7 +66,7 @@ namespace InnaTourWebService.Models
                 errors.Add("invalid BirthDate format");
 
             //проверяем срок действия паспорта
-            if (DateTime.TryParseExact(PassportValidDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateRes))
+            if (DateTime.TryParseExact(PassportValidDate, ConfigurationManager.AppSettings["DatesFormat"], CultureInfo.InvariantCulture, DateTimeStyles.None, out dateRes))
             {
                 if (dateRes <= DateTime.Today)
                     errors.Add("invalid PassportValidDate");

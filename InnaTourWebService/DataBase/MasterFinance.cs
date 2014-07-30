@@ -51,12 +51,17 @@ namespace InnaTourWebService.DataBase
 
             if (result.ContainsKey("dataSet"))
             {
+                Helpers.Logger.WriteToLog("contains dataset");
+
                 var resp = new List<DepositInfo>();
 
                 var rows = result["dataSet"] as DataSet;
 
                 if((rows.Tables.Count>0) && (rows.Tables[0].Columns.Contains("DEP_VALUE")))
                 {
+
+                    Helpers.Logger.WriteToLog("Tables.Count>0");
+
                     foreach (DataRow row in rows.Tables[0].Rows)
                         resp.Add(new DepositInfo() { 
                                       Deposit =  Convert.ToDecimal(row["DEP_VALUE"]), 
@@ -68,7 +73,11 @@ namespace InnaTourWebService.DataBase
             
             if (result.ContainsKey("output"))
             {
+                Helpers.Logger.WriteToLog("contains output");
+
                 var output = result["output"] as Dictionary<string, object>;
+
+                Helpers.Logger.WriteToLog("contains keys " + string.Join(",",output.Keys));
 
                 throw new Exception(String.Format( "Check deposit exception. Recieved code {0}. Error text '{1}'.", output["p_nErrorCode"], output["p_sErrorString"] ) );
             }

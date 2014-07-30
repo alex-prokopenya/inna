@@ -71,8 +71,12 @@ namespace InnaTourWebService.DataBase
             com.CommandType = CommandType.StoredProcedure;
 
             foreach (string key in procParams.Keys) //добавляем параметры
-                com.Parameters.Add(new SqlParameter("@" + key, procParams[key]));
-        
+                com.Parameters.Add(new SqlParameter("@" + key, procParams[key]) 
+                {
+                    Direction = outputParams.Contains(key)? ParameterDirection.Output: ParameterDirection.Input,
+                    Size = 200 //размер получаемого ответа
+                });
+
             com.CommandTimeout = 3000;
 
             var dataSet = new DataSet(); //создаем дата-сет для ответа
@@ -82,16 +86,16 @@ namespace InnaTourWebService.DataBase
 
             var outputValues = new Dictionary<string, object>();
 
+            foreach (string key in procParams.Keys) //
+               Logger.WriteToLog ("for key "+key+" value " + com.Parameters["@" + key].Value);
+
             foreach(string key in outputParams) //
                 outputValues.Add(key, com.Parameters["@"+key].Value);
 
-
             var result = new Dictionary<string, object>();
-
 
             result.Add("dataSet", dataSet);         //пакуем ответ
             result.Add("output", outputValues);     
-
 
             return result;
         }
@@ -106,11 +110,11 @@ namespace InnaTourWebService.DataBase
         {
             OpenSqlConnection();
 
-            string comString = string.Format("insert into {0}({1}) values(@{2}) SET @ID = SCOPE_IDENTITY();", tableName, string.Join(", ", values.Keys),  string.Join(",@", values.Keys)); //"рыба" для запроса на добавление записси
+            string comString = string.Format("insert into {0}({1}) values(@{2}) SET @ID = SCOPE_IDENTITY();", tableName.ToString(), string.Join(", ", values.Keys),  string.Join(",@", values.Keys)); //"рыба" для запроса на добавление записси
 
             comString = SafeSqlLiteral(comString); //экранируем одинарные кавычки
 
-          //  Добавить вывод id
+           //Добавить вывод id
 
             var cmd = new SqlCommand(comString, this.myConnection); //создем объект SqlCommand
 

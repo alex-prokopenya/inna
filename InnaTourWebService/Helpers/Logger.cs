@@ -25,8 +25,8 @@ namespace InnaTourWebService.Helpers
         /// <param name="message"> текст сообщения</param>
         public static void WriteToLog(string message)
         {
-            int att = 5;
-            while (att-- > 0) //делаем несколько попыток записи
+            int ats = 5;
+            while (ats-- > 0) //делаем несколько попыток записи
             {
                 try
                 {
@@ -44,6 +44,29 @@ namespace InnaTourWebService.Helpers
                     Thread.Sleep(100);
                 }
             }     
+        }
+
+        public static void WriteToBookLog(string message)
+        {
+            int ats = 5; 
+            while (ats-- > 0) //делаем несколько попыток записи
+            {
+                try
+                {
+                    StreamWriter outfile = new StreamWriter("" + AppDomain.CurrentDomain.BaseDirectory + @"/log/book_" + DateTime.Today.ToString("yyyy-MM-dd") + ".log", true);
+
+                    outfile.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " " + message);
+                    outfile.WriteLine();
+                    outfile.WriteLine();
+
+                    outfile.Close();
+                    break;
+                }
+                catch (Exception)
+                {
+                    Thread.Sleep(100);
+                }
+            }
         }
     }
 }

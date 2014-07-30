@@ -5,14 +5,15 @@ using System.Web;
 using System.Xml.Serialization;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace InnaTourWebService.Models
 {
     [XmlRoot("UserInfo")]
     public class UserInfo
     {
-        [XmlAttribute("AgentKey")]
-        public int AgentKey = 0;
+        [XmlAttribute("AgentLogin")]
+        public string AgentLogin = "";
 
         [XmlAttribute("Name")]
         public string Name;
@@ -33,37 +34,25 @@ namespace InnaTourWebService.Models
 
             Regex mailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
 
-            UserInfo userInfo = null;
+            int partnerKey = 0;
 
-            if (this.AgentKey > 0)
+            if (this.AgentLogin != "")
             { 
                 var mtHelper = new DataBase.MasterTour();
 
-                userInfo = mtHelper.GetUserInfoForAgent(this.AgentKey);
+                partnerKey = mtHelper.GetAgentInfo(this.AgentLogin);
             }
 
-            if (!mailRegex.IsMatch(this.Email))
-            { 
-                if(userInfo == null)
+            if (partnerKey == 0)
+            {
+                if (!mailRegex.IsMatch(this.Email))
                     errors.Add("invalid Email");
-                else
-                    this.Email = userInfo.Email;
-            }
 
-            if (!new Regex(@"^\+?(\d[\d-. ]+)?(\([\d-. ]+\))?[\d-. ]+\d$").IsMatch(this.Phone))
-            {
-                if (userInfo == null)
+                if (!new Regex(@"^\+?(\d[\d-. ]+)?(\([\d-. ]+\))?[\d-. ]+\d$").IsMatch(this.Phone))
                     errors.Add("invalid Phone");
-                else
-                    this.Phone = userInfo.Phone;
-            }
 
-            if (this.Name.Length < 1)
-            {
-                if (userInfo == null)
-                    errors.Add("invalid Name");
-                else
-                    this.Name = userInfo.Name;
+                if (this.Name.Length < 1)
+                   errors.Add("invalid Name");
             }
 
             if (errors.Count > 0)

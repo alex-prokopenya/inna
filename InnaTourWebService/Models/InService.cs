@@ -5,7 +5,8 @@ using System.Web;
 using System.Xml.Serialization;
 using System.Text.RegularExpressions;
 using System.IO;
-
+using System.Configuration;
+using System.Globalization;
 
 namespace InnaTourWebService.Models
 {
@@ -53,11 +54,21 @@ namespace InnaTourWebService.Models
             //партнер-поставщик
             var mtHelper = new DataBase.MasterTour();
 
-            userInfo = mtHelper.GetUserInfoForAgent(this.PartnerID);
+            userInfo = mtHelper.GetPartnerInfo(this.PartnerID);
 
             if (userInfo == null)
                 errors.Add("unknown PartnerID");
 
+            DateTime dateRes = DateTime.Today.AddDays(-1);
+
+            if (DateTime.TryParseExact(this.Date, ConfigurationManager.AppSettings["DatesFormat"], CultureInfo.InvariantCulture, DateTimeStyles.None, out dateRes))
+            {
+                if (dateRes < DateTime.Today)
+                    errors.Add("invalid Service Date");
+            }
+            else
+                errors.Add("invalid Service Date format");
+            
             int minLong = 1;
 
             //продолжительность услуги
