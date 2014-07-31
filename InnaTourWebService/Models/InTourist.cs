@@ -36,6 +36,9 @@ namespace InnaTourWebService.Models
         [XmlAttribute("PassportValidDate")]
         public string PassportValidDate;
 
+        [XmlAttribute("Citizenship")]
+        public string Citizenship;
+
         /// <summary>
         /// проверяет данные полученные в объект
         /// </summary>
@@ -47,17 +50,21 @@ namespace InnaTourWebService.Models
             var latin = new Regex(@"^[a-zA-Z\-]{2,50}$");
 
             //проверяем имя
-            if (!latin.IsMatch(FirstName))
+            if (!latin.IsMatch(this.FirstName))
                 errors.Add("invalid FirstName");
 
             //проверяем фамилию
-            if (!latin.IsMatch(LastName))
+            if (!latin.IsMatch(this.LastName))
                 errors.Add("invalid LastName");
-           
+
+            //проверяем гражданство
+            if (this.Citizenship.Length != 2)
+                errors.Add("invalid LastName");
+
             //проверяем дату рождения
             DateTime dateRes = DateTime.Today;
 
-            if (DateTime.TryParseExact(BirthDate, ConfigurationManager.AppSettings["DatesFormat"], CultureInfo.InvariantCulture, DateTimeStyles.None, out dateRes))
+            if (DateTime.TryParseExact(this.BirthDate, ConfigurationManager.AppSettings["DatesFormat"], CultureInfo.InvariantCulture, DateTimeStyles.None, out dateRes))
             {
                 if (dateRes>= DateTime.Today)
                     errors.Add("invalid BirthDate");
@@ -66,14 +73,16 @@ namespace InnaTourWebService.Models
                 errors.Add("invalid BirthDate format");
 
             //проверяем срок действия паспорта
-            if (DateTime.TryParseExact(PassportValidDate, ConfigurationManager.AppSettings["DatesFormat"], CultureInfo.InvariantCulture, DateTimeStyles.None, out dateRes))
+            if (this.PassportValidDate != "")
             {
-                if (dateRes <= DateTime.Today)
-                    errors.Add("invalid PassportValidDate");
+                if (DateTime.TryParseExact(this.PassportValidDate, ConfigurationManager.AppSettings["DatesFormat"], CultureInfo.InvariantCulture, DateTimeStyles.None, out dateRes))
+                {
+                    if (dateRes <= DateTime.Today)
+                        errors.Add("invalid PassportValidDate");
+                }
+                else
+                    errors.Add("invalid PassportValidDate format");
             }
-            else
-                errors.Add("invalid PassportValidDate format");
-
             //если есть ошибки, выводим
             if (errors.Count > 0)
             {

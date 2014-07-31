@@ -15,12 +15,22 @@ namespace InnaTourWebService.DataBase
 {
     public class MasterTour
     {
+        private string dateFormat;
+
+        private int aviaServiceKey;
+
+        private int hotelServiceKey;
+
         /// <summary>
         /// создает объект MasterTour
         /// </summary>
         public MasterTour()
         {
             Megatec.MasterTour.DataAccess.Manager.ConnectionString = ConfigurationManager.AppSettings["connectionString"];
+            dateFormat = ConfigurationManager.AppSettings["datesFormat"];
+
+            aviaServiceKey = Convert.ToInt32(ConfigurationManager.AppSettings["AviaBookingServiceKey"]);
+            hotelServiceKey = Convert.ToInt32(ConfigurationManager.AppSettings["HotelBookingServiceKey"]);
         }
 
         /// <summary>
@@ -119,12 +129,13 @@ namespace InnaTourWebService.DataBase
             //создали пустой договор
             Dogovor dogovor = CreateEmptyDogovor(userInfo, 
                                                  DateTime.ParseExact(services[0].Date, 
-                                                                     ConfigurationManager.AppSettings["DatesFormat"],
+                                                                     dateFormat,
                                                                      null));
-
+            //добавляем туристов
             foreach (var tourist in tourists)
                 AddTouristToDogovor(dogovor, tourist);
 
+            //добавляем услуги
             foreach (var service in services)
                 AddServiceToDogovor(dogovor, service);
 
@@ -137,13 +148,172 @@ namespace InnaTourWebService.DataBase
         #region private methods
 
         private void AddTouristToDogovor(Dogovor dogovor, InTourist tourist)
-        { 
-        
+        {
+            Turist tst = dogovor.Turists.NewRow();    // создаем новый объект "турист"
+            tst.NameRus = tourist.FirstName;          // проставляем имя
+            tst.NameLat = tst.NameRus;
+
+            tst.FNameRus = tourist.LastName;           // проставляем фамилию
+            tst.FNameLat = tst.FNameLat;
+
+            tst.Birthday = DateTime.ParseExact(tourist.BirthDate, dateFormat, null ); //дату рождения
+            tst.CreatorKey = dogovor.CreatorKey;       //создатель
+
+            if(tourist.PassrortType == PasportType.FOREIGN)
+            {
+                if (tourist.PassportValidDate != "")
+                    tst.PasportDateEnd = DateTime.ParseExact(tourist.PassportValidDate, dateFormat, null);
+
+                tst.PasportNum = tourist.PasspordNumber;      //номер и ...
+                tst.PasportType = tourist.PasspordCode;       //... серия паспорта
+            }
+            else // внутренний паспорт
+            {
+                tst.PaspRuNum = tourist.PasspordNumber;      //номер и ...
+                tst.PaspRUser = tourist.PasspordCode;       //... серия паспорта
+            }
+
+            tst.DogovorCode = dogovor.Code;              //код путевки
+            tst.DogovorKey = dogovor.Key;                //ключ путевки
+
+            tst.Citizen = tourist.Citizenship;          //код гражданства туриста
+
+            if (tourist.Sex == Sex.F)                  //пол туриста
+            {
+                tst.RealSex = Turist.RealSex_Female;
+                if (tst.Age > Convert.ToInt32(ConfigurationManager.AppSettings["ChildAgeLimit"]))//ребенок или взрослый в зависимости от возраста
+                    tst.Sex = Turist.Sex_Female;
+                else
+                    tst.Sex = Turist.Sex_Child;
+            }
+            else
+            {
+                tst.RealSex = Turist.RealSex_Male;
+                if (tst.Age > Convert.ToInt32(ConfigurationManager.AppSettings["ChildAgeLimit"]))//ребенок или взрослый в зависимости от возраста
+                    tst.Sex = Turist.Sex_Male;
+                else
+                    tst.Sex = Turist.Sex_Child;
+            }
+
+            dogovor.Turists.Add(tst);                              //Добавляем к туристам в путевке 
+            dogovor.Turists.DataContainer.Update();                    //Сохраняем изменения
         }
 
         private void AddServiceToDogovor(Dogovor dogovor, InService service)
-        { 
-        
+        {
+            dogovor.Turists.Sort = "tu_key asc";
+
+            dogovor.Turists.Fill();
+
+            var dateStart = DateTime.ParseExact( service.Date, this.dateFormat, null );
+
+            var dateEnd = dateStart.AddDays(service.NDays - 1);
+
+            DogovorList dl = dogovor.DogovorLists.NewRow();
+           
+            dl.TourKey = dl.Dogovor.TourKey;
+            dl.PacketKey = dl.Dogovor.TourKey;
+            dl.CreatorKey = dl.Dogovor.CreatorKey;        //копируем ключ создателя путевки
+            dl.OwnerKey = dl.Dogovor.OwnerKey;            //копируем ключ создателя путевки
+            dl.DateBegin = dateStart;
+            dl.DateEnd = dateEnd;
+
+            dl.NDays = (short)(service.NDays);
+
+
+            if (dl.Dogovor.TurDate > dl.DateBegin)      //корректируем даты тура в путевке
+            {
+                dl.Dogovor.NDays += (short)(dl.Dogovor.TurDate - dl.DateBegin).Days;
+                dl.Dogovor.TurDate = dl.DateBegin;
+                dl.Dogovor.DataContainer.Update();
+            }
+
+            if (dl.DateEnd > dl.Dogovor.DateEnd)        //корректируем дату окончания тура в путевке
+            {
+                dl.Dogovor.NDays += (short)(dl.DateEnd - dl.Dogovor.DateEnd).Days;
+                dl.Dogovor.DataContainer.Update();
+            }
+
+            dl.TurDate = dl.Dogovor.TurDate;
+
+            dl.NMen = (short)(service.TuristIndexes.Length > 0 ? service.TuristIndexes.Length : dogovor.Turists.Count);             
+            dl.ServiceKey = service.ServiceType == ServiceType.AVIA ? aviaServiceKey: hotelServiceKey;
+            dl.CityKey = dogovor.CityKey;
+
+            //Добавляем услугу
+            dl.SubService = AddServiceList(dl.ServiceKey, service.Title);
+
+            dl.SubCode1 = 0;
+            dl.SubCode2 = 0;
+
+            //разбираемся с ценами
+
+            dl.Brutto   = service.Price;
+            dl.Netto    = service.NettoPrice;
+            dl.Discount = service.Comission;
+            
+            dl.PartnerKey = service.PartnerID;               //проставляем поставщика услуги
+            dl.BuildName();
+            dogovor.DogovorLists.Add(dl);
+
+            dogovor.DogovorLists.DataContainer.Update();
+
+            dl.FormulaNetto = dl.Netto.ToString("0.00").Replace(".", ",");
+            dl.FormulaBrutto = dl.Brutto.ToString("0.00").Replace(".", ",");
+            dl.FormulaDiscount = dl.Discount.ToString("0.00").Replace(".", ",");
+
+            dl.DataContainer.Update();
+
+            //садим людей на услугу
+            this.AddTouristsToService(dogovor, service, dl);
+
+            dogovor.DogovorLists.DataCache.Update();        //сохраняем изменения в услугах
+        }
+
+        /// <summary>
+        /// создает привязки туристов к услуге
+        /// </summary>
+        /// <param name="dogovor">путевка</param>
+        /// <param name="service">полученная сервисом услуга</param>
+        /// <param name="dl">объект DogovorList -- добавленная в МТ услуга</param>
+        private void AddTouristsToService(Dogovor dogovor, InService service, DogovorList dl)
+        {
+            //садим людей на услугу
+            TuristServices tServices = new TuristServices(new DataCache());
+            for (int index = 0; index < dogovor.Turists.Count; index++)       //Просматриваем услуги в путевке
+            {
+                if ((service.TuristIndexes.Length == 0) || (service.TuristIndexes.Contains(index + 1)))
+                {
+                    Turist tst = dogovor.Turists[index];
+
+                    TuristService ts = tServices.NewRow();  //садим его на услугу
+                    ts.Turist = tst;
+                    ts.DogovorList = dl;
+                    tServices.Add(ts);
+                    tServices.DataCache.Update();           //сохраняем изменения
+                }
+            }
+        }
+
+        private ServiceList AddServiceList(int serviceKey, string name)
+        {
+            if (name.Length > 50) name = name.Substring(0, 50);
+
+            ServiceLists sls = new ServiceLists(new Megatec.Common.BusinessRules.Base.DataContainer());
+            sls.RowFilter = "sl_name = '" + name + "' and sl_svkey=" + serviceKey;
+            sls.Fill();
+
+            if (sls.Count > 0) return sls[0];
+
+            ServiceList sl = sls.NewRow();
+
+            sl.Name = name;
+            sl.ServiceKey = serviceKey;
+
+            sls.Add(sl);
+            sls.DataCache.Update();
+
+            return sl;
         }
 
         /// <summary>
@@ -158,12 +328,15 @@ namespace InnaTourWebService.DataBase
 
             //берем информацию о туре, к которму цепляем
             var turList = this.GetTurlistByKey(Convert.ToInt32(ConfigurationManager.AppSettings["BookingPacketKey"]));
-            dog.CountryKey = turList.CountryKey;
-            dog.CityKey = turList.CityKey;
-            dog.TourKey = turList.Key;
+            dog.CountryKey = turList.CountryKey; //привязываем к стране 
+            dog.CityKey = turList.CityKey; // ... городу
+            dog.TourKey = turList.Key;  // ... пакету
 
-            dog.TurDate = startDate;
-            dog.NDays = 1;
+            //даты и продолжительность
+            dog.TurDate = startDate; //дата тура -- ставится по первой услуге, далее может быть изменена
+            dog.NDays = 1;           //продолжительность. млжет измениться в процессе добавления услуг
+
+            //информация о покупателе
             dog.MainMenEMail = userInfo.Email != "" ? userInfo.Email : "";
             dog.MainMenPhone = userInfo.Phone != "" ? userInfo.Phone : "";
             dog.MainMen = userInfo.Name !="" ? userInfo.Name : "";//;
@@ -185,11 +358,15 @@ namespace InnaTourWebService.DataBase
 
             dogs.Add(dog); //добавляем запись в БД
 
-            dogs.DataCache.Update(); // !! проверить, работет ли без этого!
+            dogs.DataContainer.Update(); // !! проверить, работет ли без этого!
 
             return dog;
         }
 
+        /// <summary>
+        /// ищет код национальной валюты
+        /// </summary>
+        /// <returns>код нац. валюты</returns>
         private string GetNationalRateCode()
         {
             var rates = new Rates(new Megatec.Common.BusinessRules.Base.DataContainer());
@@ -201,7 +378,6 @@ namespace InnaTourWebService.DataBase
             if (rates.Count > 0) rateCode = rates[0].Code;
             return rateCode;
         }
-
         #endregion
     }
 }
