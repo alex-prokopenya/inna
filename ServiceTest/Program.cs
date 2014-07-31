@@ -4,6 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
+using System.IO;
+using System.Threading;
+using ServiceTest.InnaService;
+using System.Xml;
+using System.Xml.Serialization;
+
 
 namespace ServiceTest
 {
@@ -11,32 +17,273 @@ namespace ServiceTest
     {
         static void Main(string[] args)
         {
-        //    CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator = ",";
+            var codes = TestCreateDogovor();
 
-            decimal test = 1134M;
-
-            Console.WriteLine(test.ToString());
-
-            Console.WriteLine(test.ToString("0,00"));
-
-            Console.WriteLine(test.ToString("G"));
-
-            Console.WriteLine(test.ToString("0,0000"));
-
+            foreach (string code in codes)
+            {
+                TestPayments(code, 1, "PSB", new Random(1000).Next() + 100, (new Random(1000).Next() + 10000).ToString());
+                Thread.Sleep(1000);
+            }
             Console.ReadKey();
-            return;
-            var client = new ServiceTest.InnaService.BookServiceSoapClient();
+        }
 
-            var resp = client.GetDepositAndReceivable(1);
+        private static void TestPayments(string dogCode, int paymentType, string paymentSys, decimal paidSum, string paymentId)
+        {
+            var client = new BookServiceSoapClient();
+            client.Open();
 
-            if (resp.Item is InnaService.InTourist)
-                Console.WriteLine((resp.Item as InnaService.InTourist).name);
+            WriteToLog(String.Format("dogCode = {0}, paymentType={1}, paymentSys={2}, paidSum={3}, paymentId={4}", dogCode, paymentType, paymentSys, paidSum, paymentId));
 
-            else
-                if (resp.Item is InnaService.DepositInfo[])
-                    Console.WriteLine((resp.Item as InnaService.DepositInfo[])[0].Deposit);
+            var resp = client.CreateDogovorPayment(dogCode, paymentType, paymentSys, paidSum, paymentId);
 
-            Console.ReadKey();
+            WriteToLog(Serialize(resp, resp.GetType()));
+
+            client.Close();
+        }
+
+
+
+        private static void TestDeposit(string dogCode)
+        {
+
+        }
+
+
+        private static List<string> TestCreateDogovor()
+        {
+            List<string> createdDogovors = new List<string>();
+
+            WriteToLog("TestCreateDogovor");
+
+            var client = new BookServiceSoapClient();
+            client.Open();
+
+            var turists = new InTourist[] { 
+            
+                new InTourist(){
+                    BirthDate = "2010-01-01",
+                    Citizenship = "BY",
+                    FirstName = "Alexey",
+                    LastName = "Ivanov",
+                    PasspordCode = "MP",
+                    PasspordNumber = "1122334455",
+                    PassportValidDate = "",
+                    PassrortType = PasportType.INTERNAL,
+                    Sex = Sex.M
+                },
+                new InTourist(){
+                    BirthDate = "1980-01-01",
+                    Citizenship = "RU",
+                    FirstName = "Alena",
+                    LastName = "Frolova",
+                    PasspordCode = "67",
+                    PasspordNumber = "132659616",
+                    PassportValidDate = "2020-01-01",
+                    PassrortType = PasportType.FOREIGN,
+                    Sex = Sex.F
+                },
+                new InTourist(){
+                    BirthDate = "1999-12-01",
+                    Citizenship = "TEST",
+                    FirstName = "Alexey",
+                    LastName = "Ivanov",
+                    PasspordCode = "MP",
+                    PasspordNumber = "1122334455",
+                    PassportValidDate = "",
+                    PassrortType = PasportType.INTERNAL,
+                    Sex = Sex.M
+                }
+            };
+
+            var userInfo = new InnaService.UserInfo(){
+                AgentLogin = "",
+                Email = "nomail@tut.by",
+                Name = "Ivan",
+                Phone = "12454345"
+            };
+
+            var AgentInfo = new InnaService.UserInfo(){
+                AgentLogin = "rover"
+            };
+
+            var servicesOne = new InService[]{ //отель
+                new InService(){
+                    Comission = 10,
+                    Date = "2014-10-09",
+                    NDays = 12,
+                    NettoPrice = 1980,
+                    PartnerBookID = "21234234234224",
+                    PartnerID = 57448,
+                    Price = 2030,
+                    ServiceType = ServiceType.HOTEL,
+                    Title = "Grand efe 4*, Кушадасы, dbl sea view, All",
+                    TuristIndexes = new int[0]
+                }
+            };
+
+            var servicesTwo = new InService[]{ //перелет
+                
+                new InService(){
+                    Comission = 500,
+                    Date = "2015-10-09",
+                    NDays = 1,
+                    NettoPrice = 500,
+                    PartnerBookID = "1234232345",
+                    PartnerID = 57448,
+                    Price = 1500,
+                    ServiceType = ServiceType.AVIA,
+                    Title = "Минск-Измир, B2 8420, 18:00-20:30",
+                    TuristIndexes = new int[0]
+                }
+            };
+
+            var servicesThree = new InService[]{ //отели + перелеты
+                
+                 new InService(){
+                        Comission = 0,
+                        Date = "2014-10-09",
+                        NDays = 1,
+                        NettoPrice = 0,
+                        PartnerBookID = "1234232345",
+                        PartnerID = 57448,
+                        Price = 0,
+                        ServiceType = ServiceType.AVIA,
+                        Title = "Измир-Минск, B2 8420, 18:00-20:30",
+                        TuristIndexes = new int[0]
+                    },
+
+                    new InService(){
+                        Comission = 100,
+                        Date = "2014-10-01",
+                        NDays = 1,
+                        NettoPrice = 560,
+                        PartnerBookID = "1234232345",
+                        PartnerID = 57448,
+                        Price = 700,
+                        ServiceType = ServiceType.AVIA,
+                        Title = "Минск-Измир, B2 8420, 12:00-14:30",
+                        TuristIndexes = new int[0]
+                    },
+
+                    new InService(){
+                        Comission = 10,
+                        Date = "2014-10-01",
+                        NDays = 5,
+                        NettoPrice = 1980,
+                        PartnerBookID = "21234234234224",
+                        PartnerID = 57448,
+                        Price = 2030,
+                        ServiceType = ServiceType.HOTEL,
+                        Title = "Grand efe 4*, Кушадасы, tpl sea view, All",
+                        TuristIndexes = new int[] {1,2,3}
+                    },
+                    new InService(){
+                        Comission = 10,
+                        Date = "2014-10-05",
+                        NDays = 4,
+                        NettoPrice = 2980,
+                        PartnerBookID = "21234234234224",
+                        PartnerID = 57448,
+                        Price = 3030,
+                        ServiceType = ServiceType.HOTEL,
+                        Title = "Grand efe 4*, Кушадасы, dbl sea view, All",
+                        TuristIndexes = new int[] {1,3}
+                    },
+                    new InService(){
+                        Comission = 10,
+                        Date = "2014-10-06",
+                        NDays = 4,
+                        NettoPrice = 3980,
+                        PartnerBookID = "21234234234224",
+                        PartnerID = 57448,
+                        Price = 4030,
+                        ServiceType = ServiceType.HOTEL,
+                        Title = "Grand efe 4*, Кушадасы, sgl sea view, All",
+                        TuristIndexes = new int[]{2}
+                    },
+            };
+            WriteToLog(""); WriteToLog("");
+            WriteToLog("try turists, userInfo, servicesOne");
+
+            Thread.Sleep(1000);
+            var resp = client.CreateDogovor(turists, userInfo, servicesOne);
+
+            WriteToLog(Serialize(resp, resp.GetType()));
+
+            if ((resp.Item is string) && (resp.hasErrors == false))
+                createdDogovors.Add(resp.Item.ToString());
+
+            WriteToLog(""); WriteToLog("");
+            WriteToLog("try turists, AgentInfo, servicesTwo");
+
+            Thread.Sleep(1000);
+            resp = client.CreateDogovor(turists, AgentInfo, servicesTwo);
+
+            WriteToLog(Serialize(resp, resp.GetType()));
+
+            if ((resp.Item is string) && (resp.hasErrors == false))
+                createdDogovors.Add(resp.Item.ToString());
+
+            WriteToLog(""); WriteToLog("");
+            WriteToLog("try turists, userInfo, servicesThree");
+
+            Thread.Sleep(1000);
+            resp = client.CreateDogovor(turists, userInfo, servicesThree);
+
+            WriteToLog(Serialize(resp, resp.GetType()));
+
+            if ((resp.Item is string) && (resp.hasErrors == false))
+                createdDogovors.Add(resp.Item.ToString());
+
+            WriteToLog(""); WriteToLog("");
+            WriteToLog("try turists, AgentInfo, servicesThree");
+
+            Thread.Sleep(1000);
+            resp = client.CreateDogovor(turists, AgentInfo, servicesThree);
+
+            WriteToLog(Serialize(resp, resp.GetType()));
+
+            if ((resp.Item is string) && (resp.hasErrors == false))
+                createdDogovors.Add(resp.Item.ToString());
+
+            client.Close();
+
+            WriteToLog("end of TestCreateDogovor");
+
+            return createdDogovors;
+        }
+
+        private static string Serialize(object obj, Type type)
+        {
+            var sw = new StringWriter();
+            new XmlSerializer(type).Serialize(sw, obj);
+
+            return sw.ToString();
+        }
+
+
+        private static void WriteToLog(string message)
+        {
+            Console.WriteLine(message);
+            int ats = 5;
+            while (ats-- > 0) //делаем несколько попыток записи
+            {
+                try
+                {
+                    StreamWriter outfile = new StreamWriter("" + AppDomain.CurrentDomain.BaseDirectory + @"/log/" + DateTime.Today.ToString("yyyy-MM-dd") + ".log", true);
+
+                    outfile.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " " + message);
+                    outfile.WriteLine();
+                    outfile.WriteLine();
+
+                    outfile.Close();
+                    break;
+                }
+                catch (Exception)
+                {
+                    Thread.Sleep(100);
+                }
+            }
         }
     }
 }

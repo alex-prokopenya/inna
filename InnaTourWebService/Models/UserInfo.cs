@@ -17,11 +17,11 @@ namespace InnaTourWebService.Models
 
         [XmlAttribute("Name")]
         public string Name;
-
-        [XmlAttribute("Phone")]
+     
+        [XmlAttribute("Email")]
         public string Email;
 
-        [XmlAttribute("LastName")]
+        [XmlAttribute("Phone")]
         public string Phone;
 
         /// <summary>

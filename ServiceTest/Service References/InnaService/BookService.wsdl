@@ -3,15 +3,106 @@
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
       <s:element name="CreateDogovor">
-        <s:complexType />
-      </s:element>
-      <s:element name="CreateDogovorResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="CreateDogovorResult" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="turists" type="tns:ArrayOfInTourist" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserInfo" nillable="true" type="tns:UserInfo" />
+            <s:element minOccurs="0" maxOccurs="1" name="services" type="tns:ArrayOfInService" />
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:complexType name="ArrayOfInTourist">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="InTourist" nillable="true" type="tns:InTourist" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="InTourist">
+        <s:attribute name="FirstName" type="s:string" />
+        <s:attribute name="Sex" type="tns:Sex" use="required" />
+        <s:attribute name="LastName" type="s:string" />
+        <s:attribute name="BirthDate" type="s:string" />
+        <s:attribute name="PassrortType" type="tns:PasportType" use="required" />
+        <s:attribute name="PasspordNumber" type="s:string" />
+        <s:attribute name="PasspordCode" type="s:string" />
+        <s:attribute name="PassportValidDate" type="s:string" />
+        <s:attribute name="Citizenship" type="s:string" />
+      </s:complexType>
+      <s:simpleType name="Sex">
+        <s:restriction base="s:string">
+          <s:enumeration value="M" />
+          <s:enumeration value="F" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="PasportType">
+        <s:restriction base="s:string">
+          <s:enumeration value="INTERNAL" />
+          <s:enumeration value="FOREIGN" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="UserInfo">
+        <s:attribute name="AgentLogin" type="s:string" />
+        <s:attribute name="Name" type="s:string" />
+        <s:attribute name="Email" type="s:string" />
+        <s:attribute name="Phone" type="s:string" />
+      </s:complexType>
+      <s:complexType name="ArrayOfInService">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="InService" nillable="true" type="tns:InService" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="InService">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="TuristIndexes" type="tns:ArrayOfInt" />
+        </s:sequence>
+        <s:attribute name="ServiceType" type="tns:ServiceType" use="required" />
+        <s:attribute name="Date" type="s:string" />
+        <s:attribute name="NDays" type="s:int" use="required" />
+        <s:attribute name="Title" type="s:string" />
+        <s:attribute name="PartnerID" type="s:int" use="required" />
+        <s:attribute name="PartnerBookID" type="s:string" />
+        <s:attribute name="Price" type="s:int" use="required" />
+        <s:attribute name="NettoPrice" type="s:int" use="required" />
+        <s:attribute name="Comission" type="s:int" use="required" />
+      </s:complexType>
+      <s:complexType name="ArrayOfInt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="ServiceType">
+        <s:restriction base="s:string">
+          <s:enumeration value="AVIA" />
+          <s:enumeration value="HOTEL" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="CreateDogovorResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateDogovorResult" type="tns:Response" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Response">
+        <s:sequence>
+          <s:choice minOccurs="1" maxOccurs="1">
+            <s:element minOccurs="0" maxOccurs="1" name="Deposits" type="tns:ArrayOfDepositInfo" />
+            <s:element minOccurs="0" maxOccurs="1" name="result" type="s:string" />
+          </s:choice>
+          <s:element minOccurs="1" maxOccurs="1" name="hasErrors" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="errorMessage" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDepositInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DepositInfo" nillable="true" type="tns:DepositInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DepositInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Deposit" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="RateIsoCode" type="s:string" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="CreateDogovorPayment">
         <s:complexType>
           <s:sequence>
@@ -26,7 +117,7 @@
       <s:element name="CreateDogovorPaymentResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="CreateDogovorPaymentResult" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CreateDogovorPaymentResult" type="tns:Response" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -41,45 +132,6 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="GetDepositAndReceivableResult" type="tns:Response" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="Response">
-        <s:sequence>
-          <s:choice minOccurs="1" maxOccurs="1">
-            <s:element minOccurs="0" maxOccurs="1" name="Tourist" type="tns:InTourist" />
-            <s:element minOccurs="0" maxOccurs="1" name="value" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="Deposits" type="tns:ArrayOfDepositInfo" />
-          </s:choice>
-          <s:element minOccurs="1" maxOccurs="1" name="hasErrors" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="errorMessage" type="s:string" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="InTourist">
-        <s:attribute name="name" type="s:string" />
-      </s:complexType>
-      <s:complexType name="ArrayOfDepositInfo">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="DepositInfo" nillable="true" type="tns:DepositInfo" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="DepositInfo">
-        <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="Deposit" type="s:decimal" />
-          <s:element minOccurs="0" maxOccurs="1" name="RateIsoCode" type="s:string" />
-        </s:sequence>
-      </s:complexType>
-      <s:element name="TestResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="partnerId" type="s:int" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="TestResponseResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="TestResponseResult" type="tns:Response" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -103,12 +155,6 @@
   <wsdl:message name="GetDepositAndReceivableSoapOut">
     <wsdl:part name="parameters" element="tns:GetDepositAndReceivableResponse" />
   </wsdl:message>
-  <wsdl:message name="TestResponseSoapIn">
-    <wsdl:part name="parameters" element="tns:TestResponse" />
-  </wsdl:message>
-  <wsdl:message name="TestResponseSoapOut">
-    <wsdl:part name="parameters" element="tns:TestResponseResponse" />
-  </wsdl:message>
   <wsdl:portType name="BookServiceSoap">
     <wsdl:operation name="CreateDogovor">
       <wsdl:input message="tns:CreateDogovorSoapIn" />
@@ -121,10 +167,6 @@
     <wsdl:operation name="GetDepositAndReceivable">
       <wsdl:input message="tns:GetDepositAndReceivableSoapIn" />
       <wsdl:output message="tns:GetDepositAndReceivableSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="TestResponse">
-      <wsdl:input message="tns:TestResponseSoapIn" />
-      <wsdl:output message="tns:TestResponseSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BookServiceSoap" type="tns:BookServiceSoap">
@@ -156,15 +198,6 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="TestResponse">
-      <soap:operation soapAction="http://tempuri.org/TestResponse" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="BookServiceSoap12" type="tns:BookServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -188,15 +221,6 @@
     </wsdl:operation>
     <wsdl:operation name="GetDepositAndReceivable">
       <soap12:operation soapAction="http://tempuri.org/GetDepositAndReceivable" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="TestResponse">
-      <soap12:operation soapAction="http://tempuri.org/TestResponse" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

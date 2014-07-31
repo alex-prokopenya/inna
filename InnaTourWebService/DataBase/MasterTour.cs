@@ -140,6 +140,7 @@ namespace InnaTourWebService.DataBase
                 AddServiceToDogovor(dogovor, service);
 
             //MyCalculateTotalCost
+            MyCalculateCost(dogovor);
 
             return dogovor.Code;
         }
@@ -253,6 +254,7 @@ namespace InnaTourWebService.DataBase
             dl.Discount = service.Comission;
             
             dl.PartnerKey = service.PartnerID;               //проставляем поставщика услуги
+            dl.Comment = service.PartnerBookID;
             dl.BuildName();
             dogovor.DogovorLists.Add(dl);
 
@@ -377,6 +379,45 @@ namespace InnaTourWebService.DataBase
 
             if (rates.Count > 0) rateCode = rates[0].Code;
             return rateCode;
+        }
+
+
+        private void MyCalculateCost(Dogovor dog)                             //Расчитываем стоимость
+        {
+            dog.DogovorLists.Fill();
+            foreach (DogovorList dl in dog.DogovorLists)                      //По всем услугам в путевке
+            {
+                try
+                {
+                    if ((dl.FormulaBrutto != "") && (dl.FormulaBrutto.IndexOf(",") > 0))                                 //если брутто услуги 0
+                    {
+                        dl.Brutto = Convert.ToDouble(dl.FormulaBrutto);    //проставляем брутто из поля "Formula"
+
+                        dl.FormulaBrutto = dl.Brutto.ToString("0.00").Replace(".", ",");
+                        dog.Price += dl.Brutto;
+                    }
+
+                    if ((dl.FormulaNetto != "") && (dl.FormulaNetto.IndexOf(",") > 0))                                 //если брутто услуги 0
+                    {
+                        dl.Netto = System.Convert.ToDouble(dl.FormulaNetto);      //проставляем брутто из поля "Formula"
+                        dl.FormulaNetto = dl.Netto.ToString("0.00").Replace(".", ",");
+                    }
+
+                    if ((dl.FormulaDiscount != "") && (dl.FormulaDiscount.IndexOf(",") > 0))                                 //если брутто услуги 0
+                    {
+                        dl.Discount = System.Convert.ToDouble(dl.FormulaDiscount);      //проставляем брутто из поля "Formula"
+                        dl.FormulaDiscount = dl.Discount.ToString("0.00").Replace(".", ",");
+                    }
+
+                    dl.DataContainer.Update();   
+                    dog.DataContainer.Update();
+                }
+                catch (Exception ex)
+                {
+                    Helpers.Logger.WriteToLog("in myCalc " + ex.Message + " " + ex.StackTrace + " " + dl.Name );
+                }
+            }
+          
         }
         #endregion
     }
