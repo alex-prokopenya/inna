@@ -126,6 +126,8 @@ namespace InnaTourWebService.DataBase
         /// <returns>номер брони</returns>
         public string CreateNewDogovor(InTourist[] tourists, UserInfo userInfo, InService[] services)
         {
+            Array.Sort<InService>(services);
+
             //создали пустой договор
             Dogovor dogovor = CreateEmptyDogovor(userInfo, 
                                                  DateTime.ParseExact(services[0].Date, 
@@ -141,6 +143,10 @@ namespace InnaTourWebService.DataBase
 
             //MyCalculateTotalCost
             MyCalculateCost(dogovor);
+
+            dogovor.Turists.Fill();
+            dogovor.NMen = (short)dogovor.Turists.Count;
+            dogovor.DataContainer.Update();
 
             return dogovor.Code;
         }
@@ -197,7 +203,7 @@ namespace InnaTourWebService.DataBase
             }
 
             dogovor.Turists.Add(tst);                              //Добавляем к туристам в путевке 
-            dogovor.Turists.DataContainer.Update();                    //Сохраняем изменения
+            dogovor.Turists.DataContainer.Update();                //Сохраняем изменения
         }
 
         private void AddServiceToDogovor(Dogovor dogovor, InService service)
@@ -220,7 +226,7 @@ namespace InnaTourWebService.DataBase
             dl.DateEnd = dateEnd;
 
             dl.NDays = (short)(service.NDays);
-
+           
 
             if (dl.Dogovor.TurDate > dl.DateBegin)      //корректируем даты тура в путевке
             {
@@ -236,6 +242,7 @@ namespace InnaTourWebService.DataBase
             }
 
             dl.TurDate = dl.Dogovor.TurDate;
+            dl.Day = (short)((dl.DateBegin - dl.TurDate).Days + 1);
 
             dl.NMen = (short)(service.TuristIndexes.Length > 0 ? service.TuristIndexes.Length : dogovor.Turists.Count);             
             dl.ServiceKey = service.ServiceType == ServiceType.AVIA ? aviaServiceKey: hotelServiceKey;
@@ -269,7 +276,7 @@ namespace InnaTourWebService.DataBase
             //садим людей на услугу
             this.AddTouristsToService(dogovor, service, dl);
 
-            dogovor.DogovorLists.DataCache.Update();        //сохраняем изменения в услугах
+            dogovor.DogovorLists.DataContainer.Update();        //сохраняем изменения в услугах
         }
 
         /// <summary>
@@ -281,7 +288,7 @@ namespace InnaTourWebService.DataBase
         private void AddTouristsToService(Dogovor dogovor, InService service, DogovorList dl)
         {
             //садим людей на услугу
-            TuristServices tServices = new TuristServices(new DataCache());
+            TuristServices tServices = new TuristServices(new Megatec.Common.BusinessRules.Base.DataContainer());
             for (int index = 0; index < dogovor.Turists.Count; index++)       //Просматриваем услуги в путевке
             {
                 if ((service.TuristIndexes.Length == 0) || (service.TuristIndexes.Contains(index + 1)))
@@ -292,7 +299,7 @@ namespace InnaTourWebService.DataBase
                     ts.Turist = tst;
                     ts.DogovorList = dl;
                     tServices.Add(ts);
-                    tServices.DataCache.Update();           //сохраняем изменения
+                    tServices.DataContainer.Update();           //сохраняем изменения
                 }
             }
         }
@@ -313,7 +320,7 @@ namespace InnaTourWebService.DataBase
             sl.ServiceKey = serviceKey;
 
             sls.Add(sl);
-            sls.DataCache.Update();
+            sls.DataContainer.Update();
 
             return sl;
         }
@@ -337,6 +344,7 @@ namespace InnaTourWebService.DataBase
             //даты и продолжительность
             dog.TurDate = startDate; //дата тура -- ставится по первой услуге, далее может быть изменена
             dog.NDays = 1;           //продолжительность. млжет измениться в процессе добавления услуг
+            dog.NMen = 0;
 
             //информация о покупателе
             dog.MainMenEMail = userInfo.Email != "" ? userInfo.Email : "";
@@ -406,6 +414,7 @@ namespace InnaTourWebService.DataBase
                     if ((dl.FormulaDiscount != "") && (dl.FormulaDiscount.IndexOf(",") > 0))                                 //если брутто услуги 0
                     {
                         dl.Discount = System.Convert.ToDouble(dl.FormulaDiscount);      //проставляем брутто из поля "Formula"
+                        dog.DiscountSum += dl.Discount;
                         dl.FormulaDiscount = dl.Discount.ToString("0.00").Replace(".", ",");
                     }
 

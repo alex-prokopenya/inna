@@ -59,7 +59,7 @@ namespace InnaTourWebService.Models
 
             //проверяем гражданство
             if (this.Citizenship.Length != 2)
-                errors.Add("invalid LastName");
+                errors.Add("invalid Citizenship");
 
             //проверяем дату рождения
             DateTime dateRes = DateTime.Today;

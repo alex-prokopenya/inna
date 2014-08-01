@@ -17,6 +17,17 @@ namespace ServiceTest
     {
         static void Main(string[] args)
         {
+            //int[] arr = new int[] { 1, 3, 2 };
+
+            //Console.WriteLine(arr[1].ToString());
+
+            //var temp = arr.ToList();
+            //temp.Sort();
+            //Console.WriteLine(temp.ToArray()[1].ToString());
+
+            //Console.ReadKey();
+            //return;
+
             var codes = TestCreateDogovor();
 
             foreach (string code in codes)
@@ -84,7 +95,7 @@ namespace ServiceTest
                 },
                 new InTourist(){
                     BirthDate = "1999-12-01",
-                    Citizenship = "TEST",
+                    Citizenship = "UA",
                     FirstName = "Alexey",
                     LastName = "Ivanov",
                     PasspordCode = "MP",
@@ -168,7 +179,7 @@ namespace ServiceTest
                     new InService(){
                         Comission = 10,
                         Date = "2014-10-01",
-                        NDays = 5,
+                        NDays = 4,
                         NettoPrice = 1980,
                         PartnerBookID = "21234234234224",
                         PartnerID = 57448,
@@ -179,8 +190,8 @@ namespace ServiceTest
                     },
                     new InService(){
                         Comission = 10,
-                        Date = "2014-10-05",
-                        NDays = 4,
+                        Date = "2014-10-04",
+                        NDays = 6,
                         NettoPrice = 2980,
                         PartnerBookID = "21234234234224",
                         PartnerID = 57448,
@@ -191,8 +202,8 @@ namespace ServiceTest
                     },
                     new InService(){
                         Comission = 10,
-                        Date = "2014-10-06",
-                        NDays = 4,
+                        Date = "2014-10-04",
+                        NDays = 6,
                         NettoPrice = 3980,
                         PartnerBookID = "21234234234224",
                         PartnerID = 57448,

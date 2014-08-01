@@ -11,8 +11,19 @@ using System.Globalization;
 namespace InnaTourWebService.Models
 {
     [XmlRoot("InService")]
-    public class InService
+    public class InService : IComparable<InService>
     {
+        public int CompareTo(InService other)
+        {
+            if (other == null)
+                return 1;
+
+            if (other.Date == this.Date)
+                return this.NDays - other.NDays;
+
+            return this.Date.CompareTo(other.Date);
+        }
+
        [XmlAttribute("ServiceType")]
        public ServiceType ServiceType;
        
