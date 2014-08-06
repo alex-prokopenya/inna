@@ -133,6 +133,10 @@ namespace InnaTourWebService.DataBase
                                                  DateTime.ParseExact(services[0].Date, 
                                                                      dateFormat,
                                                                      null));
+
+            dogovor.NMen = (short)dogovor.Turists.Count;
+            dogovor.DataContainer.Update();
+
             //добавляем туристов
             foreach (var tourist in tourists)
                 AddTouristToDogovor(dogovor, tourist);
@@ -145,7 +149,7 @@ namespace InnaTourWebService.DataBase
             MyCalculateCost(dogovor);
 
             dogovor.Turists.Fill();
-            dogovor.NMen = (short)dogovor.Turists.Count;
+           
             dogovor.DataContainer.Update();
 
             return dogovor.Code;
@@ -338,13 +342,13 @@ namespace InnaTourWebService.DataBase
             //берем информацию о туре, к которму цепляем
             var turList = this.GetTurlistByKey(Convert.ToInt32(ConfigurationManager.AppSettings["BookingPacketKey"]));
             dog.CountryKey = turList.CountryKey; //привязываем к стране 
-            dog.CityKey = turList.CityKey; // ... городу
+            dog.CityKey = turList.CTDepartureKey; // ... городу
             dog.TourKey = turList.Key;  // ... пакету
 
             //даты и продолжительность
             dog.TurDate = startDate; //дата тура -- ставится по первой услуге, далее может быть изменена
             dog.NDays = 1;           //продолжительность. млжет измениться в процессе добавления услуг
-            dog.NMen = 0;
+          ///  dog.NMen = 0;
 
             //информация о покупателе
             dog.MainMenEMail = userInfo.Email != "" ? userInfo.Email : "";
@@ -355,6 +359,8 @@ namespace InnaTourWebService.DataBase
             var dupUser = userInfo.AgentLogin != "" ? this.GetDupUserByLogin(userInfo.AgentLogin) : null;
             dog.PartnerKey = dupUser != null ? dupUser.PartnerKey: 0;
             dog.DupUserKey = dupUser != null ? dupUser.Key : 0;
+
+            dog.AdvertisementKey = dupUser != null ? 21 : 5;
 
             //получаем пользоваетля в из строки подключения к базе
             var users = new Users(new Megatec.Common.BusinessRules.Base.DataContainer());
@@ -370,6 +376,8 @@ namespace InnaTourWebService.DataBase
 
             dogs.DataContainer.Update(); // !! проверить, работет ли без этого!
 
+
+            
             return dog;
         }
 

@@ -126,7 +126,7 @@ namespace InnaTourWebService.DataBase
 
             cmd.ExecuteNonQuery();
 
-            return Convert.ToInt32(cmd.Parameters["ID"].Value);
+            return Convert.ToInt32(cmd.Parameters["@ID"].Value);
         }
 
         #endregion

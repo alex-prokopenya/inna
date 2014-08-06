@@ -17,25 +17,34 @@ namespace ServiceTest
     {
         static void Main(string[] args)
         {
-            //int[] arr = new int[] { 1, 3, 2 };
-
-            //Console.WriteLine(arr[1].ToString());
-
-            //var temp = arr.ToList();
-            //temp.Sort();
-            //Console.WriteLine(temp.ToArray()[1].ToString());
-
-            //Console.ReadKey();
-            //return;
-
-            var codes = TestCreateDogovor();
-
-            foreach (string code in codes)
+            try
             {
-                TestPayments(code, 1, "PSB", new Random(1000).Next() + 100, (new Random(1000).Next() + 10000).ToString());
-                Thread.Sleep(1000);
+                //int[] arr = new int[] { 1, 3, 2 };
+
+                //Console.WriteLine(arr[1].ToString());
+
+                //var temp = arr.ToList();
+                //temp.Sort();
+                //Console.WriteLine(temp.ToArray()[1].ToString());
+
+                //Console.ReadKey();
+                //return;
+
+                var codes = TestCreateDogovor();
+
+                foreach (string code in codes)
+                {
+                    TestPayments(code, 1, "PSB", new Random(DateTime.Now.Millisecond).Next(10000) + 1000, (new Random().Next(10000) + 10000).ToString());
+                    Thread.Sleep(1000);
+                }
+                Console.ReadKey();
+
             }
-            Console.ReadKey();
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + " " + ex.StackTrace);
+                Console.ReadKey();
+            }
         }
 
         private static void TestPayments(string dogCode, int paymentType, string paymentSys, decimal paidSum, string paymentId)

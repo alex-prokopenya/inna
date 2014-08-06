@@ -19,7 +19,7 @@ namespace InnaTourWebService.Models
                 return 1;
 
             if (other.Date == this.Date)
-                return this.NDays - other.NDays;
+                return other.NDays - this.NDays;
 
             return this.Date.CompareTo(other.Date);
         }

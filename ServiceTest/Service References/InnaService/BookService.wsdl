@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://inna.ru/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://inna.ru/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
-    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+    <s:schema elementFormDefault="qualified" targetNamespace="http://inna.ru/">
       <s:element name="CreateDogovor">
         <s:complexType>
           <s:sequence>
@@ -172,7 +172,7 @@
   <wsdl:binding name="BookServiceSoap" type="tns:BookServiceSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="CreateDogovor">
-      <soap:operation soapAction="http://tempuri.org/CreateDogovor" style="document" />
+      <soap:operation soapAction="http://inna.ru/CreateDogovor" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -181,7 +181,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="CreateDogovorPayment">
-      <soap:operation soapAction="http://tempuri.org/CreateDogovorPayment" style="document" />
+      <soap:operation soapAction="http://inna.ru/CreateDogovorPayment" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -190,7 +190,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetDepositAndReceivable">
-      <soap:operation soapAction="http://tempuri.org/GetDepositAndReceivable" style="document" />
+      <soap:operation soapAction="http://inna.ru/GetDepositAndReceivable" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -202,7 +202,7 @@
   <wsdl:binding name="BookServiceSoap12" type="tns:BookServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="CreateDogovor">
-      <soap12:operation soapAction="http://tempuri.org/CreateDogovor" style="document" />
+      <soap12:operation soapAction="http://inna.ru/CreateDogovor" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -211,7 +211,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="CreateDogovorPayment">
-      <soap12:operation soapAction="http://tempuri.org/CreateDogovorPayment" style="document" />
+      <soap12:operation soapAction="http://inna.ru/CreateDogovorPayment" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -220,7 +220,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetDepositAndReceivable">
-      <soap12:operation soapAction="http://tempuri.org/GetDepositAndReceivable" style="document" />
+      <soap12:operation soapAction="http://inna.ru/GetDepositAndReceivable" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

@@ -12,19 +12,19 @@ namespace ServiceTest.InnaService {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="InnaService.BookServiceSoap")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://inna.ru/", ConfigurationName="InnaService.BookServiceSoap")]
     public interface BookServiceSoap {
         
         // CODEGEN: Parameter 'UserInfo' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/CreateDogovor", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://inna.ru/CreateDogovor", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         ServiceTest.InnaService.CreateDogovorResponse CreateDogovor(ServiceTest.InnaService.CreateDogovorRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/CreateDogovorPayment", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://inna.ru/CreateDogovorPayment", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         ServiceTest.InnaService.Response CreateDogovorPayment(string dogovorCode, int paymentType, string paymentSys, decimal paidSum, string paymentId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetDepositAndReceivable", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://inna.ru/GetDepositAndReceivable", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         ServiceTest.InnaService.Response GetDepositAndReceivable(int partnerId);
     }
@@ -34,7 +34,7 @@ namespace ServiceTest.InnaService {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
     public partial class InTourist : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string firstNameField;
@@ -176,7 +176,7 @@ namespace ServiceTest.InnaService {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
     public enum Sex {
         
         /// <remarks/>
@@ -189,7 +189,7 @@ namespace ServiceTest.InnaService {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
     public enum PasportType {
         
         /// <remarks/>
@@ -204,7 +204,7 @@ namespace ServiceTest.InnaService {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
     public partial class DepositInfo : object, System.ComponentModel.INotifyPropertyChanged {
         
         private decimal depositField;
@@ -250,7 +250,7 @@ namespace ServiceTest.InnaService {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
     public partial class Response : object, System.ComponentModel.INotifyPropertyChanged {
         
         private object itemField;
@@ -311,7 +311,7 @@ namespace ServiceTest.InnaService {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
     public partial class InService : object, System.ComponentModel.INotifyPropertyChanged {
         
         private int[] turistIndexesField;
@@ -467,7 +467,7 @@ namespace ServiceTest.InnaService {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
     public enum ServiceType {
         
         /// <remarks/>
@@ -482,7 +482,7 @@ namespace ServiceTest.InnaService {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
     public partial class UserInfo : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string agentLoginField;
@@ -554,17 +554,17 @@ namespace ServiceTest.InnaService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="CreateDogovor", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="CreateDogovor", WrapperNamespace="http://inna.ru/", IsWrapped=true)]
     public partial class CreateDogovorRequest {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://inna.ru/", Order=0)]
         public ServiceTest.InnaService.InTourist[] turists;
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://inna.ru/", Order=1)]
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
         public ServiceTest.InnaService.UserInfo UserInfo;
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://inna.ru/", Order=2)]
         public ServiceTest.InnaService.InService[] services;
         
         public CreateDogovorRequest() {
@@ -580,10 +580,10 @@ namespace ServiceTest.InnaService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="CreateDogovorResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="CreateDogovorResponse", WrapperNamespace="http://inna.ru/", IsWrapped=true)]
     public partial class CreateDogovorResponse {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://inna.ru/", Order=0)]
         public ServiceTest.InnaService.Response CreateDogovorResult;
         
         public CreateDogovorResponse() {
