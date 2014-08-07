@@ -316,6 +316,8 @@ namespace ServiceTest.InnaService {
         
         private int[] turistIndexesField;
         
+        private string[] numDocsField;
+        
         private ServiceType serviceTypeField;
         
         private string dateField;
@@ -343,6 +345,18 @@ namespace ServiceTest.InnaService {
             set {
                 this.turistIndexesField = value;
                 this.RaisePropertyChanged("TuristIndexes");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=1)]
+        public string[] NumDocs {
+            get {
+                return this.numDocsField;
+            }
+            set {
+                this.numDocsField = value;
+                this.RaisePropertyChanged("NumDocs");
             }
         }
         

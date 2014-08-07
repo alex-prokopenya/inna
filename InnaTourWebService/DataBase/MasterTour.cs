@@ -297,11 +297,20 @@ namespace InnaTourWebService.DataBase
             {
                 if ((service.TuristIndexes.Length == 0) || (service.TuristIndexes.Contains(index + 1)))
                 {
+                    var docNumIndex = index; 
+
+                    if(service.TuristIndexes.Contains(index + 1))
+                        docNumIndex = Array.IndexOf( service.TuristIndexes, (index + 1));
+
                     Turist tst = dogovor.Turists[index];
 
                     TuristService ts = tServices.NewRow();  //садим его на услугу
                     ts.Turist = tst;
                     ts.DogovorList = dl;
+
+                    
+                    ts.Numdoc = service.NumDocs.Length > docNumIndex ? service.NumDocs[docNumIndex]: "";//
+
                     tServices.Add(ts);
                     tServices.DataContainer.Update();           //сохраняем изменения
                 }

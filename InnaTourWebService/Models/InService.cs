@@ -54,6 +54,9 @@ namespace InnaTourWebService.Models
        [XmlArray("TuristIndexes")]
        public int[] TuristIndexes;
 
+       [XmlArray("NumDocs")]
+       public string[] NumDocs;
+
         public bool Validate(int turistsCnt)
         {
             var errors = new List<string>();
@@ -118,6 +121,10 @@ namespace InnaTourWebService.Models
                     usedIndexes.Add(index);
                 }
 
+            //номера билетов
+            for (int i = 0; i < NumDocs.Length; i++)
+                if (NumDocs[i].Length > 30)
+                    NumDocs[i] = NumDocs[i].Substring(0, 30);
 
             if (errors.Count > 0)
             {

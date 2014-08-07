@@ -39,6 +39,7 @@ namespace InnaTourWebService.Models
         [XmlAttribute("Citizenship")]
         public string Citizenship;
 
+
         /// <summary>
         /// проверяет данные полученные в объект
         /// </summary>

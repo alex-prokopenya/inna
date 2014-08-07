@@ -30,21 +30,43 @@ namespace ServiceTest
                 //Console.ReadKey();
                 //return;
 
+                //создаем заказы
                 var codes = TestCreateDogovor();
 
+                //платим
                 foreach (string code in codes)
                 {
                     TestPayments(code, 1, "PSB", new Random(DateTime.Now.Millisecond).Next(10000) + 1000, (new Random().Next(10000) + 10000).ToString());
                     Thread.Sleep(1000);
                 }
-                Console.ReadKey();
 
+                //берем инфо по депозиту
+                int[] partnerKeys = new int[] {56820,59527,59224,6,21,973 };
+
+                foreach (int prKey in partnerKeys)
+                    TestDeposit(prKey);
+
+                Console.ReadKey();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message + " " + ex.StackTrace);
                 Console.ReadKey();
             }
+        }
+
+        private static void TestDeposit(int partnerKey)
+        {
+            var client = new BookServiceSoapClient();
+            client.Open();
+
+            WriteToLog(String.Format("check deposit partner key {0}", partnerKey));
+
+            var resp = client.GetDepositAndReceivable(partnerKey);
+
+            WriteToLog(Serialize(resp, resp.GetType()));
+
+            client.Close();
         }
 
         private static void TestPayments(string dogCode, int paymentType, string paymentSys, decimal paidSum, string paymentId)
@@ -123,7 +145,12 @@ namespace ServiceTest
             };
 
             var AgentInfo = new InnaService.UserInfo(){
-                AgentLogin = "rover"
+                AgentLogin = "geotrav"
+            };
+
+            var AgentInfo2 = new InnaService.UserInfo()
+            {
+                AgentLogin = "YTV"
             };
 
             var servicesOne = new InService[]{ //отель
@@ -153,7 +180,8 @@ namespace ServiceTest
                     Price = 1500,
                     ServiceType = ServiceType.AVIA,
                     Title = "Минск-Измир, B2 8420, 18:00-20:30",
-                    TuristIndexes = new int[0]
+                    TuristIndexes = new int[0],
+                    NumDocs = new string[]{"num_one","num_two"}
                 }
             };
 
@@ -169,7 +197,8 @@ namespace ServiceTest
                         Price = 0,
                         ServiceType = ServiceType.AVIA,
                         Title = "Измир-Минск, B2 8420, 18:00-20:30",
-                        TuristIndexes = new int[0]
+                        TuristIndexes = new int[0],
+                        NumDocs = new string[]{"num_1","num_2"}
                     },
 
                     new InService(){
@@ -259,7 +288,7 @@ namespace ServiceTest
             WriteToLog("try turists, AgentInfo, servicesThree");
 
             Thread.Sleep(1000);
-            resp = client.CreateDogovor(turists, AgentInfo, servicesThree);
+            resp = client.CreateDogovor(turists, AgentInfo2, servicesThree);
 
             WriteToLog(Serialize(resp, resp.GetType()));
 
