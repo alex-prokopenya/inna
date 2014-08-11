@@ -56,6 +56,16 @@ namespace InnaTourWebService
             }
         }
 
+         /// <summary>
+        /// Проводит платеж брони
+        /// </summary>
+        /// <returns>PaymentId -- идентификатор созданной проводки</returns>
+        [WebMethod]
+        public Response CreateDogovorDepositPayment(string dogovorCode)
+        {
+            return CreateDogovorPayment(dogovorCode, 0, "deposit", 0m, "0");
+        }
+
 
         /// <summary>
         /// Проводит платеж брони
@@ -73,6 +83,12 @@ namespace InnaTourWebService
 
                 if (dogovor == null)
                     throw new Exception(String.Format("Dogovor '{0}' not founded", dogovorCode));
+
+                if ((paymentSys != "deposit") && (dogovor.PartnerKey > 0))
+                    throw new Exception(String.Format("only deposit payment awailable"));
+                else
+                    if ((paidSum <= 0) && (dogovor.PartnerKey == 0))
+                        throw new Exception(String.Format("paidSum <= 0"));
 
                 if (dogovor.PartnerKey > 0)  // если заказ агентский
                     masterFinanceHelper.DepositPayDogovor(dogovor.PartnerKey, dogovor.Key); //платим депозитом

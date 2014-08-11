@@ -20,6 +20,10 @@ namespace ServiceTest.InnaService {
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         ServiceTest.InnaService.CreateDogovorResponse CreateDogovor(ServiceTest.InnaService.CreateDogovorRequest request);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://inna.ru/CreateDogovorDepositPayment", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        ServiceTest.InnaService.Response CreateDogovorDepositPayment(string dogovorCode);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://inna.ru/CreateDogovorPayment", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         ServiceTest.InnaService.Response CreateDogovorPayment(string dogovorCode, int paymentType, string paymentSys, decimal paidSum, string paymentId);
@@ -647,6 +651,10 @@ namespace ServiceTest.InnaService {
             inValue.services = services;
             ServiceTest.InnaService.CreateDogovorResponse retVal = ((ServiceTest.InnaService.BookServiceSoap)(this)).CreateDogovor(inValue);
             return retVal.CreateDogovorResult;
+        }
+        
+        public ServiceTest.InnaService.Response CreateDogovorDepositPayment(string dogovorCode) {
+            return base.Channel.CreateDogovorDepositPayment(dogovorCode);
         }
         
         public ServiceTest.InnaService.Response CreateDogovorPayment(string dogovorCode, int paymentType, string paymentSys, decimal paidSum, string paymentId) {

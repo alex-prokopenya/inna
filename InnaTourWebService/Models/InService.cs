@@ -122,9 +122,14 @@ namespace InnaTourWebService.Models
                 }
 
             //номера билетов
-            for (int i = 0; i < NumDocs.Length; i++)
-                if (NumDocs[i].Length > 30)
-                    NumDocs[i] = NumDocs[i].Substring(0, 30);
+            if (this.NumDocs != null)
+            {
+                for (int i = 0; i < this.NumDocs.Length; i++)
+                    if (this.NumDocs[i].Length > 30)
+                        this.NumDocs[i] = this.NumDocs[i].Substring(0, 30);
+            }
+            else
+                this.NumDocs = new string[0];
 
             if (errors.Count > 0)
             {

@@ -19,17 +19,6 @@ namespace ServiceTest
         {
             try
             {
-                //int[] arr = new int[] { 1, 3, 2 };
-
-                //Console.WriteLine(arr[1].ToString());
-
-                //var temp = arr.ToList();
-                //temp.Sort();
-                //Console.WriteLine(temp.ToArray()[1].ToString());
-
-                //Console.ReadKey();
-                //return;
-
                 //создаем заказы
                 var codes = TestCreateDogovor();
 
@@ -37,6 +26,13 @@ namespace ServiceTest
                 foreach (string code in codes)
                 {
                     TestPayments(code, 1, "PSB", new Random(DateTime.Now.Millisecond).Next(10000) + 1000, (new Random().Next(10000) + 10000).ToString());
+                    Thread.Sleep(1000);
+                }
+
+                //платим
+                foreach (string code in codes)
+                {
+                    TestDepositPayments(code);
                     Thread.Sleep(1000);
                 }
 
@@ -69,6 +65,20 @@ namespace ServiceTest
             client.Close();
         }
 
+        private static void TestDepositPayments(string dogCode)
+        {
+            var client = new BookServiceSoapClient();
+            client.Open();
+
+            WriteToLog(String.Format("dogCode = {0}", dogCode));
+
+            var resp = client.CreateDogovorDepositPayment(dogCode);
+
+            WriteToLog(Serialize(resp, resp.GetType()));
+
+            client.Close();
+        }
+
         private static void TestPayments(string dogCode, int paymentType, string paymentSys, decimal paidSum, string paymentId)
         {
             var client = new BookServiceSoapClient();
@@ -82,14 +92,6 @@ namespace ServiceTest
 
             client.Close();
         }
-
-
-
-        private static void TestDeposit(string dogCode)
-        {
-
-        }
-
 
         private static List<string> TestCreateDogovor()
         {
@@ -148,8 +150,7 @@ namespace ServiceTest
                 AgentLogin = "geotrav"
             };
 
-            var AgentInfo2 = new InnaService.UserInfo()
-            {
+            var AgentInfo2 = new InnaService.UserInfo(){
                 AgentLogin = "YTV"
             };
 
@@ -169,7 +170,6 @@ namespace ServiceTest
             };
 
             var servicesTwo = new InService[]{ //перелет
-                
                 new InService(){
                     Comission = 500,
                     Date = "2015-10-09",
@@ -251,6 +251,7 @@ namespace ServiceTest
                         TuristIndexes = new int[]{2}
                     },
             };
+
             WriteToLog(""); WriteToLog("");
             WriteToLog("try turists, userInfo, servicesOne");
 

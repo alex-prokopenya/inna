@@ -109,6 +109,20 @@
           <s:element minOccurs="0" maxOccurs="1" name="RateIsoCode" type="s:string" />
         </s:sequence>
       </s:complexType>
+      <s:element name="CreateDogovorDepositPayment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="dogovorCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateDogovorDepositPaymentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateDogovorDepositPaymentResult" type="tns:Response" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="CreateDogovorPayment">
         <s:complexType>
           <s:sequence>
@@ -149,6 +163,12 @@
   <wsdl:message name="CreateDogovorSoapOut">
     <wsdl:part name="parameters" element="tns:CreateDogovorResponse" />
   </wsdl:message>
+  <wsdl:message name="CreateDogovorDepositPaymentSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateDogovorDepositPayment" />
+  </wsdl:message>
+  <wsdl:message name="CreateDogovorDepositPaymentSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateDogovorDepositPaymentResponse" />
+  </wsdl:message>
   <wsdl:message name="CreateDogovorPaymentSoapIn">
     <wsdl:part name="parameters" element="tns:CreateDogovorPayment" />
   </wsdl:message>
@@ -166,6 +186,10 @@
       <wsdl:input message="tns:CreateDogovorSoapIn" />
       <wsdl:output message="tns:CreateDogovorSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="CreateDogovorDepositPayment">
+      <wsdl:input message="tns:CreateDogovorDepositPaymentSoapIn" />
+      <wsdl:output message="tns:CreateDogovorDepositPaymentSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="CreateDogovorPayment">
       <wsdl:input message="tns:CreateDogovorPaymentSoapIn" />
       <wsdl:output message="tns:CreateDogovorPaymentSoapOut" />
@@ -179,6 +203,15 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="CreateDogovor">
       <soap:operation soapAction="http://inna.ru/CreateDogovor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateDogovorDepositPayment">
+      <soap:operation soapAction="http://inna.ru/CreateDogovorDepositPayment" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -209,6 +242,15 @@
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="CreateDogovor">
       <soap12:operation soapAction="http://inna.ru/CreateDogovor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateDogovorDepositPayment">
+      <soap12:operation soapAction="http://inna.ru/CreateDogovorDepositPayment" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

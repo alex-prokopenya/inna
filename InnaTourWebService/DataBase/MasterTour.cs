@@ -134,7 +134,7 @@ namespace InnaTourWebService.DataBase
                                                                      dateFormat,
                                                                      null));
 
-            dogovor.NMen = (short)dogovor.Turists.Count;
+            dogovor.NMen = (short)tourists.Length;
             dogovor.DataContainer.Update();
 
             //добавляем туристов
