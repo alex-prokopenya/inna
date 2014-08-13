@@ -89,6 +89,7 @@
     <Compile Include="ErrorCodes.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Models\DepositInfo.cs" />
+    <Compile Include="Models\DogovorInfo.cs" />
     <Compile Include="Models\InService.cs" />
     <Compile Include="Models\InTourist.cs" />
     <Compile Include="Models\PasportType.cs" />

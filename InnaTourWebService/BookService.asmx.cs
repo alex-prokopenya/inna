@@ -6,6 +6,9 @@ using System.Web.Services;
 using InnaTourWebService.Models;
 using InnaTourWebService.DataBase;
 using InnaTourWebService.Helpers;
+using Megatec.MasterTour.BusinessRules;
+using Megatec.Common.BusinessRules.Base;
+using System.Configuration;
 
 namespace InnaTourWebService
 {
@@ -20,8 +23,51 @@ namespace InnaTourWebService
     // [System.Web.Script.Services.ScriptService]
     public partial class BookService : System.Web.Services.WebService
     {
+       
+        [WebMethod]
+        public Response GetDogovorInfo(string dogovorCode)
+        {
+            try
+            {
+                var masterHelper = new MasterTour();
+                var masterFinanceHelper = new MasterFinance();
+
+                var dogovor = masterHelper.GetDogovorByCode(dogovorCode); //ищем путевку по коду
+
+                if (dogovor == null)
+                    throw new Exception(String.Format("Dogovor '{0}' not founded", dogovorCode));
+
+                return new Response()
+                {
+                    value = new DogovorInfo() {
+                        agentKey = dogovor.PartnerKey,
+                        agentLogin = dogovor.DupUserKey > 0 ? (new DupUsers(new DataContainer()).FindByPKeyValue(dogovor.DupUserKey) as DupUser).ID: "", 
+                        dgCode = dogovor.Code,
+                        dgKey = dogovor.Key,
+                        paid =  Convert.ToDecimal( dogovor.Payed ),
+                        price = Convert.ToDecimal( dogovor.Price ),
+                        rateIsoCode = dogovor.Rate.ISOCode,
+                        statusKey = dogovor.OrderStatusKey,
+                        statusName = dogovor.OrderStatus.Name_Rus,
+                        tourDate = dogovor.TurDate.ToString(ConfigurationManager.AppSettings["datesFormat"])
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                Logger.ReportException(ex); //пишем в лог ошибки
+
+                return new Response() //отдаем ответ с ошибкой
+                {
+                    hasErrors = true,
+                    errorMessage = ex.Message + " " + ex.StackTrace
+                };
+            }
+        }
+
+
         /// <summary>
-        /// Созздает бронь в Мастер-Туре.
+        /// Создает бронь в Мастер-Туре.
         /// </summary>
         /// <returns>DogovorCode -- код созданной брони</returns>
         [WebMethod]
@@ -124,11 +170,6 @@ namespace InnaTourWebService
         [WebMethod]
         public Response GetDepositAndReceivable(int partnerId)
         {
-            //return new Response()
-            //{
-            //    value = new DepositInfo[] { new DepositInfo(){Deposit=112, RateIsoCode="BYR"}}
-            //};
-
                 try{
                     var masterFinance = new DataBase.MasterFinance();
 

@@ -9,7 +9,6 @@ using Megatec.MasterTour.BusinessRules;
 using Megatec.Common.DataAccess;
 using InnaTourWebService.Models;
 using System.Globalization;
-using System.Configuration;
 
 namespace InnaTourWebService.DataBase
 {

@@ -11,6 +11,8 @@ namespace InnaTourWebService.Models
     {
         [XmlElement(Type = typeof(String), ElementName = "result")]
         [XmlElement(Type = typeof(DepositInfo[]), ElementName = "Deposits")]
+        [XmlElement(Type = typeof(DogovorInfo), ElementName = "dogovorInfo")]
+
         public object value;
 
         [XmlElement("hasErrors")]
