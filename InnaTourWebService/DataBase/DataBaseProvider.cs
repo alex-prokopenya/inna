@@ -14,7 +14,7 @@ using InnaTourWebService.Helpers;
 
 namespace InnaTourWebService.DataBase
 {
-    public class DataBaseProvider: IDisposable
+    internal class DataBaseProvider: IDisposable
     {
         #region Fields
         //подключение к базе
