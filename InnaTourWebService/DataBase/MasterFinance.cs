@@ -26,9 +26,7 @@ namespace InnaTourWebService.DataBase
                 return;
 
             if (disposing)
-            {
                 this.db.Dispose();
-            }
 
             disposed = true;
         }
