@@ -140,18 +140,18 @@ namespace ServiceTest
             };
 
             var userInfo = new InnaService.UserInfo(){
-                AgentLogin = "",
+                AgentKey = 0,
                 Email = "nomail@tut.by",
                 Name = "Ivan",
                 Phone = "12454345"
             };
 
             var AgentInfo = new InnaService.UserInfo(){
-                AgentLogin = "geotrav"
+                AgentKey = 59527
             };
 
             var AgentInfo2 = new InnaService.UserInfo(){
-                AgentLogin = "YTV"
+                AgentKey = 59224
             };
 
             var servicesOne = new InService[]{ //отель

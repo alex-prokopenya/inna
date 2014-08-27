@@ -2,6 +2,54 @@
 <wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://inna.ru/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://inna.ru/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://inna.ru/">
+      <s:element name="GetDogovorInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="dogovorCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDogovorInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDogovorInfoResult" type="tns:Response" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Response">
+        <s:sequence>
+          <s:choice minOccurs="1" maxOccurs="1">
+            <s:element minOccurs="0" maxOccurs="1" name="Deposits" type="tns:ArrayOfDepositInfo" />
+            <s:element minOccurs="0" maxOccurs="1" name="result" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="dogovorInfo" type="tns:DogovorInfo" />
+          </s:choice>
+          <s:element minOccurs="1" maxOccurs="1" name="hasErrors" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="errorMessage" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDepositInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DepositInfo" nillable="true" type="tns:DepositInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DepositInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Deposit" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="RateIsoCode" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DogovorInfo">
+        <s:attribute name="TourDate" type="s:string" />
+        <s:attribute name="DogovorKey" type="s:int" use="required" />
+        <s:attribute name="DogovorCode" type="s:string" />
+        <s:attribute name="StatusKey" type="s:int" use="required" />
+        <s:attribute name="StatusName" type="s:string" />
+        <s:attribute name="AgentKey" type="s:int" use="required" />
+        <s:attribute name="AgentLogin" type="s:string" />
+        <s:attribute name="Price" type="s:decimal" use="required" />
+        <s:attribute name="Paid" type="s:decimal" use="required" />
+        <s:attribute name="RateIsoCode" type="s:string" />
+      </s:complexType>
       <s:element name="CreateDogovor">
         <s:complexType>
           <s:sequence>
@@ -40,7 +88,7 @@
         </s:restriction>
       </s:simpleType>
       <s:complexType name="UserInfo">
-        <s:attribute name="AgentLogin" type="s:string" />
+        <s:attribute name="AgentKey" type="s:int" use="required" />
         <s:attribute name="Name" type="s:string" />
         <s:attribute name="Email" type="s:string" />
         <s:attribute name="Phone" type="s:string" />
@@ -88,27 +136,6 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:complexType name="Response">
-        <s:sequence>
-          <s:choice minOccurs="1" maxOccurs="1">
-            <s:element minOccurs="0" maxOccurs="1" name="result" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="Deposits" type="tns:ArrayOfDepositInfo" />
-          </s:choice>
-          <s:element minOccurs="1" maxOccurs="1" name="hasErrors" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="errorMessage" type="s:string" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="ArrayOfDepositInfo">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="DepositInfo" nillable="true" type="tns:DepositInfo" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="DepositInfo">
-        <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="Deposit" type="s:decimal" />
-          <s:element minOccurs="0" maxOccurs="1" name="RateIsoCode" type="s:string" />
-        </s:sequence>
-      </s:complexType>
       <s:element name="CreateDogovorDepositPayment">
         <s:complexType>
           <s:sequence>
@@ -157,6 +184,12 @@
       </s:element>
     </s:schema>
   </wsdl:types>
+  <wsdl:message name="GetDogovorInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDogovorInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetDogovorInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDogovorInfoResponse" />
+  </wsdl:message>
   <wsdl:message name="CreateDogovorSoapIn">
     <wsdl:part name="parameters" element="tns:CreateDogovor" />
   </wsdl:message>
@@ -182,6 +215,10 @@
     <wsdl:part name="parameters" element="tns:GetDepositAndReceivableResponse" />
   </wsdl:message>
   <wsdl:portType name="BookServiceSoap">
+    <wsdl:operation name="GetDogovorInfo">
+      <wsdl:input message="tns:GetDogovorInfoSoapIn" />
+      <wsdl:output message="tns:GetDogovorInfoSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="CreateDogovor">
       <wsdl:input message="tns:CreateDogovorSoapIn" />
       <wsdl:output message="tns:CreateDogovorSoapOut" />
@@ -201,6 +238,15 @@
   </wsdl:portType>
   <wsdl:binding name="BookServiceSoap" type="tns:BookServiceSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetDogovorInfo">
+      <soap:operation soapAction="http://inna.ru/GetDogovorInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="CreateDogovor">
       <soap:operation soapAction="http://inna.ru/CreateDogovor" style="document" />
       <wsdl:input>
@@ -240,6 +286,15 @@
   </wsdl:binding>
   <wsdl:binding name="BookServiceSoap12" type="tns:BookServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetDogovorInfo">
+      <soap12:operation soapAction="http://inna.ru/GetDogovorInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="CreateDogovor">
       <soap12:operation soapAction="http://inna.ru/CreateDogovor" style="document" />
       <wsdl:input>

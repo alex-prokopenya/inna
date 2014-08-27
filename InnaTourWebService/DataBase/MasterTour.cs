@@ -356,23 +356,23 @@ namespace InnaTourWebService.DataBase
             //даты и продолжительность
             dog.TurDate = startDate; //дата тура -- ставится по первой услуге, далее может быть изменена
             dog.NDays = 1;           //продолжительность. млжет измениться в процессе добавления услуг
-          ///  dog.NMen = 0;
-
+         
             //информация о покупателе
             dog.MainMenEMail = userInfo.Email != "" ? userInfo.Email : "";
             dog.MainMenPhone = userInfo.Phone != "" ? userInfo.Phone : "";
-            dog.MainMen = userInfo.Name !="" ? userInfo.Name : "";//;
+            dog.MainMen = userInfo.Name != "" ? userInfo.Name : "";//;
            
             //получаем текущего пользователя - покупателя
-            var dupUser = userInfo.AgentLogin != "" ? this.GetDupUserByLogin(userInfo.AgentLogin) : null;
-            dog.PartnerKey = dupUser != null ? dupUser.PartnerKey: 0;
-            dog.DupUserKey = dupUser != null ? dupUser.Key : 0;
+        //    var dupUser = userInfo.AgentLogin != "" ? this.GetDupUserByLogin(userInfo.AgentLogin) : null;
+            dog.PartnerKey = userInfo.AgentKey;
+        //    dog.DupUserKey = dupUser != null ? dupUser.Key : 0;
 
-            dog.AdvertisementKey = dupUser != null ? 21 : 5;
+            dog.AdvertisementKey = userInfo.AgentKey > 0 ? 21 : 5;
 
             //получаем пользоваетля в из строки подключения к базе
             var users = new Users(new Megatec.Common.BusinessRules.Base.DataContainer());
             users.Fill();
+
             dog.CreatorKey = users.CurrentUser.Key;
             dog.OwnerKey = users.CurrentUser.Key;
 
@@ -383,8 +383,6 @@ namespace InnaTourWebService.DataBase
             dogs.Add(dog); //добавляем запись в БД
 
             dogs.DataContainer.Update(); // !! проверить, работет ли без этого!
-
-
             
             return dog;
         }

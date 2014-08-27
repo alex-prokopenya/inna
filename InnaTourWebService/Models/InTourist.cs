@@ -58,8 +58,11 @@ namespace InnaTourWebService.Models
             if (!latin.IsMatch(this.LastName))
                 errors.Add("invalid LastName");
 
+
             //проверяем гражданство
-            if (this.Citizenship.Length != 2)
+            this.Citizenship = this.Citizenship.ToUpper();
+
+            if (new Regex(@"^[A-Z]{2}$").IsMatch(this.Citizenship))
                 errors.Add("invalid Citizenship");
 
             //проверяем дату рождения

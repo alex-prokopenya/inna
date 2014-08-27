@@ -12,8 +12,8 @@ namespace InnaTourWebService.Models
     [XmlRoot("UserInfo")]
     public class UserInfo
     {
-        [XmlAttribute("AgentLogin")]
-        public string AgentLogin = "";
+        [XmlAttribute("AgentKey")]
+        public int AgentKey = 0;
 
         [XmlAttribute("Name")]
         public string Name;
@@ -34,16 +34,17 @@ namespace InnaTourWebService.Models
 
             Regex mailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
 
-            int partnerKey = 0;
+          //  int partnerKey = 0;
 
-            if (this.AgentLogin != "")
+          /*  if (this.AgentLogin != "")
             { 
                 var mtHelper = new DataBase.MasterTour();
 
                 partnerKey = mtHelper.GetAgentInfo(this.AgentLogin);
             }
+            */
 
-            if (partnerKey == 0)
+            if (this.AgentKey == 0)
             {
                 if (!mailRegex.IsMatch(this.Email))
                     errors.Add("invalid Email");

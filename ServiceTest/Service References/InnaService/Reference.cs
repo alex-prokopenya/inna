@@ -15,6 +15,10 @@ namespace ServiceTest.InnaService {
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://inna.ru/", ConfigurationName="InnaService.BookServiceSoap")]
     public interface BookServiceSoap {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://inna.ru/GetDogovorInfo", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        ServiceTest.InnaService.Response GetDogovorInfo(string dogovorCode);
+        
         // CODEGEN: Parameter 'UserInfo' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://inna.ru/CreateDogovor", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -39,131 +43,49 @@ namespace ServiceTest.InnaService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
-    public partial class InTourist : object, System.ComponentModel.INotifyPropertyChanged {
+    public partial class Response : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private string firstNameField;
+        private object itemField;
         
-        private Sex sexField;
+        private bool hasErrorsField;
         
-        private string lastNameField;
-        
-        private string birthDateField;
-        
-        private PasportType passrortTypeField;
-        
-        private string passpordNumberField;
-        
-        private string passpordCodeField;
-        
-        private string passportValidDateField;
-        
-        private string citizenshipField;
+        private string errorMessageField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string FirstName {
+        [System.Xml.Serialization.XmlElementAttribute("Deposits", typeof(DepositInfo[]), Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("dogovorInfo", typeof(DogovorInfo), Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("result", typeof(string), Order=0)]
+        public object Item {
             get {
-                return this.firstNameField;
+                return this.itemField;
             }
             set {
-                this.firstNameField = value;
-                this.RaisePropertyChanged("FirstName");
+                this.itemField = value;
+                this.RaisePropertyChanged("Item");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public Sex Sex {
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public bool hasErrors {
             get {
-                return this.sexField;
+                return this.hasErrorsField;
             }
             set {
-                this.sexField = value;
-                this.RaisePropertyChanged("Sex");
+                this.hasErrorsField = value;
+                this.RaisePropertyChanged("hasErrors");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string LastName {
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string errorMessage {
             get {
-                return this.lastNameField;
+                return this.errorMessageField;
             }
             set {
-                this.lastNameField = value;
-                this.RaisePropertyChanged("LastName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string BirthDate {
-            get {
-                return this.birthDateField;
-            }
-            set {
-                this.birthDateField = value;
-                this.RaisePropertyChanged("BirthDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public PasportType PassrortType {
-            get {
-                return this.passrortTypeField;
-            }
-            set {
-                this.passrortTypeField = value;
-                this.RaisePropertyChanged("PassrortType");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string PasspordNumber {
-            get {
-                return this.passpordNumberField;
-            }
-            set {
-                this.passpordNumberField = value;
-                this.RaisePropertyChanged("PasspordNumber");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string PasspordCode {
-            get {
-                return this.passpordCodeField;
-            }
-            set {
-                this.passpordCodeField = value;
-                this.RaisePropertyChanged("PasspordCode");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string PassportValidDate {
-            get {
-                return this.passportValidDateField;
-            }
-            set {
-                this.passportValidDateField = value;
-                this.RaisePropertyChanged("PassportValidDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string Citizenship {
-            get {
-                return this.citizenshipField;
-            }
-            set {
-                this.citizenshipField = value;
-                this.RaisePropertyChanged("Citizenship");
+                this.errorMessageField = value;
+                this.RaisePropertyChanged("errorMessage");
             }
         }
         
@@ -175,32 +97,6 @@ namespace ServiceTest.InnaService {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
-    public enum Sex {
-        
-        /// <remarks/>
-        M,
-        
-        /// <remarks/>
-        F,
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
-    public enum PasportType {
-        
-        /// <remarks/>
-        INTERNAL,
-        
-        /// <remarks/>
-        FOREIGN,
     }
     
     /// <remarks/>
@@ -236,67 +132,6 @@ namespace ServiceTest.InnaService {
             set {
                 this.rateIsoCodeField = value;
                 this.RaisePropertyChanged("RateIsoCode");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
-    public partial class Response : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private object itemField;
-        
-        private bool hasErrorsField;
-        
-        private string errorMessageField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Deposits", typeof(DepositInfo[]), Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("result", typeof(string), Order=0)]
-        public object Item {
-            get {
-                return this.itemField;
-            }
-            set {
-                this.itemField = value;
-                this.RaisePropertyChanged("Item");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public bool hasErrors {
-            get {
-                return this.hasErrorsField;
-            }
-            set {
-                this.hasErrorsField = value;
-                this.RaisePropertyChanged("hasErrors");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string errorMessage {
-            get {
-                return this.errorMessageField;
-            }
-            set {
-                this.errorMessageField = value;
-                this.RaisePropertyChanged("errorMessage");
             }
         }
         
@@ -503,7 +338,7 @@ namespace ServiceTest.InnaService {
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
     public partial class UserInfo : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private string agentLoginField;
+        private int agentKeyField;
         
         private string nameField;
         
@@ -513,13 +348,13 @@ namespace ServiceTest.InnaService {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string AgentLogin {
+        public int AgentKey {
             get {
-                return this.agentLoginField;
+                return this.agentKeyField;
             }
             set {
-                this.agentLoginField = value;
-                this.RaisePropertyChanged("AgentLogin");
+                this.agentKeyField = value;
+                this.RaisePropertyChanged("AgentKey");
             }
         }
         
@@ -556,6 +391,334 @@ namespace ServiceTest.InnaService {
             set {
                 this.phoneField = value;
                 this.RaisePropertyChanged("Phone");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
+    public partial class InTourist : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string firstNameField;
+        
+        private Sex sexField;
+        
+        private string lastNameField;
+        
+        private string birthDateField;
+        
+        private PasportType passrortTypeField;
+        
+        private string passpordNumberField;
+        
+        private string passpordCodeField;
+        
+        private string passportValidDateField;
+        
+        private string citizenshipField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string FirstName {
+            get {
+                return this.firstNameField;
+            }
+            set {
+                this.firstNameField = value;
+                this.RaisePropertyChanged("FirstName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public Sex Sex {
+            get {
+                return this.sexField;
+            }
+            set {
+                this.sexField = value;
+                this.RaisePropertyChanged("Sex");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string LastName {
+            get {
+                return this.lastNameField;
+            }
+            set {
+                this.lastNameField = value;
+                this.RaisePropertyChanged("LastName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string BirthDate {
+            get {
+                return this.birthDateField;
+            }
+            set {
+                this.birthDateField = value;
+                this.RaisePropertyChanged("BirthDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public PasportType PassrortType {
+            get {
+                return this.passrortTypeField;
+            }
+            set {
+                this.passrortTypeField = value;
+                this.RaisePropertyChanged("PassrortType");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string PasspordNumber {
+            get {
+                return this.passpordNumberField;
+            }
+            set {
+                this.passpordNumberField = value;
+                this.RaisePropertyChanged("PasspordNumber");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string PasspordCode {
+            get {
+                return this.passpordCodeField;
+            }
+            set {
+                this.passpordCodeField = value;
+                this.RaisePropertyChanged("PasspordCode");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string PassportValidDate {
+            get {
+                return this.passportValidDateField;
+            }
+            set {
+                this.passportValidDateField = value;
+                this.RaisePropertyChanged("PassportValidDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Citizenship {
+            get {
+                return this.citizenshipField;
+            }
+            set {
+                this.citizenshipField = value;
+                this.RaisePropertyChanged("Citizenship");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
+    public enum Sex {
+        
+        /// <remarks/>
+        M,
+        
+        /// <remarks/>
+        F,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
+    public enum PasportType {
+        
+        /// <remarks/>
+        INTERNAL,
+        
+        /// <remarks/>
+        FOREIGN,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
+    public partial class DogovorInfo : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string tourDateField;
+        
+        private int dogovorKeyField;
+        
+        private string dogovorCodeField;
+        
+        private int statusKeyField;
+        
+        private string statusNameField;
+        
+        private int agentKeyField;
+        
+        private string agentLoginField;
+        
+        private decimal priceField;
+        
+        private decimal paidField;
+        
+        private string rateIsoCodeField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string TourDate {
+            get {
+                return this.tourDateField;
+            }
+            set {
+                this.tourDateField = value;
+                this.RaisePropertyChanged("TourDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public int DogovorKey {
+            get {
+                return this.dogovorKeyField;
+            }
+            set {
+                this.dogovorKeyField = value;
+                this.RaisePropertyChanged("DogovorKey");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string DogovorCode {
+            get {
+                return this.dogovorCodeField;
+            }
+            set {
+                this.dogovorCodeField = value;
+                this.RaisePropertyChanged("DogovorCode");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public int StatusKey {
+            get {
+                return this.statusKeyField;
+            }
+            set {
+                this.statusKeyField = value;
+                this.RaisePropertyChanged("StatusKey");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string StatusName {
+            get {
+                return this.statusNameField;
+            }
+            set {
+                this.statusNameField = value;
+                this.RaisePropertyChanged("StatusName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public int AgentKey {
+            get {
+                return this.agentKeyField;
+            }
+            set {
+                this.agentKeyField = value;
+                this.RaisePropertyChanged("AgentKey");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string AgentLogin {
+            get {
+                return this.agentLoginField;
+            }
+            set {
+                this.agentLoginField = value;
+                this.RaisePropertyChanged("AgentLogin");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public decimal Price {
+            get {
+                return this.priceField;
+            }
+            set {
+                this.priceField = value;
+                this.RaisePropertyChanged("Price");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public decimal Paid {
+            get {
+                return this.paidField;
+            }
+            set {
+                this.paidField = value;
+                this.RaisePropertyChanged("Paid");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string RateIsoCode {
+            get {
+                return this.rateIsoCodeField;
+            }
+            set {
+                this.rateIsoCodeField = value;
+                this.RaisePropertyChanged("RateIsoCode");
             }
         }
         
@@ -637,6 +800,10 @@ namespace ServiceTest.InnaService {
         
         public BookServiceSoapClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public ServiceTest.InnaService.Response GetDogovorInfo(string dogovorCode) {
+            return base.Channel.GetDogovorInfo(dogovorCode);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
