@@ -136,7 +136,7 @@ namespace InnaTourWebService.Models
                 var sw = new StringWriter();
                 new XmlSerializer(this.GetType()).Serialize(sw, this);
 
-                throw new Exception(string.Format("Invalid object UserInfo from {0}. Finded errors: {1}.", sw.ToString(), string.Join(";", errors)));
+                throw new Exception(string.Format("Invalid object InService from {0}. Finded errors: {1}.", sw.ToString(), string.Join(";", errors)));
             }
 
             return true;
