@@ -164,10 +164,10 @@ namespace InnaTourWebService.DataBase
         private void AddTouristToDogovor(Dogovor dogovor, InTourist tourist)
         {
             Turist tst = dogovor.Turists.NewRow();    // создаем новый объект "турист"
-            tst.NameRus = tourist.FirstName;          // проставляем имя
+            tst.NameRus = tourist.LastName;          // проставляем имя
             tst.NameLat = tst.NameRus;
 
-            tst.FNameRus = tourist.LastName;           // проставляем фамилию
+            tst.FNameRus = tourist.FirstName;           // проставляем фамилию
             tst.FNameLat = tst.FNameLat;
 
             tst.Birthday = DateTime.ParseExact(tourist.BirthDate, dateFormat, null ); //дату рождения
@@ -197,6 +197,8 @@ namespace InnaTourWebService.DataBase
                 tst.RealSex = Turist.RealSex_Female;
                 if (tst.Age > Convert.ToInt32(ConfigurationManager.AppSettings["ChildAgeLimit"]))//ребенок или взрослый в зависимости от возраста
                     tst.Sex = Turist.Sex_Female;
+                else if(tst.Age < 2)
+                    tst.Sex = Turist.Sex_Infant;
                 else
                     tst.Sex = Turist.Sex_Child;
             }
@@ -205,6 +207,8 @@ namespace InnaTourWebService.DataBase
                 tst.RealSex = Turist.RealSex_Male;
                 if (tst.Age > Convert.ToInt32(ConfigurationManager.AppSettings["ChildAgeLimit"]))//ребенок или взрослый в зависимости от возраста
                     tst.Sex = Turist.Sex_Male;
+                else if (tst.Age < 2)
+                    tst.Sex = Turist.Sex_Infant;
                 else
                     tst.Sex = Turist.Sex_Child;
             }
