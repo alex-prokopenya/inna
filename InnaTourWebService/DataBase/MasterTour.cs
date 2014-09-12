@@ -39,6 +39,9 @@ namespace InnaTourWebService.DataBase
         /// <returns>объект Dogovor</returns>
         public Dogovor GetDogovorByCode(string dogovorCode)
         {
+            if (dogovorCode.Length > 10)
+                dogovorCode = dogovorCode.Substring(0, 10);
+
             var dogs = new Dogovors(new Megatec.Common.BusinessRules.Base.DataContainer());
 
             dogs.RowFilter = string.Format("dg_code='{0}'", DataBaseProvider.SafeSqlLiteral(dogovorCode));
@@ -123,7 +126,7 @@ namespace InnaTourWebService.DataBase
         /// <param name="userInfo">информация о покупателе</param>
         /// <param name="services">список услуг</param>
         /// <returns>номер брони</returns>
-        public string CreateNewDogovor(InTourist[] tourists, UserInfo userInfo, InService[] services)
+        public string CreateNewDogovor(InTourist[] tourists, UserInfo userInfo, InService[] services, string dogovorCode)
         {
             Array.Sort<InService>(services);
 
@@ -131,7 +134,8 @@ namespace InnaTourWebService.DataBase
             Dogovor dogovor = CreateEmptyDogovor(userInfo, 
                                                  DateTime.ParseExact(services[0].Date, 
                                                                      dateFormat,
-                                                                     null));
+                                                                     null),
+                                                 dogovorCode);
 
             dogovor.NMen = (short)tourists.Length;
             dogovor.DataContainer.Update();
@@ -342,10 +346,18 @@ namespace InnaTourWebService.DataBase
         /// </summary>
         /// <param name="userInfo">информация о покупателе</param>
         /// <returns>ссылка на созданную путевку</returns>
-        private Dogovor CreateEmptyDogovor(UserInfo userInfo, DateTime startDate)
+        private Dogovor CreateEmptyDogovor(UserInfo userInfo, DateTime startDate, string dogovorCode)
         {
             Dogovors dogs = new Dogovors(new Megatec.Common.BusinessRules.Base.DataContainer());
             Dogovor dog = dogs.NewRow();
+
+            if ((dogovorCode != null) && (dogovorCode.Length > 0))
+            {
+                if (GetDogovorByCode(dogovorCode) != null)
+                    throw new Exception(String.Format("dogovor {0} already exists", dogovorCode));
+                else
+                    dog.Code = dogovorCode;
+            }
 
             //берем информацию о туре, к которму цепляем
             var turList = this.GetTurlistByKey(Convert.ToInt32(ConfigurationManager.AppSettings["BookingPacketKey"]));

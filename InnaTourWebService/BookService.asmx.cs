@@ -71,7 +71,7 @@ namespace InnaTourWebService
         /// </summary>
         /// <returns>DogovorCode -- код созданной брони</returns>
         [WebMethod]
-        public Response CreateDogovor(InTourist[] turists, UserInfo userInfo, InService[] services)
+        public Response CreateDogovor(InTourist[] turists, UserInfo userInfo, InService[] services, string dogovorCode)
         {
             try
             {
@@ -87,7 +87,7 @@ namespace InnaTourWebService
 
                 return new Response()
                 {
-                    value = mtHelper.CreateNewDogovor(turists, userInfo, services)
+                    value = mtHelper.CreateNewDogovor(turists, userInfo, services, dogovorCode)
                 };
             }
             catch (Exception ex)

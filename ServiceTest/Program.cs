@@ -256,7 +256,7 @@ namespace ServiceTest
             WriteToLog("try turists, userInfo, servicesOne");
 
             Thread.Sleep(1000);
-            var resp = client.CreateDogovor(turists, userInfo, servicesOne);
+            var resp = client.CreateDogovor(turists, userInfo, servicesOne, "test123");
 
             WriteToLog(Serialize(resp, resp.GetType()));
 
@@ -267,7 +267,7 @@ namespace ServiceTest
             WriteToLog("try turists, AgentInfo, servicesTwo");
 
             Thread.Sleep(1000);
-            resp = client.CreateDogovor(turists, AgentInfo, servicesTwo);
+            resp = client.CreateDogovor(turists, AgentInfo, servicesTwo, "test123");
 
             WriteToLog(Serialize(resp, resp.GetType()));
 
@@ -278,7 +278,7 @@ namespace ServiceTest
             WriteToLog("try turists, userInfo, servicesThree");
 
             Thread.Sleep(1000);
-            resp = client.CreateDogovor(turists, userInfo, servicesThree);
+            resp = client.CreateDogovor(turists, userInfo, servicesThree, "test124");
 
             WriteToLog(Serialize(resp, resp.GetType()));
 
@@ -289,7 +289,7 @@ namespace ServiceTest
             WriteToLog("try turists, AgentInfo, servicesThree");
 
             Thread.Sleep(1000);
-            resp = client.CreateDogovor(turists, AgentInfo2, servicesThree);
+            resp = client.CreateDogovor(turists, AgentInfo2, servicesThree, "test125");
 
             WriteToLog(Serialize(resp, resp.GetType()));
 

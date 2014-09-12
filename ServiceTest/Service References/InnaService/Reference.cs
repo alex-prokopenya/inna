@@ -748,13 +748,17 @@ namespace ServiceTest.InnaService {
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://inna.ru/", Order=2)]
         public ServiceTest.InnaService.InService[] services;
         
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://inna.ru/", Order=3)]
+        public string dogovorCode;
+        
         public CreateDogovorRequest() {
         }
         
-        public CreateDogovorRequest(ServiceTest.InnaService.InTourist[] turists, ServiceTest.InnaService.UserInfo UserInfo, ServiceTest.InnaService.InService[] services) {
+        public CreateDogovorRequest(ServiceTest.InnaService.InTourist[] turists, ServiceTest.InnaService.UserInfo UserInfo, ServiceTest.InnaService.InService[] services, string dogovorCode) {
             this.turists = turists;
             this.UserInfo = UserInfo;
             this.services = services;
+            this.dogovorCode = dogovorCode;
         }
     }
     
@@ -811,11 +815,12 @@ namespace ServiceTest.InnaService {
             return base.Channel.CreateDogovor(request);
         }
         
-        public ServiceTest.InnaService.Response CreateDogovor(ServiceTest.InnaService.InTourist[] turists, ServiceTest.InnaService.UserInfo UserInfo, ServiceTest.InnaService.InService[] services) {
+        public ServiceTest.InnaService.Response CreateDogovor(ServiceTest.InnaService.InTourist[] turists, ServiceTest.InnaService.UserInfo UserInfo, ServiceTest.InnaService.InService[] services, string dogovorCode) {
             ServiceTest.InnaService.CreateDogovorRequest inValue = new ServiceTest.InnaService.CreateDogovorRequest();
             inValue.turists = turists;
             inValue.UserInfo = UserInfo;
             inValue.services = services;
+            inValue.dogovorCode = dogovorCode;
             ServiceTest.InnaService.CreateDogovorResponse retVal = ((ServiceTest.InnaService.BookServiceSoap)(this)).CreateDogovor(inValue);
             return retVal.CreateDogovorResult;
         }
