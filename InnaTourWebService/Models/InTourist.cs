@@ -62,7 +62,7 @@ namespace InnaTourWebService.Models
             //проверяем гражданство
             this.Citizenship = this.Citizenship.ToUpper();
 
-            if (new Regex(@"^[A-Z]{2}$").IsMatch(this.Citizenship))
+            if (! new Regex(@"^[A-Z]{2}$").IsMatch(this.Citizenship))
                 errors.Add("invalid Citizenship");
 
             //проверяем дату рождения
