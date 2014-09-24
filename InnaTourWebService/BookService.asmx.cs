@@ -122,29 +122,31 @@ namespace InnaTourWebService
             try
             {
                 var masterHelper = new MasterTour();
-                var masterFinanceHelper = new MasterFinance();
 
-                var dogovor = masterHelper.GetDogovorByCode(dogovorCode); //ищем путевку по коду
+                using(var masterFinanceHelper = new MasterFinance())
+                {
 
-                if (dogovor == null)
-                    throw new Exception(String.Format("Dogovor '{0}' not founded", dogovorCode));
+                    var dogovor = masterHelper.GetDogovorByCode(dogovorCode); //ищем путевку по коду
 
-                if ((paymentSys != "deposit") && (dogovor.PartnerKey > 0))
-                    throw new Exception(String.Format("only deposit payment awailable"));
-                else
-                    if ((paidSum <= 0) && (dogovor.PartnerKey == 0))
-                        throw new Exception(String.Format("paidSum <= 0"));
+                    if (dogovor == null)
+                        throw new Exception(String.Format("Dogovor '{0}' not founded", dogovorCode));
 
-                if (dogovor.PartnerKey > 0)  // если заказ агентский
-                    masterFinanceHelper.DepositPayDogovor(dogovor.PartnerKey, dogovor.Key); //платим депозитом
-                else //иначе
-                    masterFinanceHelper.PayDogovor(dogovor.Code,
-                                                    paymentType,
-                                                    paymentSys,
-                                                    paidSum,
-                                                    paymentId); // сохраняем платеж по карте
+                    if ((paymentSys != "deposit") && (dogovor.PartnerKey > 0))
+                        throw new Exception(String.Format("only deposit payment awailable"));
+                    else
+                        if ((paidSum <= 0) && (dogovor.PartnerKey == 0))
+                            throw new Exception(String.Format("paidSum <= 0"));
 
-                masterFinanceHelper.Dispose();
+                    if (dogovor.PartnerKey > 0)  // если заказ агентский
+                        masterFinanceHelper.DepositPayDogovor(dogovor.PartnerKey, dogovor.Key); //платим депозитом
+                    else //иначе
+                        masterFinanceHelper.PayDogovor(dogovor.Code,
+                                                        paymentType,
+                                                        paymentSys,
+                                                        paidSum,
+                                                        paymentId); // сохраняем платеж по карте
+
+                 }
 
                 return new Response()
                 {

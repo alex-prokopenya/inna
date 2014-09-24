@@ -21,7 +21,6 @@ namespace InnaTourWebService.DataBase
         SqlConnection myConnection = null;
         #endregion
 
-
         bool disposed = false;
 
         // Public implementation of Dispose pattern callable by consumers. 
@@ -38,13 +37,11 @@ namespace InnaTourWebService.DataBase
                 return;
 
             if (disposing)
-                try
-                {
-                    this.myConnection.Close();
-                }
-                catch (Exception) { }
+            {
+                this.myConnection.Dispose();
 
-            disposed = true;
+                disposed = true;
+            }
         }
         
         #region public methods

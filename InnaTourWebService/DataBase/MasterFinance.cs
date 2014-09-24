@@ -118,8 +118,6 @@ namespace InnaTourWebService.DataBase
         /// <param name="paymentId">идентификатор платежа</param>
         public void PayDogovor(string dgCode, int paymentType, string paymentSys, decimal paidSum, string paymentId)
         {
-            var db = new DataBaseProvider();
-
             var inpParams = new Dictionary<string, object>();  //собираем параметры для сохранения новой строки в таблице оплат
             inpParams.Add("DP_TXN_ID", paymentId);
             inpParams.Add("DP_TXN_DATE", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
