@@ -38,10 +38,11 @@ namespace InnaTourWebService.DataBase
                 return;
 
             if (disposing)
-            {
-                if ((this.myConnection.State != System.Data.ConnectionState.Broken) && (this.myConnection.State != System.Data.ConnectionState.Broken))
+                try
+                {
                     this.myConnection.Close();
-            }
+                }
+                catch (Exception) { }
 
             disposed = true;
         }

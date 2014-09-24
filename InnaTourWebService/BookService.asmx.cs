@@ -30,7 +30,6 @@ namespace InnaTourWebService
             try
             {
                 var masterHelper = new MasterTour();
-                var masterFinanceHelper = new MasterFinance();
 
                 var dogovor = masterHelper.GetDogovorByCode(dogovorCode); //ищем путевку по коду
 
@@ -145,6 +144,8 @@ namespace InnaTourWebService
                                                     paidSum,
                                                     paymentId); // сохраняем платеж по карте
 
+                masterFinanceHelper.Dispose();
+
                 return new Response()
                 {
                     value =  "success"
@@ -170,12 +171,13 @@ namespace InnaTourWebService
         [WebMethod]
         public Response GetDepositAndReceivable(int partnerId)
         {
-                try{
-                    var masterFinance = new DataBase.MasterFinance();
-
-                    return new Response(){ 
-                     value = masterFinance.CallDepositGetValue(partnerId)
-                    };
+                try{ 
+                    using(var masterFinance = new DataBase.MasterFinance())
+                    {
+                        return new Response(){ 
+                         value = masterFinance.CallDepositGetValue(partnerId)
+                        };
+                    }
                 }
                 catch(Exception ex)
                 {

@@ -143,7 +143,7 @@ namespace ServiceTest
                 AgentKey = 0,
                 Email = "nomail@tut.by",
                 Name = "Ivan",
-                Phone = "12454345"
+                Phone = "78197567575"
             };
 
             var AgentInfo = new InnaService.UserInfo(){
@@ -256,7 +256,7 @@ namespace ServiceTest
             WriteToLog("try turists, userInfo, servicesOne");
 
             Thread.Sleep(1000);
-            var resp = client.CreateDogovor(turists, userInfo, servicesOne, "test123");
+            var resp = client.CreateDogovor(turists, userInfo, servicesOne, "");
 
             WriteToLog(Serialize(resp, resp.GetType()));
 
@@ -267,7 +267,7 @@ namespace ServiceTest
             WriteToLog("try turists, AgentInfo, servicesTwo");
 
             Thread.Sleep(1000);
-            resp = client.CreateDogovor(turists, AgentInfo, servicesTwo, "test123");
+            resp = client.CreateDogovor(turists, AgentInfo, servicesTwo, "test223");
 
             WriteToLog(Serialize(resp, resp.GetType()));
 
@@ -289,7 +289,7 @@ namespace ServiceTest
             WriteToLog("try turists, AgentInfo, servicesThree");
 
             Thread.Sleep(1000);
-            resp = client.CreateDogovor(turists, AgentInfo2, servicesThree, "test125");
+            resp = client.CreateDogovor(turists, AgentInfo2, servicesThree, "test224");
 
             WriteToLog(Serialize(resp, resp.GetType()));
 

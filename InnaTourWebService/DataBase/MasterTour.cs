@@ -376,12 +376,11 @@ namespace InnaTourWebService.DataBase
             //информация о покупателе
             dog.MainMenEMail = userInfo.Email != "" ? userInfo.Email : "";
             dog.MainMenPhone = userInfo.Phone != "" ? userInfo.Phone : "";
+            dog.MainMenComment = userInfo.Phone != "" ? userInfo.Phone : "";
             dog.MainMen = userInfo.Name != "" ? userInfo.Name : "";//;
            
             //получаем текущего пользователя - покупателя
-        //    var dupUser = userInfo.AgentLogin != "" ? this.GetDupUserByLogin(userInfo.AgentLogin) : null;
             dog.PartnerKey = userInfo.AgentKey;
-        //    dog.DupUserKey = dupUser != null ? dupUser.Key : 0;
 
             dog.AdvertisementKey = userInfo.AgentKey > 0 ? 21 : 5;
 
@@ -399,7 +398,7 @@ namespace InnaTourWebService.DataBase
             dogs.Add(dog); //добавляем запись в БД
 
             dogs.DataContainer.Update(); // !! проверить, работет ли без этого!
-            
+
             return dog;
         }
 
