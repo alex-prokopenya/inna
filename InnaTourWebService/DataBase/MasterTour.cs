@@ -16,10 +16,6 @@ namespace InnaTourWebService.DataBase
     {
         private string dateFormat;
 
-        private int aviaServiceKey;
-
-        private int hotelServiceKey;
-
         /// <summary>
         /// создает объект MasterTour
         /// </summary>
@@ -27,9 +23,6 @@ namespace InnaTourWebService.DataBase
         {
             Megatec.MasterTour.DataAccess.Manager.ConnectionString = ConfigurationManager.AppSettings["connectionString"];
             dateFormat = ConfigurationManager.AppSettings["datesFormat"];
-
-            aviaServiceKey = Convert.ToInt32(ConfigurationManager.AppSettings["AviaBookingServiceKey"]);
-            hotelServiceKey = Convert.ToInt32(ConfigurationManager.AppSettings["HotelBookingServiceKey"]);
         }
 
         /// <summary>
@@ -255,8 +248,10 @@ namespace InnaTourWebService.DataBase
             dl.TurDate = dl.Dogovor.TurDate;
             dl.Day = (short)((dl.DateBegin - dl.TurDate).Days + 1);
 
-            dl.NMen = (short)(service.TuristIndexes.Length > 0 ? service.TuristIndexes.Length : dogovor.Turists.Count);             
-            dl.ServiceKey = service.ServiceType == ServiceType.AVIA ? aviaServiceKey: hotelServiceKey;
+            dl.NMen = (short)(service.TuristIndexes.Length > 0 ? service.TuristIndexes.Length : dogovor.Turists.Count);  
+           
+            dl.ServiceKey = service.ServiceKey;
+
             dl.CityKey = dogovor.CityKey;
 
             //Добавляем услугу

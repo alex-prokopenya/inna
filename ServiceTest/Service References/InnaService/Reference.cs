@@ -159,6 +159,8 @@ namespace ServiceTest.InnaService {
         
         private ServiceType serviceTypeField;
         
+        private int serviceKeyField;
+        
         private string dateField;
         
         private int nDaysField;
@@ -208,6 +210,18 @@ namespace ServiceTest.InnaService {
             set {
                 this.serviceTypeField = value;
                 this.RaisePropertyChanged("ServiceType");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public int ServiceKey {
+            get {
+                return this.serviceKeyField;
+            }
+            set {
+                this.serviceKeyField = value;
+                this.RaisePropertyChanged("ServiceKey");
             }
         }
         
@@ -328,6 +342,9 @@ namespace ServiceTest.InnaService {
         
         /// <remarks/>
         HOTEL,
+        
+        /// <remarks/>
+        CUSTOM,
     }
     
     /// <remarks/>

@@ -26,7 +26,10 @@ namespace InnaTourWebService.Models
 
        [XmlAttribute("ServiceType")]
        public ServiceType ServiceType;
-       
+
+       [XmlAttribute("ServiceKey")]
+       public int ServiceKey;
+
        [XmlAttribute("Date")]
        public string Date;
        
@@ -91,6 +94,9 @@ namespace InnaTourWebService.Models
 
             if (minLong > this.NDays)
                 errors.Add("invalid service NDays");
+
+            if (this.ServiceKey < 1)
+                errors.Add("invalid ServiceKey");
 
             //название услуги
             if (this.Title.Length == 0)

@@ -8,6 +8,7 @@ namespace InnaTourWebService.Models
     public enum ServiceType
     {
         AVIA,
-        HOTEL
+        HOTEL, 
+        CUSTOM
     }
 }

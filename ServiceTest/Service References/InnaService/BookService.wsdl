@@ -19,8 +19,8 @@
       <s:complexType name="Response">
         <s:sequence>
           <s:choice minOccurs="1" maxOccurs="1">
-            <s:element minOccurs="0" maxOccurs="1" name="Deposits" type="tns:ArrayOfDepositInfo" />
             <s:element minOccurs="0" maxOccurs="1" name="result" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Deposits" type="tns:ArrayOfDepositInfo" />
             <s:element minOccurs="1" maxOccurs="1" name="dogovorInfo" type="tns:DogovorInfo" />
           </s:choice>
           <s:element minOccurs="1" maxOccurs="1" name="hasErrors" type="s:boolean" />
@@ -105,6 +105,7 @@
           <s:element minOccurs="0" maxOccurs="1" name="NumDocs" type="tns:ArrayOfString" />
         </s:sequence>
         <s:attribute name="ServiceType" type="tns:ServiceType" use="required" />
+        <s:attribute name="ServiceKey" type="s:int" use="required" />
         <s:attribute name="Date" type="s:string" />
         <s:attribute name="NDays" type="s:int" use="required" />
         <s:attribute name="Title" type="s:string" />
@@ -128,6 +129,7 @@
         <s:restriction base="s:string">
           <s:enumeration value="AVIA" />
           <s:enumeration value="HOTEL" />
+          <s:enumeration value="CUSTOM" />
         </s:restriction>
       </s:simpleType>
       <s:element name="CreateDogovorResponse">

@@ -164,6 +164,7 @@ namespace ServiceTest
                     PartnerID = 57448,
                     Price = 2030,
                     ServiceType = ServiceType.HOTEL,
+                    ServiceKey = 1061,
                     Title = "Grand efe 4*, Кушадасы, dbl sea view, All",
                     TuristIndexes = new int[0]
                 }
@@ -179,6 +180,7 @@ namespace ServiceTest
                     PartnerID = 57448,
                     Price = 1500,
                     ServiceType = ServiceType.AVIA,
+                    ServiceKey = 1062,
                     Title = "Минск-Измир, B2 8420, 18:00-20:30",
                     TuristIndexes = new int[0],
                     NumDocs = new string[]{"num_one","num_two"}
@@ -196,6 +198,7 @@ namespace ServiceTest
                         PartnerID = 57448,
                         Price = 0,
                         ServiceType = ServiceType.AVIA,
+                        ServiceKey = 1062,
                         Title = "Измир-Минск, B2 8420, 18:00-20:30",
                         TuristIndexes = new int[0],
                         NumDocs = new string[]{"num_1","num_2"}
@@ -210,6 +213,7 @@ namespace ServiceTest
                         PartnerID = 57448,
                         Price = 700,
                         ServiceType = ServiceType.AVIA,
+                        ServiceKey = 1062,
                         Title = "Минск-Измир, B2 8420, 12:00-14:30",
                         TuristIndexes = new int[0]
                     },
@@ -223,6 +227,7 @@ namespace ServiceTest
                         PartnerID = 57448,
                         Price = 2030,
                         ServiceType = ServiceType.HOTEL,
+                        ServiceKey = 1061,
                         Title = "Grand efe 4*, Кушадасы, tpl sea view, All",
                         TuristIndexes = new int[] {1,2,3}
                     },
@@ -235,6 +240,7 @@ namespace ServiceTest
                         PartnerID = 57448,
                         Price = 3030,
                         ServiceType = ServiceType.HOTEL,
+                        ServiceKey = 1061,
                         Title = "Grand efe 4*, Кушадасы, dbl sea view, All",
                         TuristIndexes = new int[] {1,3}
                     },
@@ -247,6 +253,7 @@ namespace ServiceTest
                         PartnerID = 57448,
                         Price = 4030,
                         ServiceType = ServiceType.HOTEL,
+                        ServiceKey = 1061,
                         Title = "Grand efe 4*, Кушадасы, sgl sea view, All",
                         TuristIndexes = new int[]{2}
                     },
