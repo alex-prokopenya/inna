@@ -39,48 +39,32 @@ namespace InnaTourWebService.DataBase
         /// <returns>DepositInfo -- сумма размера депозита и код валюты</returns>
         public DepositInfo[] CallDepositGetValue(int partnerId)
         {
-            var inpParams = new Dictionary<string, object>(); //составляем список параметров
+            var result = this.db.SelectDeposits(partnerId);
 
-            inpParams.Add("p_nPartner", partnerId); 
-            inpParams.Add("p_nErrorCode", "");
-            inpParams.Add("p_sErrorString", "");
+            var deposits = new Dictionary<string, DepositInfo>();
+            deposits.Add("RUR", new DepositInfo("RUR"));
 
-            var result = this.db.CallStoredProcedure("FIN_DepositGetValue", inpParams, new string[] { "p_nErrorCode", "p_sErrorString"});
-
-            if (result.ContainsKey("dataSet"))
-            {
-                Helpers.Logger.WriteToLog("contains dataset");
-
-                var resp = new List<DepositInfo>();
-
-                var rows = result["dataSet"] as DataSet;
-
-                if((rows.Tables.Count>0) && (rows.Tables[0].Columns.Contains("DEP_VALUE")))
+            if(result != null)
+                foreach (DataRow row in result.Rows)
                 {
+                    var depRate = row["dep_rate_iso"].ToString();
+                    var depValue = Convert.ToDecimal( row["DAL_DepositSum"] );
 
-                    Helpers.Logger.WriteToLog("Tables.Count>0");
+                    if (!deposits.ContainsKey(depRate))
+                        deposits[depRate] = new DepositInfo(depRate);
 
-                    foreach (DataRow row in rows.Tables[0].Rows)
-                        resp.Add(new DepositInfo() { 
-                                      Deposit =  Convert.ToDecimal(row["DEP_VALUE"]), 
-                                      RateIsoCode = row["DEP_RAISOCODE"].ToString()});
+                    deposits[depRate].Deposit += depValue;
 
-                    return resp.ToArray();
+                    var limRate = row["lim_rate_iso"].ToString();
+                    var limValue = Convert.ToDecimal(row["DAL_LimitSum"]);
+
+                    if (!deposits.ContainsKey(limRate))
+                        deposits[limRate] = new DepositInfo(limRate);
+
+                    deposits[limRate].Limit += limValue;
                 }
-            }
-            
-            if (result.ContainsKey("output"))
-            {
-                Helpers.Logger.WriteToLog("contains output");
 
-                var output = result["output"] as Dictionary<string, object>;
-
-                Helpers.Logger.WriteToLog("contains keys " + string.Join(",",output.Keys));
-
-                throw new Exception(String.Format( "Check deposit exception. Recieved code {0}. Error text '{1}'.", output["p_nErrorCode"], output["p_sErrorString"] ) );
-            }
-
-            throw new Exception("Incorrect FIN_DepositGetValue result");
+            return deposits.Values.ToArray();
         }
 
         /// <summary>

@@ -53,6 +53,32 @@ namespace InnaTourWebService.DataBase
             this.OpenSqlConnection();
         }
 
+
+        /// <summary>
+        /// выбираем данные из view [FIN_DepositAndReceivable]
+        /// </summary>
+        /// <param name="partnerKey"></param>
+        /// <returns></returns>
+        public DataTable SelectDeposits(int partnerKey )
+        {
+            OpenSqlConnection();
+
+            string comString = string.Format("select [DAL_PRKEY],[DAL_CompanyKey],[DAL_DepositSum] ,[DAL_DepositRate],[DAL_LimitSum],[DAL_LimitRate], " +
+                                             "[DAL_UpdateDate], b.RA_ISOCode as dep_rate_iso, a.RA_ISOCode as lim_rate_iso " +
+                                             "from [dbo].[FIN_DepositAndReceivable], dbo.Rates as a, dbo.Rates as b "+
+                                             "where a.RA_CODE = DAL_LimitRate and b.RA_CODE = DAL_DepositRate and DAL_PRKEY = " + partnerKey);
+
+            var cmd = new SqlCommand(comString, this.myConnection);
+
+            var dataSet = new DataSet();
+            var sqlAdaptert = new SqlDataAdapter(cmd).Fill(dataSet);
+
+            if (dataSet.Tables.Count > 0)
+                return dataSet.Tables[0];
+            else
+                return null;
+        }
+
         /// <summary>
         /// вызывает хранимую процедуру
         /// </summary>

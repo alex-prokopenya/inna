@@ -29,11 +29,21 @@ namespace InnaTourWebService.Models
             set { rateIsoCode = value; }
         }
 
+        [XmlAttribute("limit")]
+        private decimal limit;
 
-        public DepositInfo() 
+        public decimal Limit
         {
+            get { return limit; }
+            set { limit = value; }
+        }
 
-
+        public DepositInfo() { }
+        public DepositInfo(string rate) 
+        {
+            this.rateIsoCode = rate;
+            this.limit = 0;
+            this.deposit = 0;
         }
     }
 }
