@@ -157,7 +157,7 @@ namespace ServiceTest
             var servicesOne = new InService[]{ //отель
                 new InService(){
                     Comission = 10,
-                    Date = "2014-10-09",
+                    Date = "2015-10-09",
                     NDays = 12,
                     NettoPrice = 1980,
                     PartnerBookID = "21234234234224",
@@ -178,10 +178,10 @@ namespace ServiceTest
                     NettoPrice = 500,
                     PartnerBookID = "1234232345",
                     PartnerID = 57448,
-                    Price = 1500,
+                    Price = 2500,
                     ServiceType = ServiceType.AVIA,
                     ServiceKey = 1062,
-                    Title = "Минск-Измир, B2 8420, 18:00-20:30",
+                    Title = "Минск-Измир+, B34 8420, 18:00-20:30",
                     TuristIndexes = new int[0],
                     NumDocs = new string[]{"num_one","num_two"}
                 }
@@ -191,7 +191,7 @@ namespace ServiceTest
                 
                  new InService(){
                         Comission = 0,
-                        Date = "2014-10-09",
+                        Date = "2015-10-09",
                         NDays = 1,
                         NettoPrice = 0,
                         PartnerBookID = "1234232345",
@@ -206,7 +206,7 @@ namespace ServiceTest
 
                     new InService(){
                         Comission = 100,
-                        Date = "2014-10-01",
+                        Date = "2015-10-01",
                         NDays = 1,
                         NettoPrice = 560,
                         PartnerBookID = "1234232345",
@@ -220,7 +220,7 @@ namespace ServiceTest
 
                     new InService(){
                         Comission = 10,
-                        Date = "2014-10-01",
+                        Date = "2015-10-01",
                         NDays = 4,
                         NettoPrice = 1980,
                         PartnerBookID = "21234234234224",
@@ -233,7 +233,7 @@ namespace ServiceTest
                     },
                     new InService(){
                         Comission = 10,
-                        Date = "2014-10-04",
+                        Date = "2015-10-04",
                         NDays = 6,
                         NettoPrice = 2980,
                         PartnerBookID = "21234234234224",
@@ -246,7 +246,7 @@ namespace ServiceTest
                     },
                     new InService(){
                         Comission = 10,
-                        Date = "2014-10-04",
+                        Date = "2015-10-04",
                         NDays = 6,
                         NettoPrice = 3980,
                         PartnerBookID = "21234234234224",

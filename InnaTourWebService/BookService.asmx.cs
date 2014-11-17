@@ -79,11 +79,13 @@ namespace InnaTourWebService
 
                 var dogovor = mtHelper.GetDogovorByCode(dogovorCode);
                 if (dogovor != null)
-                    return new Response(){
-                                            value = mtHelper.ReloadDogovorServices(services, dogovor)
-                                        };
-
-
+                {
+                    services.All(item => item.Validate(dogovor.NMen));
+                    return new Response()
+                    {
+                        value = mtHelper.ReloadDogovorServices(services, dogovor)
+                    };
+                }
                 //verify
                 turists.All(item => item.Validate());
 

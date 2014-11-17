@@ -32,6 +32,9 @@ namespace InnaTourWebService.DataBase
         /// <returns>объект Dogovor</returns>
         public Dogovor GetDogovorByCode(string dogovorCode)
         {
+            if (dogovorCode.Trim() == "")
+                return null;
+
             if (dogovorCode.Length > 10)
                 dogovorCode = dogovorCode.Substring(0, 10);
 
@@ -122,8 +125,8 @@ namespace InnaTourWebService.DataBase
             //выгрузили список услуг из БД
             dogovor.DogovorLists.Fill();
 
-            foreach (DogovorList dl in dogovor.DogovorLists)
-                dl.Delete(); //удалили все
+            for (int i = dogovor.DogovorLists.Count; i >0; i-- )
+                dogovor.DogovorLists[i-1].Delete(); //удалили все
 
             dogovor.CalculateCost();
          
