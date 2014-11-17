@@ -296,12 +296,16 @@ namespace ServiceTest
             WriteToLog("try turists, AgentInfo, servicesThree");
 
             Thread.Sleep(1000);
-            resp = client.CreateDogovor(turists, AgentInfo2, servicesThree, "test224");
+            resp = client.CreateDogovor(turists, AgentInfo2, servicesThree, "test1224");
 
             WriteToLog(Serialize(resp, resp.GetType()));
 
             if ((resp.Item is string) && (resp.hasErrors == false))
                 createdDogovors.Add(resp.Item.ToString());
+
+
+            //заменяем список услуг в заказе test224
+            resp = client.CreateDogovor(null, null, servicesOne, "test1224");
 
             client.Close();
 

@@ -111,6 +111,38 @@ namespace InnaTourWebService.DataBase
             return dupUsers[0];
         }
 
+        /// <summary>
+        /// Перезаписывает список услуг. Удаляет старые, добавляет новые
+        /// </summary>
+        /// <param name="services">услуги, полный список</param>
+        /// <param name="dogovor">путевка, услуги которой будут заменены</param>
+        /// <returns></returns>
+        public string ReloadDogovorServices(InService[] services, Dogovor dogovor)
+        {
+            //выгрузили список услуг из БД
+            dogovor.DogovorLists.Fill();
+
+            foreach (DogovorList dl in dogovor.DogovorLists)
+                dl.Delete(); //удалили все
+
+            dogovor.CalculateCost();
+         
+            //применили изменения
+            dogovor.DataContainer.Update();
+
+            //добавляем услуги
+            foreach (var service in services)
+                AddServiceToDogovor(dogovor, service);
+
+            //MyCalculateTotalCost
+            MyCalculateCost(dogovor);
+
+            dogovor.Turists.Fill();
+
+            dogovor.DataContainer.Update();
+
+            return dogovor.Code;
+        }
 
         /// <summary>
         /// создает бронь в Мастер-Туре
@@ -309,7 +341,6 @@ namespace InnaTourWebService.DataBase
                     TuristService ts = tServices.NewRow();  //садим его на услугу
                     ts.Turist = tst;
                     ts.DogovorList = dl;
-
                     
                     ts.Numdoc = service.NumDocs.Length > docNumIndex ? service.NumDocs[docNumIndex]: "";//
 

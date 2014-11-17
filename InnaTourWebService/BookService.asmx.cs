@@ -65,6 +65,7 @@ namespace InnaTourWebService
         }
 
 
+
         /// <summary>
         /// Создает бронь в Мастер-Туре.
         /// </summary>
@@ -74,6 +75,15 @@ namespace InnaTourWebService
         {
             try
             {
+                var mtHelper = new MasterTour();
+
+                var dogovor = mtHelper.GetDogovorByCode(dogovorCode);
+                if (dogovor != null)
+                    return new Response(){
+                                            value = mtHelper.ReloadDogovorServices(services, dogovor)
+                                        };
+
+
                 //verify
                 turists.All(item => item.Validate());
 
@@ -82,8 +92,6 @@ namespace InnaTourWebService
                 services.All(item => item.Validate(turists.Length));
 
                 //создание путевки
-                var mtHelper = new MasterTour();
-
                 return new Response()
                 {
                     value = mtHelper.CreateNewDogovor(turists, userInfo, services, dogovorCode)
