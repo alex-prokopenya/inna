@@ -104,15 +104,15 @@ namespace InnaTourWebService.Models
             else if (this.Title.Length > 50)
                 this.Title = this.Title.Substring(0, 50);
 
-            //стоимость, комиссия, нетто
-            if(this.Price < 0)
-                errors.Add("invalid Price");
+            ////стоимость, комиссия, нетто
+            //if(this.Price < 0)
+            //    errors.Add("invalid Price");
 
-            if (this.NettoPrice < 0)
-                errors.Add("invalid NettoPrice");
+            //if (this.NettoPrice < 0)
+            //    errors.Add("invalid NettoPrice");
 
-            if (this.Comission < 0)
-                errors.Add("invalid Comission");
+            //if (this.Comission < 0)
+            //    errors.Add("invalid Comission");
 
             if (this.PartnerBookID == null)
                 this.PartnerBookID = string.Empty;
