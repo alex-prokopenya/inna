@@ -13,7 +13,7 @@ namespace InnaTourWebService.Models
     [XmlRoot("InService")]
     public class InService : IComparable<InService>
     {
-        public int CompareTo(InService other)
+        public int CompareTo(InService other) //для сортировки
         {
             if (other == null)
                 return 1;
@@ -114,7 +114,13 @@ namespace InnaTourWebService.Models
             if (this.Comission < 0)
                 errors.Add("invalid Comission");
 
+            if (this.PartnerBookID == null)
+                this.PartnerBookID = string.Empty;
+
             //индексы туристов
+            if (this.TuristIndexes == null)
+                this.TuristIndexes = new int[0];
+
             var usedIndexes = new List<int>();
             foreach(int index in this.TuristIndexes)
                 if ((index < 1) || (index > turistsCnt) || (usedIndexes.Contains(index)))
@@ -123,9 +129,7 @@ namespace InnaTourWebService.Models
                     break;
                 }
                 else
-                {
                     usedIndexes.Add(index);
-                }
 
             //номера билетов
             if (this.NumDocs != null)
