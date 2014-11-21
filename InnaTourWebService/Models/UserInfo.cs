@@ -52,8 +52,8 @@ namespace InnaTourWebService.Models
                 if (!new Regex(@"^\+?(\d[\d-. ]+)?(\([\d-. ]+\))?[\d-. ]+\d$").IsMatch(this.Phone))
                     errors.Add("invalid Phone");
 
-                if (this.Name.Length < 1)
-                   errors.Add("invalid Name");
+                if (this.Name == null)
+                    this.Name = "";
             }
 
             if (errors.Count > 0)
