@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://inna.ru/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://inna.ru/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://inna.ru/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://inna.ru/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://inna.ru/">
-      <s:element name="GetDogovorInfo">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="GetReportTest">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="dogovorCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="reportGuid" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="GetDogovorInfoResponse">
+      <s:element name="GetReportTestResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetDogovorInfoResult" type="tns:Response" />
+            <s:element minOccurs="0" maxOccurs="1" name="GetReportTestResult" type="tns:Response" />
           </s:sequence>
         </s:complexType>
       </s:element>
       <s:complexType name="Response">
         <s:sequence>
           <s:choice minOccurs="1" maxOccurs="1">
+            <s:element minOccurs="0" maxOccurs="1" name="report" type="tns:ReportResponse" />
             <s:element minOccurs="0" maxOccurs="1" name="result" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="Deposits" type="tns:ArrayOfDepositInfo" />
             <s:element minOccurs="1" maxOccurs="1" name="dogovorInfo" type="tns:DogovorInfo" />
@@ -27,6 +30,18 @@
           <s:element minOccurs="0" maxOccurs="1" name="errorMessage" type="s:string" />
         </s:sequence>
       </s:complexType>
+      <s:complexType name="ReportResponse">
+        <s:attribute name="Content" type="s:base64Binary" />
+        <s:attribute name="FileType" type="tns:FileType" use="required" />
+      </s:complexType>
+      <s:simpleType name="FileType">
+        <s:restriction base="s:string">
+          <s:enumeration value="html" />
+          <s:enumeration value="pdf" />
+          <s:enumeration value="xls" />
+          <s:enumeration value="rtf" />
+        </s:restriction>
+      </s:simpleType>
       <s:complexType name="ArrayOfDepositInfo">
         <s:sequence>
           <s:element minOccurs="0" maxOccurs="unbounded" name="DepositInfo" nillable="true" type="tns:DepositInfo" />
@@ -36,6 +51,7 @@
         <s:sequence>
           <s:element minOccurs="1" maxOccurs="1" name="Deposit" type="s:decimal" />
           <s:element minOccurs="0" maxOccurs="1" name="RateIsoCode" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Limit" type="s:decimal" />
         </s:sequence>
       </s:complexType>
       <s:complexType name="DogovorInfo">
@@ -50,6 +66,46 @@
         <s:attribute name="Paid" type="s:decimal" use="required" />
         <s:attribute name="RateIsoCode" type="s:string" />
       </s:complexType>
+      <s:element name="GetReport">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="dogovorCode" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="reportGuid" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="extraParams" type="tns:ArrayOfPairOfStringString" />
+            <s:element minOccurs="1" maxOccurs="1" name="type" type="tns:FileType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfPairOfStringString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PairOfStringString" type="tns:PairOfStringString" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PairOfStringString">
+        <s:attribute name="Key" type="s:string" />
+        <s:attribute name="Value" type="s:string" />
+      </s:complexType>
+      <s:element name="GetReportResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetReportResult" type="tns:Response" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDogovorInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="dogovorCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDogovorInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDogovorInfoResult" type="tns:Response" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="CreateDogovor">
         <s:complexType>
           <s:sequence>
@@ -186,7 +242,26 @@
         </s:complexType>
       </s:element>
     </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="guid">
+        <s:restriction base="s:string">
+          <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
   </wsdl:types>
+  <wsdl:message name="GetReportTestSoapIn">
+    <wsdl:part name="parameters" element="tns:GetReportTest" />
+  </wsdl:message>
+  <wsdl:message name="GetReportTestSoapOut">
+    <wsdl:part name="parameters" element="tns:GetReportTestResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetReportSoapIn">
+    <wsdl:part name="parameters" element="tns:GetReport" />
+  </wsdl:message>
+  <wsdl:message name="GetReportSoapOut">
+    <wsdl:part name="parameters" element="tns:GetReportResponse" />
+  </wsdl:message>
   <wsdl:message name="GetDogovorInfoSoapIn">
     <wsdl:part name="parameters" element="tns:GetDogovorInfo" />
   </wsdl:message>
@@ -218,6 +293,14 @@
     <wsdl:part name="parameters" element="tns:GetDepositAndReceivableResponse" />
   </wsdl:message>
   <wsdl:portType name="BookServiceSoap">
+    <wsdl:operation name="GetReportTest">
+      <wsdl:input message="tns:GetReportTestSoapIn" />
+      <wsdl:output message="tns:GetReportTestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetReport">
+      <wsdl:input message="tns:GetReportSoapIn" />
+      <wsdl:output message="tns:GetReportSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="GetDogovorInfo">
       <wsdl:input message="tns:GetDogovorInfoSoapIn" />
       <wsdl:output message="tns:GetDogovorInfoSoapOut" />
@@ -241,6 +324,24 @@
   </wsdl:portType>
   <wsdl:binding name="BookServiceSoap" type="tns:BookServiceSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetReportTest">
+      <soap:operation soapAction="http://inna.ru/GetReportTest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetReport">
+      <soap:operation soapAction="http://inna.ru/GetReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetDogovorInfo">
       <soap:operation soapAction="http://inna.ru/GetDogovorInfo" style="document" />
       <wsdl:input>
@@ -289,6 +390,24 @@
   </wsdl:binding>
   <wsdl:binding name="BookServiceSoap12" type="tns:BookServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetReportTest">
+      <soap12:operation soapAction="http://inna.ru/GetReportTest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetReport">
+      <soap12:operation soapAction="http://inna.ru/GetReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetDogovorInfo">
       <soap12:operation soapAction="http://inna.ru/GetDogovorInfo" style="document" />
       <wsdl:input>

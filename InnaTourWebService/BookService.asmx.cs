@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Services;
-using InnaTourWebService.Models;
-using InnaTourWebService.DataBase;
+﻿using InnaTourWebService.DataBase;
 using InnaTourWebService.Helpers;
-using Megatec.MasterTour.BusinessRules;
+using InnaTourWebService.Models;
 using Megatec.Common.BusinessRules.Base;
+using Megatec.MasterTour.BusinessRules;
+using System;
+using System.Collections;
 using System.Configuration;
+using System.Linq;
+using System.Web.Services;
+using System.Xml.Serialization;
 
 namespace InnaTourWebService
 {
@@ -23,6 +23,67 @@ namespace InnaTourWebService
     // [System.Web.Script.Services.ScriptService]
     public partial class BookService : System.Web.Services.WebService
     {
+
+        [Serializable]
+        [XmlRoot("Param")]
+        public struct Pair<K, V>
+        {
+            [XmlAttribute("Key")]
+            public K Key { get; set; }
+
+            [XmlAttribute("Value")]
+            public V Value { get; set; }
+        }
+
+#if DEBUG
+        [WebMethod]
+        public Response GetReportTest(string dogovorCode, string reportGuid)
+        {
+            return GetReport(dogovorCode, new Guid(reportGuid), null, FileType.rtf);
+        }
+#endif
+
+        [WebMethod]
+        public Response GetReport(string dogovorCode, Guid reportGuid, Pair<string, string>[] extraParams, FileType type)
+        {
+            try
+            {
+                //найти договор
+                var masterHelper = new MasterTour();
+
+                var dogovor = masterHelper.GetDogovorByCode(dogovorCode); //ищем путевку по коду
+
+                if (dogovor == null)
+                    throw new Exception(String.Format("Dogovor '{0}' not founded", dogovorCode));
+
+
+                var data = new Hashtable();
+
+                if(extraParams!= null)
+                    foreach(Pair<string,string> dataItem in extraParams)
+                        data[dataItem.Key] = dataItem.Value;
+
+                return new Response()
+                {
+                    hasErrors = false,
+
+                    value = new ReportResponse()
+                                 {
+                                     content = new ReportsGenerator().GenerateReport(dogovor, reportGuid, data, type),
+                                     type = type
+                                 }
+                };
+
+            }
+            catch (Exception ex)
+            {
+                return new Response() { 
+                                            errorMessage = ex.Message + " "+ ex.Source + " " + ex.StackTrace,
+                                            hasErrors = true
+                                        };
+            }
+        }
+
        
         [WebMethod]
         public Response GetDogovorInfo(string dogovorCode)

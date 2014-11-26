@@ -39,23 +39,294 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MasterSoft.Finance.DataAccess">
-      <HintPath>..\..\..\..\..\..\Temp\innatour\MasterSoft.Finance.DataAccess.dll</HintPath>
+    <Reference Include="AgentService, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\AgentService.dll</HintPath>
     </Reference>
-    <Reference Include="Megatec.Common.BusinessRules">
-      <HintPath>..\..\..\..\..\..\Temp\innatour\Megatec.Common.BusinessRules.dll</HintPath>
+    <Reference Include="antlr.runtime, Version=2.7.6.2, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\antlr.runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Megatec.Common.Model">
-      <HintPath>..\..\..\..\..\..\Temp\innatour\Megatec.Common.Model.dll</HintPath>
+    <Reference Include="blowery.Web.HttpCompress, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\blowery.Web.HttpCompress.dll</HintPath>
     </Reference>
-    <Reference Include="megatec.mastertour.businessrules">
-      <HintPath>..\..\..\..\..\..\Temp\innatour\megatec.mastertour.businessrules.dll</HintPath>
+    <Reference Include="Common.Logging, Version=1.2.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Common.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="megatec.mastertour.dataaccess">
-      <HintPath>..\..\..\..\..\..\Temp\innatour\megatec.mastertour.dataaccess.dll</HintPath>
+    <Reference Include="ComponentFactory.Krypton.Docking, Version=4.3.1.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\ComponentFactory.Krypton.Docking.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="ComponentFactory.Krypton.Navigator, Version=4.3.1.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\ComponentFactory.Krypton.Navigator.dll</HintPath>
+    </Reference>
+    <Reference Include="ComponentFactory.Krypton.Ribbon, Version=4.3.1.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\ComponentFactory.Krypton.Ribbon.dll</HintPath>
+    </Reference>
+    <Reference Include="ComponentFactory.Krypton.Toolkit, Version=4.3.1.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\ComponentFactory.Krypton.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="ComponentFactory.Krypton.Workspace, Version=4.3.1.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\ComponentFactory.Krypton.Workspace.dll</HintPath>
+    </Reference>
+    <Reference Include="IGERSoft.WebControls, Version=1.0.1543.38583, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\IGERSoft.WebControls.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=4.1.6.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.9.0, Culture=neutral, PublicKeyToken=b32731d11ce58905">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MasterSoft.Finance.DataAccess, Version=1.0.0.34163, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\MasterSoft.Finance.DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="MasterWeb, Version=9.2.12.19964, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\MasterWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="MasterWeb.Plugins.Agent, Version=9.2.12.19964, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\MasterWeb.Plugins.Agent.dll</HintPath>
+    </Reference>
+    <Reference Include="MasterWeb.Plugins.Reports, Version=9.2.12.19964, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\MasterWeb.Plugins.Reports.dll</HintPath>
+    </Reference>
+    <Reference Include="MasterWebStandard.Extra.AdvancedBasket, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\MasterWebStandard.Extra.AdvancedBasket.dll</HintPath>
+    </Reference>
+    <Reference Include="MasterWebStandard.Extra.AviaQuotes, Version=9.2.12.19964, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\MasterWebStandard.Extra.AviaQuotes.dll</HintPath>
+    </Reference>
+    <Reference Include="MasterWebStandard.Extra.ComplexTour, Version=9.2.12.19964, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\MasterWebStandard.Extra.ComplexTour.dll</HintPath>
+    </Reference>
+    <Reference Include="MasterWebStandard.Extra.DogovorNumberGenerator, Version=9.2.12.19964, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\MasterWebStandard.Extra.DogovorNumberGenerator.dll</HintPath>
+    </Reference>
+    <Reference Include="MasterWebStandard.Extra.HotelQuotes, Version=9.2.12.19964, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\MasterWebStandard.Extra.HotelQuotes.dll</HintPath>
+    </Reference>
+    <Reference Include="MasterWebStandard.Extra.JavaScriptSearch, Version=9.2.12.19964, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\MasterWebStandard.Extra.JavaScriptSearch.dll</HintPath>
+    </Reference>
+    <Reference Include="MasterWebStandard.Extra.PartnerRegistration, Version=9.2.12.19964, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\MasterWebStandard.Extra.PartnerRegistration.dll</HintPath>
+    </Reference>
+    <Reference Include="MasterWebStandard.Extra.QuotedDynamic, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\MasterWebStandard.Extra.QuotedDynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.ApplicationContainer, Version=9.2.12.19964, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.ApplicationContainer.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.Binding, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.Binding.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.Common, Version=1.3.3.370, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.Common.BusinessRules, Version=1.3.3.370, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Temp\Megatec.Common.BusinessRules.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.Common.Model, Version=1.3.3.370, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.Common.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.CommonInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.CommonInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.Cryptography, Version=1.3.0.70, Culture=neutral, PublicKeyToken=e8a85c0485bf578b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.Dispatchers, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.Dispatchers.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.Loading, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.Loading.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.Localizer, Version=9.2.12.19964, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.Localizer.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.Localizer.resources, Version=9.2.12.19964, Culture=en, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.Localizer.resources.dll</HintPath>
+    </Reference>
+    <Reference Include="megatec.mastertour.businessrules, Version=9.2.12.19964, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Temp\megatec.mastertour.businessrules.dll</HintPath>
+    </Reference>
+    <Reference Include="megatec.mastertour.dataaccess, Version=1.3.3.370, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Temp\megatec.mastertour.dataaccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.MasterTour.Model, Version=9.2.12.19964, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.MasterTour.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.MasterTour.ReportCore, Version=1.3.3.370, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.MasterTour.ReportCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.MasterTour.ReportLogic, Version=1.0.4013.31842, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.MasterTour.ReportLogic.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.MasterTour.Types, Version=9.2.12.19964, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.MasterTour.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.MasterWeb.AviaBooking, Version=9.2.12.19964, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.MasterWeb.AviaBooking.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.MasterWeb.Controls, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.MasterWeb.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.MasterWeb.Loading, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.MasterWeb.Loading.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.MasterWeb.ReportLogic, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.MasterWeb.ReportLogic.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.Presentation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.Presentation.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.Presentation.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.Presentation.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.Search.DistributedSearch, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.Search.DistributedSearch.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.Web, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.Web.Services.Proxies, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.Web.Services.Proxies.dll</HintPath>
+    </Reference>
+    <Reference Include="Megatec.Web.Services.Security, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Megatec.Web.Services.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="PerpetuumSoft.Charts, Version=5.2.2.8, Culture=neutral, PublicKeyToken=8a6ae0a3e67829b5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\PerpetuumSoft.Charts.dll</HintPath>
+    </Reference>
+    <Reference Include="PerpetuumSoft.Framework, Version=5.2.2.8, Culture=neutral, PublicKeyToken=8a6ae0a3e67829b5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\PerpetuumSoft.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="PerpetuumSoft.Framework.Export, Version=5.2.2.8, Culture=neutral, PublicKeyToken=8a6ae0a3e67829b5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\PerpetuumSoft.Framework.Export.dll</HintPath>
+    </Reference>
+    <Reference Include="PerpetuumSoft.Framework.Model, Version=5.2.2.8, Culture=neutral, PublicKeyToken=8a6ae0a3e67829b5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\PerpetuumSoft.Framework.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="PerpetuumSoft.Instrumentation, Version=5.2.2.8, Culture=neutral, PublicKeyToken=8a6ae0a3e67829b5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\PerpetuumSoft.Instrumentation.dll</HintPath>
+    </Reference>
+    <Reference Include="PerpetuumSoft.Reporting, Version=5.2.2.8, Culture=neutral, PublicKeyToken=8a6ae0a3e67829b5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\PerpetuumSoft.Reporting.dll</HintPath>
+    </Reference>
+    <Reference Include="PerpetuumSoft.Reporting.Export.Csv, Version=5.2.2.8, Culture=neutral, PublicKeyToken=8a6ae0a3e67829b5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\PerpetuumSoft.Reporting.Export.Csv.dll</HintPath>
+    </Reference>
+    <Reference Include="PerpetuumSoft.Reporting.Export.Excel, Version=5.2.2.8, Culture=neutral, PublicKeyToken=8a6ae0a3e67829b5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\PerpetuumSoft.Reporting.Export.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="PerpetuumSoft.Reporting.Export.ExcelXml, Version=5.2.2.8, Culture=neutral, PublicKeyToken=8a6ae0a3e67829b5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\PerpetuumSoft.Reporting.Export.ExcelXml.dll</HintPath>
+    </Reference>
+    <Reference Include="PerpetuumSoft.Reporting.Export.Html, Version=5.2.2.8, Culture=neutral, PublicKeyToken=8a6ae0a3e67829b5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\PerpetuumSoft.Reporting.Export.Html.dll</HintPath>
+    </Reference>
+    <Reference Include="PerpetuumSoft.Reporting.Export.Pdf, Version=5.2.2.8, Culture=neutral, PublicKeyToken=8a6ae0a3e67829b5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\PerpetuumSoft.Reporting.Export.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="PerpetuumSoft.Reporting.Export.Rtf, Version=5.2.2.8, Culture=neutral, PublicKeyToken=8a6ae0a3e67829b5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\PerpetuumSoft.Reporting.Export.Rtf.dll</HintPath>
+    </Reference>
+    <Reference Include="PerpetuumSoft.Reporting.Web, Version=5.2.2.8, Culture=neutral, PublicKeyToken=8a6ae0a3e67829b5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\PerpetuumSoft.Reporting.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="PerpetuumSoft.Reporting.Web.WebReportViewer, Version=5.2.2.8, Culture=neutral, PublicKeyToken=8a6ae0a3e67829b5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\PerpetuumSoft.Reporting.Web.WebReportViewer.dll</HintPath>
+    </Reference>
+    <Reference Include="PerpetuumSoft.Writers.Excel, Version=5.2.2.8, Culture=neutral, PublicKeyToken=8a6ae0a3e67829b5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\PerpetuumSoft.Writers.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="PerpetuumSoft.Writers.Flash, Version=5.2.2.8, Culture=neutral, PublicKeyToken=8a6ae0a3e67829b5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\PerpetuumSoft.Writers.Flash.dll</HintPath>
+    </Reference>
+    <Reference Include="PerpetuumSoft.Writers.Pdf, Version=5.2.2.8, Culture=neutral, PublicKeyToken=8a6ae0a3e67829b5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\PerpetuumSoft.Writers.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="PerpetuumSoft.Writers.Svg, Version=5.2.2.8, Culture=neutral, PublicKeyToken=8a6ae0a3e67829b5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\PerpetuumSoft.Writers.Svg.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Aop, Version=1.1.2.20125, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Spring.Aop.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core, Version=1.1.2.20125, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Spring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Services, Version=1.1.2.20125, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Spring.Services.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -71,6 +342,10 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Validators, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Validators.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="BookService.asmx" />
@@ -86,13 +361,16 @@
     <Compile Include="DataBase\DataBaseProvider.cs" />
     <Compile Include="DataBase\MasterFinance.cs" />
     <Compile Include="DataBase\MasterTour.cs" />
+    <Compile Include="DataBase\ReportsGenerator.cs" />
     <Compile Include="ErrorCodes.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Models\DepositInfo.cs" />
     <Compile Include="Models\DogovorInfo.cs" />
+    <Compile Include="Models\FileType.cs" />
     <Compile Include="Models\InService.cs" />
     <Compile Include="Models\InTourist.cs" />
     <Compile Include="Models\PasportType.cs" />
+    <Compile Include="Models\ReportResponse.cs" />
     <Compile Include="Models\Response.cs" />
     <Compile Include="Models\ServiceType.cs" />
     <Compile Include="Models\Sex.cs" />

@@ -15,8 +15,36 @@ namespace ServiceTest
 {
     class Program
     {
+
+
         static void Main(string[] args)
         {
+            using (var client = new BookServiceSoapClient())
+            {
+                client.Open();
+
+                var resp = client.GetReport("PP41110002",
+                                            new Guid("55F8A40E-0C9D-4522-B335-541DD09601D0"),
+                                            new PairOfStringString[]{ new PairOfStringString(){Key = "foo", Value = "bar"}},
+                                            FileType.html);
+
+                if (resp.hasErrors == false)
+                {
+                    var report = resp.Item as ReportResponse;
+                    var tempFileName = AppDomain.CurrentDomain.BaseDirectory + @"/log/temp." + report.FileType.ToString();
+                    var sv = File.Create(tempFileName);
+
+                    sv.Write(report.Content, 0, report.Content.Length);
+                    sv.Close();
+                }
+                client.Close();
+            }
+
+            Console.WriteLine(resp.hasErrors.ToString());
+
+            Console.ReadKey();
+
+            return;
             try
             {
                 //создаем заказы

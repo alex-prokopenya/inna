@@ -15,6 +15,15 @@ namespace ServiceTest.InnaService {
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://inna.ru/", ConfigurationName="InnaService.BookServiceSoap")]
     public interface BookServiceSoap {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://inna.ru/GetReportTest", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        ServiceTest.InnaService.Response GetReportTest(string dogovorCode, string reportGuid);
+        
+        // CODEGEN: Parameter 'extraParams' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlArrayItemAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://inna.ru/GetReport", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        ServiceTest.InnaService.GetReportResponse GetReport(ServiceTest.InnaService.GetReportRequest request);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://inna.ru/GetDogovorInfo", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         ServiceTest.InnaService.Response GetDogovorInfo(string dogovorCode);
@@ -54,6 +63,7 @@ namespace ServiceTest.InnaService {
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Deposits", typeof(DepositInfo[]), Order=0)]
         [System.Xml.Serialization.XmlElementAttribute("dogovorInfo", typeof(DogovorInfo), Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("report", typeof(ReportResponse), Order=0)]
         [System.Xml.Serialization.XmlElementAttribute("result", typeof(string), Order=0)]
         public object Item {
             get {
@@ -111,6 +121,8 @@ namespace ServiceTest.InnaService {
         
         private string rateIsoCodeField;
         
+        private decimal limitField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public decimal Deposit {
@@ -132,6 +144,18 @@ namespace ServiceTest.InnaService {
             set {
                 this.rateIsoCodeField = value;
                 this.RaisePropertyChanged("RateIsoCode");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public decimal Limit {
+            get {
+                return this.limitField;
+            }
+            set {
+                this.limitField = value;
+                this.RaisePropertyChanged("Limit");
             }
         }
         
@@ -597,6 +621,52 @@ namespace ServiceTest.InnaService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
+    public partial class PairOfStringString : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string keyField;
+        
+        private string valueField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Key {
+            get {
+                return this.keyField;
+            }
+            set {
+                this.keyField = value;
+                this.RaisePropertyChanged("Key");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Value {
+            get {
+                return this.valueField;
+            }
+            set {
+                this.valueField = value;
+                this.RaisePropertyChanged("Value");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
     public partial class DogovorInfo : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string tourDateField;
@@ -749,6 +819,118 @@ namespace ServiceTest.InnaService {
         }
     }
     
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
+    public partial class ReportResponse : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private byte[] contentField;
+        
+        private FileType fileTypeField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(DataType="base64Binary")]
+        public byte[] Content {
+            get {
+                return this.contentField;
+            }
+            set {
+                this.contentField = value;
+                this.RaisePropertyChanged("Content");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public FileType FileType {
+            get {
+                return this.fileTypeField;
+            }
+            set {
+                this.fileTypeField = value;
+                this.RaisePropertyChanged("FileType");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
+    public enum FileType {
+        
+        /// <remarks/>
+        html,
+        
+        /// <remarks/>
+        pdf,
+        
+        /// <remarks/>
+        xls,
+        
+        /// <remarks/>
+        rtf,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetReport", WrapperNamespace="http://inna.ru/", IsWrapped=true)]
+    public partial class GetReportRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://inna.ru/", Order=0)]
+        public string dogovorCode;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://inna.ru/", Order=1)]
+        public System.Guid reportGuid;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://inna.ru/", Order=2)]
+        [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable=false)]
+        public ServiceTest.InnaService.PairOfStringString[] extraParams;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://inna.ru/", Order=3)]
+        public ServiceTest.InnaService.FileType type;
+        
+        public GetReportRequest() {
+        }
+        
+        public GetReportRequest(string dogovorCode, System.Guid reportGuid, ServiceTest.InnaService.PairOfStringString[] extraParams, ServiceTest.InnaService.FileType type) {
+            this.dogovorCode = dogovorCode;
+            this.reportGuid = reportGuid;
+            this.extraParams = extraParams;
+            this.type = type;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetReportResponse", WrapperNamespace="http://inna.ru/", IsWrapped=true)]
+    public partial class GetReportResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://inna.ru/", Order=0)]
+        public ServiceTest.InnaService.Response GetReportResult;
+        
+        public GetReportResponse() {
+        }
+        
+        public GetReportResponse(ServiceTest.InnaService.Response GetReportResult) {
+            this.GetReportResult = GetReportResult;
+        }
+    }
+    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -821,6 +1003,25 @@ namespace ServiceTest.InnaService {
         
         public BookServiceSoapClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public ServiceTest.InnaService.Response GetReportTest(string dogovorCode, string reportGuid) {
+            return base.Channel.GetReportTest(dogovorCode, reportGuid);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ServiceTest.InnaService.GetReportResponse ServiceTest.InnaService.BookServiceSoap.GetReport(ServiceTest.InnaService.GetReportRequest request) {
+            return base.Channel.GetReport(request);
+        }
+        
+        public ServiceTest.InnaService.Response GetReport(string dogovorCode, System.Guid reportGuid, ServiceTest.InnaService.PairOfStringString[] extraParams, ServiceTest.InnaService.FileType type) {
+            ServiceTest.InnaService.GetReportRequest inValue = new ServiceTest.InnaService.GetReportRequest();
+            inValue.dogovorCode = dogovorCode;
+            inValue.reportGuid = reportGuid;
+            inValue.extraParams = extraParams;
+            inValue.type = type;
+            ServiceTest.InnaService.GetReportResponse retVal = ((ServiceTest.InnaService.BookServiceSoap)(this)).GetReport(inValue);
+            return retVal.GetReportResult;
         }
         
         public ServiceTest.InnaService.Response GetDogovorInfo(string dogovorCode) {

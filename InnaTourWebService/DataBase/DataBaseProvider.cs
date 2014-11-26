@@ -8,8 +8,6 @@ using System.Data.SqlClient;
 
 using System.Configuration;
 
-using Microsoft.VisualStudio.QualityTools.UnitTestFramework;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using InnaTourWebService.Helpers;
 
 namespace InnaTourWebService.DataBase
