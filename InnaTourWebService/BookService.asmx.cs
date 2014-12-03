@@ -202,13 +202,12 @@ namespace InnaTourWebService
                     if (dogovor == null)
                         throw new Exception(String.Format("Dogovor '{0}' not founded", dogovorCode));
 
-                    if ((paymentSys != "deposit") && (dogovor.PartnerKey > 0))
-                        throw new Exception(String.Format("only deposit payment awailable"));
-                    else
-                        if ((paidSum <= 0) && (dogovor.PartnerKey == 0))
-                            throw new Exception(String.Format("paidSum <= 0"));
 
-                    if (dogovor.PartnerKey > 0)  // если заказ агентский
+                    if ((paidSum <= 0) && (paymentSys != "deposit"))
+                      throw new Exception(String.Format("paidSum <= 0"));
+
+
+                    if ((paymentSys == "deposit") && (dogovor.PartnerKey > 0))  // если заказ агентский и тип оплаты == депозит
                         masterFinanceHelper.DepositPayDogovor(dogovor.PartnerKey, dogovor.Key); //платим депозитом
                     else //иначе
                         masterFinanceHelper.PayDogovor(dogovor.Code,
@@ -216,7 +215,6 @@ namespace InnaTourWebService
                                                         paymentSys,
                                                         paidSum,
                                                         paymentId); // сохраняем платеж по карте
-
                  }
 
                 return new Response()
