@@ -40,7 +40,7 @@ namespace ServiceTest
                 client.Close();
             }
 
-            Console.WriteLine(resp.hasErrors.ToString());
+       //     Console.WriteLine(resp.hasErrors.ToString());
 
             Console.ReadKey();
 
@@ -194,7 +194,7 @@ namespace ServiceTest
                     ServiceType = ServiceType.HOTEL,
                     ServiceKey = 1061,
                     Title = "Grand efe 4*, Кушадасы, dbl sea view, All",
-                    TuristIndexes = new int[0]
+                    TuristIndexes = {}
                 }
             };
 
@@ -210,7 +210,7 @@ namespace ServiceTest
                     ServiceType = ServiceType.AVIA,
                     ServiceKey = 1062,
                     Title = "Минск-Измир+, B34 8420, 18:00-20:30",
-                    TuristIndexes = new int[0],
+                    TuristIndexes = {},
                     NumDocs = new string[]{"num_one","num_two"}
                 }
             };
@@ -228,7 +228,7 @@ namespace ServiceTest
                         ServiceType = ServiceType.AVIA,
                         ServiceKey = 1062,
                         Title = "Измир-Минск, B2 8420, 18:00-20:30",
-                        TuristIndexes = new int[0],
+                        TuristIndexes = {},
                         NumDocs = new string[]{"num_1","num_2"}
                     },
 
@@ -243,7 +243,7 @@ namespace ServiceTest
                         ServiceType = ServiceType.AVIA,
                         ServiceKey = 1062,
                         Title = "Минск-Измир, B2 8420, 12:00-14:30",
-                        TuristIndexes = new int[0]
+                        TuristIndexes = {}
                     },
 
                     new InService(){

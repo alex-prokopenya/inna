@@ -8,6 +8,7 @@ using System.IO;
 using System.Configuration;
 using System.Globalization;
 
+
 namespace InnaTourWebService.Models
 {
     [XmlRoot("InService")]
@@ -76,6 +77,8 @@ namespace InnaTourWebService.Models
             if (userInfo == null)
                 errors.Add("unknown PartnerID");
 
+
+            //дата услуги
             DateTime dateRes = DateTime.Today.AddDays(-1);
 
             if (DateTime.TryParseExact(this.Date, ConfigurationManager.AppSettings["DatesFormat"], CultureInfo.InvariantCulture, DateTimeStyles.None, out dateRes))
@@ -99,7 +102,7 @@ namespace InnaTourWebService.Models
                 errors.Add("invalid ServiceKey");
 
             //название услуги
-            if (this.Title.Length == 0)
+            if ( String.IsNullOrEmpty(this.Title) )
                 errors.Add("invalid title");
             else if (this.Title.Length > 50)
                 this.Title = this.Title.Substring(0, 50);
@@ -122,14 +125,15 @@ namespace InnaTourWebService.Models
                 this.TuristIndexes = new int[0];
 
             var usedIndexes = new List<int>();
+
             foreach(int index in this.TuristIndexes)
-                if ((index < 1) || (index > turistsCnt) || (usedIndexes.Contains(index)))
-                {
-                    errors.Add("invalid TuristIndexes array");
-                    break;
-                }
-                else
-                    usedIndexes.Add(index);
+               if ((index < 1) || (index > turistsCnt) || (usedIndexes.Contains(index)))
+               {
+                   errors.Add("invalid TuristIndexes array");
+                   break;
+               }
+               else
+                   usedIndexes.Add(index);
 
             //номера билетов
             if (this.NumDocs != null)

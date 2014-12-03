@@ -23,7 +23,6 @@ namespace InnaTourWebService.DataBase
         {
             Megatec.MasterTour.DataAccess.Manager.ConnectionString = ConfigurationManager.AppSettings["connectionString"];
             dateFormat = ConfigurationManager.AppSettings["datesFormat"];
-           
         }
 
         /// <summary>
