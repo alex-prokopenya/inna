@@ -77,7 +77,7 @@ namespace InnaTourWebService.Models
                 errors.Add("invalid BirthDate format");
 
             //проверяем срок действия паспорта
-            if (this.PassportValidDate != "")
+            if (!string.IsNullOrEmpty( this.PassportValidDate))
             {
                 if (DateTime.TryParseExact(this.PassportValidDate, ConfigurationManager.AppSettings["DatesFormat"], CultureInfo.InvariantCulture, DateTimeStyles.None, out dateRes))
                 {
