@@ -87,10 +87,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="MasterSoft.Finance.DataAccess, Version=1.0.0.34163, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\MasterSoft.Finance.DataAccess.dll</HintPath>
-    </Reference>
     <Reference Include="MasterWeb, Version=9.2.12.19964, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\MasterWeb.dll</HintPath>

@@ -125,8 +125,6 @@ namespace InnaTourWebService
             }
         }
 
-
-
         /// <summary>
         /// Создает бронь в Мастер-Туре.
         /// </summary>
@@ -259,6 +257,51 @@ namespace InnaTourWebService
                      errorMessage = ex.Message + " " + ex.StackTrace
                     };
                 }
+        }
+
+        /// <summary>
+        /// Аннуляция договора
+        /// </summary>
+        /// <param name="dogovorCode">код договора</param>
+        /// <param name="reason">код причины аннуляции</param>
+        /// <param name="penalty">сумма штрафа в валюте договора</param>
+        /// <returns></returns>
+        [WebMethod]
+        public Response AnnulateDogovor(string dogovorCode, short reason, decimal penalty)
+        {
+            try
+            {
+                var masterHelper = new MasterTour();
+
+                var dogovor = masterHelper.GetDogovorByCode(dogovorCode); //ищем путевку по коду
+
+                if (dogovor == null)
+                    throw new Exception(String.Format("Dogovor '{0}' not founded", dogovorCode));
+
+                dogovor.Annulate(reason, penalty);
+                dogovor.DataContainer.Update();
+
+                if(dogovor.IsAnnulated)
+                    return new Response()
+                    {
+                        value = "success"
+                    };
+                else
+                    return new Response()
+                    {
+                        value = "failed"
+                    };
+            }
+            catch (Exception ex)
+            {
+                Logger.ReportException(ex); //пишем в лог ошибки
+
+                return new Response() //отдаем ответ с ошибкой
+                {
+                    hasErrors = true,
+                    errorMessage = ex.Message + " " + ex.StackTrace
+                };
+            }
         }
 
     }
