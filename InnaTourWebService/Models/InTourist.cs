@@ -7,6 +7,7 @@ using System.IO;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Configuration;
+
 namespace InnaTourWebService.Models
 {
     [XmlRoot("InTourist")]

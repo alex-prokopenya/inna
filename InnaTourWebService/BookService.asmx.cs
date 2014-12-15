@@ -304,5 +304,25 @@ namespace InnaTourWebService
             }
         }
 
+
+
+        public Response CreatePartner(PartnerInfo pInfo)
+        {
+            if (pInfo.Validate())
+            {
+                var masterHelper = new MasterTour();
+
+                return new Response()
+                {
+                    value = masterHelper.AddPartner(pInfo)
+                };
+            }
+            else
+                return new Response()
+                {
+                    hasErrors = true,
+                    errorMessage = "Invalid Partner Info"
+                };
+        }
     }
 }

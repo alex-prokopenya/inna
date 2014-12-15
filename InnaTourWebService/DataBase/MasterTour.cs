@@ -6,6 +6,7 @@ using System.Configuration;
 
 using Megatec.MasterTour.DataAccess;
 using Megatec.MasterTour.BusinessRules;
+using Megatec.Common.BusinessRules.Base;
 using Megatec.Common.DataAccess;
 using InnaTourWebService.Models;
 using System.Globalization;
@@ -32,6 +33,7 @@ namespace InnaTourWebService.DataBase
         /// <returns>объект Dogovor</returns>
         public Dogovor GetDogovorByCode(string dogovorCode)
         {
+            
             if (dogovorCode.Trim() == "")
                 return null;
 
@@ -86,8 +88,6 @@ namespace InnaTourWebService.DataBase
             return dupUsers[0].PartnerKey;
         }
 
-
-
         public TurList GetTurlistByKey(int tlKey)
         {
             var turlists = new TurLists(new Megatec.Common.BusinessRules.Base.DataContainer());
@@ -99,7 +99,6 @@ namespace InnaTourWebService.DataBase
 
             return tl;
         }
-
 
         public DupUser GetDupUserByLogin(string agentLogin)
         {
@@ -186,6 +185,102 @@ namespace InnaTourWebService.DataBase
             return dogovor.Code;
         }
 
+
+        public int AddPartner(PartnerInfo pInfo)
+        {
+            //создаем новый пустой объект
+            Partners prs = new Partners(new DataContainer());
+            Partner pr = prs.NewRow();
+
+            //заполняем поля
+            pr.Address = PrepareString(pInfo.Address,330);
+
+            pr.Boss = PrepareString(pInfo.Boss, 50);
+
+            pr.BossName = PrepareString(pInfo.Boss, 40);
+
+            pr.Email = PrepareString(pInfo.Email, 50);
+
+            pr.Fax = PrepareString(pInfo.Fax, 120);
+
+            pr.INN = PrepareString(pInfo.INN, 30);
+
+            pr.KPP = PrepareString(pInfo.KPP, 30);
+
+            pr.Name = PrepareString(pInfo.Name, 140);
+
+            pr.FullName = PrepareString(pInfo.Name, 160);
+
+            pr.RegisterSeries = PrepareString(pInfo.RegisterSeries, 10);
+
+            pr.RegisterNumber = PrepareString(pInfo.RegisterNumber, 50);
+
+            pr.Phones = PrepareString(pInfo.Phones, 254);
+
+            pr.PostIndex = PrepareString(pInfo.PostIndex, 6);
+
+            //признаки
+            long type = 0;
+
+            Dictionary<int, int> typePowers = new Dictionary<int, int>();
+            typePowers.Add(2, PartnerType.Dogovor);
+            typePowers.Add(3, PartnerType.Tourist);
+            typePowers.Add(4, PartnerType.SmetService);
+            typePowers.Add(5, PartnerType.TourOperator);
+            typePowers.Add(6, PartnerType.Airline);
+
+            foreach (int pt in pInfo.Properties)
+                if(typePowers.ContainsKey(pt))
+                    type += typePowers[pt];
+
+            pr.TypeLong = type;
+
+
+
+            pr.LegalAddress = PrepareString(pInfo.RegistredAddress, 350);
+
+            pr.LegalPostIndex = PrepareString(pInfo.RegistredAddressIndex, 6);
+
+            pr.HomePage = PrepareString(pInfo.Site, 100);
+
+            pr.AdditionalInfo = PrepareString(pInfo.Status, 50);
+
+            //сохраняем в БД
+            prs.Add(pr);
+            prs.DataContainer.Update();
+
+
+            AddPartnerPtoperties(pr.Key, pInfo.Properties);
+            //возвращаем айдишник
+            return pr.Key;
+        }
+
+        private static void AddPartnerPtoperties(int partnerKey, int[] properties)
+        {
+            PrtTypesToPartners ppts = new PrtTypesToPartners(new DataContainer());
+
+            foreach (int proID in properties)
+            {
+                PrtTypesToPartner ppt = ppts.NewRow();
+                ppt.PartnerKey = partnerKey;
+                ppt.PrtTypeId = proID;
+
+                ppts.Add(ppt);
+            }
+
+            ppts.DataContainer.Update();
+        }
+
+        private static string PrepareString(string inp, int maxLength)
+        { 
+            if(string.IsNullOrEmpty(inp)) 
+                return "";
+
+            if (inp.Length > maxLength)
+                return inp.Substring(0, maxLength);
+
+            return inp; 
+        }
 
         #region private methods
 

@@ -365,6 +365,7 @@
     <Compile Include="Models\FileType.cs" />
     <Compile Include="Models\InService.cs" />
     <Compile Include="Models\InTourist.cs" />
+    <Compile Include="Models\PartnerInfo.cs" />
     <Compile Include="Models\PasportType.cs" />
     <Compile Include="Models\ReportResponse.cs" />
     <Compile Include="Models\Response.cs" />
