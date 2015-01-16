@@ -450,10 +450,12 @@ namespace InnaTourWebService.DataBase
 
         private ServiceList AddServiceList(int serviceKey, string name)
         {
+            name = DataBaseProvider.SafeSqlLiteral(name);
             if (name.Length > 50) name = name.Substring(0, 50);
 
             ServiceLists sls = new ServiceLists(new Megatec.Common.BusinessRules.Base.DataContainer());
-            sls.RowFilter = "sl_name = '" + name + "' and sl_svkey=" + serviceKey;
+            //escape service name
+            sls.RowFilter = "sl_name = '" + DataBaseProvider.SafeSqlLiteral(name) + "' and sl_svkey=" + serviceKey;
             sls.Fill();
 
             if (sls.Count > 0) return sls[0];

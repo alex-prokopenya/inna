@@ -175,7 +175,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Megatec.Localizer.resources.dll</HintPath>
     </Reference>
-    <Reference Include="megatec.mastertour.businessrules, Version=9.2.12.19964, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="megatec.mastertour.businessrules, Version=9.2.12.19971, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Temp\megatec.mastertour.businessrules.dll</HintPath>
     </Reference>

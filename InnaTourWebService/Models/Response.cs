@@ -10,7 +10,7 @@ namespace InnaTourWebService.Models
     public class Response
     {
         [XmlElement(Type = typeof(String), ElementName = "result")]
-        [XmlElement(Type = typeof(int), ElementName = "result")]
+        [XmlElement(Type = typeof(int), ElementName = "new_id")]
         [XmlElement(Type = typeof(DepositInfo[]), ElementName = "Deposits")]
         [XmlElement(Type = typeof(DogovorInfo), ElementName = "dogovorInfo")]
         [XmlElement(Type = typeof(ReportResponse), ElementName = "report")]

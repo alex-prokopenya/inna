@@ -278,7 +278,7 @@ namespace InnaTourWebService
                 if (dogovor == null)
                     throw new Exception(String.Format("Dogovor '{0}' not founded", dogovorCode));
 
-                dogovor.Annulate(reason, penalty);
+                dogovor.Annulate(reason, Convert.ToDouble(penalty));
                 dogovor.DataContainer.Update();
 
                 if(dogovor.IsAnnulated)
@@ -305,16 +305,16 @@ namespace InnaTourWebService
         }
 
 
-
-        public Response CreatePartner(PartnerInfo pInfo)
+        [WebMethod]
+        public Response CreatePartner(PartnerInfo partnerInfo)
         {
-            if (pInfo.Validate())
+            if (partnerInfo.Validate())
             {
                 var masterHelper = new MasterTour();
 
                 return new Response()
                 {
-                    value = masterHelper.AddPartner(pInfo)
+                    value = masterHelper.AddPartner(partnerInfo)
                 };
             }
             else

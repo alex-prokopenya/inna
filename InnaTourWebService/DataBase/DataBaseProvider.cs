@@ -108,8 +108,10 @@ namespace InnaTourWebService.DataBase
 
             var outputValues = new Dictionary<string, object>();
 
+#if DEBUG
             foreach (string key in procParams.Keys) //
                Logger.WriteToLog ("for key "+key+" value " + com.Parameters["@" + key].Value);
+#endif
 
             foreach(string key in outputParams) //
                 outputValues.Add(key, com.Parameters["@"+key].Value);
