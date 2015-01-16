@@ -455,7 +455,7 @@ namespace InnaTourWebService.DataBase
 
             ServiceLists sls = new ServiceLists(new Megatec.Common.BusinessRules.Base.DataContainer());
             //escape service name
-            sls.RowFilter = "sl_name = '" + DataBaseProvider.SafeSqlLiteral(name) + "' and sl_svkey=" + serviceKey;
+            sls.RowFilter = "sl_name = '" + name + "' and sl_svkey=" + serviceKey;
             sls.Fill();
 
             if (sls.Count > 0) return sls[0];

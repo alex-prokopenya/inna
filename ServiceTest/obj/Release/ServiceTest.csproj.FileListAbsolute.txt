@@ -1,0 +1,6 @@
+C:\Users\svs\Documents\GitHub\inna\ServiceTest\bin\Release\ServiceTest.exe.config
+C:\Users\svs\Documents\GitHub\inna\ServiceTest\bin\Release\ServiceTest.exe
+C:\Users\svs\Documents\GitHub\inna\ServiceTest\bin\Release\ServiceTest.pdb
+C:\Users\svs\Documents\GitHub\inna\ServiceTest\obj\Release\ServiceTest.csprojResolveAssemblyReference.cache
+C:\Users\svs\Documents\GitHub\inna\ServiceTest\obj\Release\ServiceTest.exe
+C:\Users\svs\Documents\GitHub\inna\ServiceTest\obj\Release\ServiceTest.pdb
