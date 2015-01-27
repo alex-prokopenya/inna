@@ -340,6 +340,7 @@ namespace InnaTourWebService.DataBase
             dogovor.Turists.DataContainer.Update();                //Сохраняем изменения
         }
 
+
         private void AddServiceToDogovor(Dogovor dogovor, InService service)
         {
             dogovor.Turists.Sort = "tu_key asc";
@@ -383,6 +384,7 @@ namespace InnaTourWebService.DataBase
             dl.ServiceKey = service.ServiceKey;
 
             dl.CityKey = dogovor.CityKey;
+            dl.CountryKey = dogovor.CountryKey;
 
             //Добавляем услугу
             dl.SubService = AddServiceList(dl.ServiceKey, service.Title);
