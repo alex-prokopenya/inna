@@ -220,6 +220,11 @@ namespace InnaTourWebService.DataBase
 
             pr.CreatorKey = Users.GetCurrentUserKey();
 
+            pr.FilialKey = Users.CurrentUserStatic.DepartmentKey;
+
+            pr.GroupKey = 0;
+            
+            pr.Type = 0;
             //признаки
             long type = 0;
 

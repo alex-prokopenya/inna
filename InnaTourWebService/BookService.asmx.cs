@@ -310,21 +310,34 @@ namespace InnaTourWebService
         [WebMethod]
         public Response CreatePartner(PartnerInfo partnerInfo)
         {
-            if (partnerInfo.Validate())
+            try
             {
-                var masterHelper = new MasterTour();
+                if (partnerInfo.Validate())
+                {
+                    var masterHelper = new MasterTour();
+
+                    return new Response()
+                    {
+                        value = masterHelper.AddPartner(partnerInfo)
+                    };
+                }
+                else
+                    return new Response()
+                    {
+                        hasErrors = true,
+                        errorMessage = "Invalid Partner Info"
+                    };
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteToLog("CreatePartner" + ex.Message);
 
                 return new Response()
                 {
-                    value = masterHelper.AddPartner(partnerInfo)
+                    hasErrors = true,
+                    errorMessage = ex.Message + "\n" + ex.StackTrace
                 };
             }
-            else
-                return new Response()
-                {
-                    hasErrors = true,
-                    errorMessage = "Invalid Partner Info"
-                };
         }
     }
 }

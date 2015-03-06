@@ -10,3 +10,6 @@ C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\obj\Debug\InnaTourWebServi
 C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\obj\Debug\InnaTourWebService.pdb
 C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\obj\Debug\InnaTourWebService.csprojResolveAssemblyReference.cache
 C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\bin\InnaTourWebService.dll
+C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\bin\Megatec.Common.BusinessRules.dll
+C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\bin\AjaxControlToolkit.dll
+C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\bin\Megatec.Common.xml
