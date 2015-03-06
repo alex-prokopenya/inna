@@ -133,6 +133,7 @@ namespace InnaTourWebService
         [WebMethod]
         public Response CreateDogovor(InTourist[] turists, UserInfo userInfo, InService[] services, string dogovorCode)
         {
+            Logger.WriteToLog("CreateDogovor request " + turists.Length + " turists, " + services.Length + " services, '"+dogovorCode+"' dogovorCode");
             try
             {
                 var mtHelper = new MasterTour();

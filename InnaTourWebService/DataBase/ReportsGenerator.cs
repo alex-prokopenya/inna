@@ -137,7 +137,6 @@ namespace InnaTourWebService.DataBase
                return stream.ToArray();
         }
 
-
         private static byte[] GetBytes(string str)
         {
             byte[] bytes = new byte[str.Length * sizeof(char)];

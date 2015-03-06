@@ -3,3 +3,4 @@ C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\bin\InnaTourWebService.dll
 C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\bin\InnaTourWebService.pdb
 C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\obj\Release\InnaTourWebService.dll
 C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\obj\Release\InnaTourWebService.pdb
+C:\Users\svs\Documents\GitHub\inna\InnaTourWebService\obj\Release\InnaTourWebService.csprojResolveAssemblyReference.cache

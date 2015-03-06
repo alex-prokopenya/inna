@@ -77,7 +77,6 @@ namespace InnaTourWebService.Models
             if (userInfo == null)
                 errors.Add("unknown PartnerID");
 
-
             //дата услуги
             DateTime dateRes = DateTime.Today.AddDays(-1);
 

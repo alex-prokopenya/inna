@@ -33,7 +33,6 @@ namespace InnaTourWebService.DataBase
         /// <returns>объект Dogovor</returns>
         public Dogovor GetDogovorByCode(string dogovorCode)
         {
-            
             if (dogovorCode.Trim() == "")
                 return null;
 
@@ -219,6 +218,8 @@ namespace InnaTourWebService.DataBase
 
             pr.PostIndex = PrepareString(pInfo.PostIndex, 6);
 
+            pr.CreatorKey = Users.GetCurrentUserKey();
+
             //признаки
             long type = 0;
 
@@ -234,7 +235,6 @@ namespace InnaTourWebService.DataBase
                     type += typePowers[pt];
 
             pr.TypeLong = type;
-
 
 
             pr.LegalAddress = PrepareString(pInfo.RegistredAddress, 350);
@@ -393,7 +393,6 @@ namespace InnaTourWebService.DataBase
             dl.SubCode2 = 0;
 
             //разбираемся с ценами
-
             dl.Brutto   = service.Price;
             dl.Netto    = service.NettoPrice;
             dl.Discount = service.Comission;

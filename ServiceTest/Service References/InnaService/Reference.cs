@@ -15,10 +15,6 @@ namespace ServiceTest.InnaService {
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://inna.ru/", ConfigurationName="InnaService.BookServiceSoap")]
     public interface BookServiceSoap {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://inna.ru/GetReportTest", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        ServiceTest.InnaService.Response GetReportTest(string dogovorCode, string reportGuid);
-        
         // CODEGEN: Parameter 'extraParams' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlArrayItemAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://inna.ru/GetReport", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -44,6 +40,15 @@ namespace ServiceTest.InnaService {
         [System.ServiceModel.OperationContractAttribute(Action="http://inna.ru/GetDepositAndReceivable", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         ServiceTest.InnaService.Response GetDepositAndReceivable(int partnerId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://inna.ru/AnnulateDogovor", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        ServiceTest.InnaService.Response AnnulateDogovor(string dogovorCode, short reason, decimal penalty);
+        
+        // CODEGEN: Parameter 'PartnerInfo' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://inna.ru/CreatePartner", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        ServiceTest.InnaService.CreatePartnerResponse CreatePartner(ServiceTest.InnaService.CreatePartnerRequest request);
     }
     
     /// <remarks/>
@@ -52,50 +57,33 @@ namespace ServiceTest.InnaService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
-    public partial class Response : object, System.ComponentModel.INotifyPropertyChanged {
+    public partial class PairOfStringString : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private object itemField;
+        private string keyField;
         
-        private bool hasErrorsField;
-        
-        private string errorMessageField;
+        private string valueField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Deposits", typeof(DepositInfo[]), Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("dogovorInfo", typeof(DogovorInfo), Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("report", typeof(ReportResponse), Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("result", typeof(string), Order=0)]
-        public object Item {
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Key {
             get {
-                return this.itemField;
+                return this.keyField;
             }
             set {
-                this.itemField = value;
-                this.RaisePropertyChanged("Item");
+                this.keyField = value;
+                this.RaisePropertyChanged("Key");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public bool hasErrors {
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Value {
             get {
-                return this.hasErrorsField;
+                return this.valueField;
             }
             set {
-                this.hasErrorsField = value;
-                this.RaisePropertyChanged("hasErrors");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string errorMessage {
-            get {
-                return this.errorMessageField;
-            }
-            set {
-                this.errorMessageField = value;
-                this.RaisePropertyChanged("errorMessage");
+                this.valueField = value;
+                this.RaisePropertyChanged("Value");
             }
         }
         
@@ -115,47 +103,243 @@ namespace ServiceTest.InnaService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
-    public partial class DepositInfo : object, System.ComponentModel.INotifyPropertyChanged {
+    public partial class PartnerInfo : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private decimal depositField;
+        private int[] propertiesField;
         
-        private string rateIsoCodeField;
+        private string nameField;
         
-        private decimal limitField;
+        private string statusField;
+        
+        private string registerSeriesField;
+        
+        private string registerNumberField;
+        
+        private string registredAddressField;
+        
+        private string registredAddressIndexField;
+        
+        private string addressField;
+        
+        private string postIndexField;
+        
+        private string bossField;
+        
+        private string bossNameField;
+        
+        private string iNNField;
+        
+        private string kPPField;
+        
+        private string emailField;
+        
+        private string siteField;
+        
+        private string phonesField;
+        
+        private string faxField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public decimal Deposit {
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        public int[] Properties {
             get {
-                return this.depositField;
+                return this.propertiesField;
             }
             set {
-                this.depositField = value;
-                this.RaisePropertyChanged("Deposit");
+                this.propertiesField = value;
+                this.RaisePropertyChanged("Properties");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string RateIsoCode {
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Name {
             get {
-                return this.rateIsoCodeField;
+                return this.nameField;
             }
             set {
-                this.rateIsoCodeField = value;
-                this.RaisePropertyChanged("RateIsoCode");
+                this.nameField = value;
+                this.RaisePropertyChanged("Name");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public decimal Limit {
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Status {
             get {
-                return this.limitField;
+                return this.statusField;
             }
             set {
-                this.limitField = value;
-                this.RaisePropertyChanged("Limit");
+                this.statusField = value;
+                this.RaisePropertyChanged("Status");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string RegisterSeries {
+            get {
+                return this.registerSeriesField;
+            }
+            set {
+                this.registerSeriesField = value;
+                this.RaisePropertyChanged("RegisterSeries");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string RegisterNumber {
+            get {
+                return this.registerNumberField;
+            }
+            set {
+                this.registerNumberField = value;
+                this.RaisePropertyChanged("RegisterNumber");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string RegistredAddress {
+            get {
+                return this.registredAddressField;
+            }
+            set {
+                this.registredAddressField = value;
+                this.RaisePropertyChanged("RegistredAddress");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string RegistredAddressIndex {
+            get {
+                return this.registredAddressIndexField;
+            }
+            set {
+                this.registredAddressIndexField = value;
+                this.RaisePropertyChanged("RegistredAddressIndex");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Address {
+            get {
+                return this.addressField;
+            }
+            set {
+                this.addressField = value;
+                this.RaisePropertyChanged("Address");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string PostIndex {
+            get {
+                return this.postIndexField;
+            }
+            set {
+                this.postIndexField = value;
+                this.RaisePropertyChanged("PostIndex");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Boss {
+            get {
+                return this.bossField;
+            }
+            set {
+                this.bossField = value;
+                this.RaisePropertyChanged("Boss");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string BossName {
+            get {
+                return this.bossNameField;
+            }
+            set {
+                this.bossNameField = value;
+                this.RaisePropertyChanged("BossName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string INN {
+            get {
+                return this.iNNField;
+            }
+            set {
+                this.iNNField = value;
+                this.RaisePropertyChanged("INN");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string KPP {
+            get {
+                return this.kPPField;
+            }
+            set {
+                this.kPPField = value;
+                this.RaisePropertyChanged("KPP");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Email {
+            get {
+                return this.emailField;
+            }
+            set {
+                this.emailField = value;
+                this.RaisePropertyChanged("Email");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Site {
+            get {
+                return this.siteField;
+            }
+            set {
+                this.siteField = value;
+                this.RaisePropertyChanged("Site");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Phones {
+            get {
+                return this.phonesField;
+            }
+            set {
+                this.phonesField = value;
+                this.RaisePropertyChanged("Phones");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Fax {
+            get {
+                return this.faxField;
+            }
+            set {
+                this.faxField = value;
+                this.RaisePropertyChanged("Fax");
             }
         }
         
@@ -621,33 +805,47 @@ namespace ServiceTest.InnaService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
-    public partial class PairOfStringString : object, System.ComponentModel.INotifyPropertyChanged {
+    public partial class DepositInfo : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private string keyField;
+        private decimal depositField;
         
-        private string valueField;
+        private string rateIsoCodeField;
+        
+        private decimal limitField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string Key {
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public decimal Deposit {
             get {
-                return this.keyField;
+                return this.depositField;
             }
             set {
-                this.keyField = value;
-                this.RaisePropertyChanged("Key");
+                this.depositField = value;
+                this.RaisePropertyChanged("Deposit");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string Value {
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string RateIsoCode {
             get {
-                return this.valueField;
+                return this.rateIsoCodeField;
             }
             set {
-                this.valueField = value;
-                this.RaisePropertyChanged("Value");
+                this.rateIsoCodeField = value;
+                this.RaisePropertyChanged("RateIsoCode");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public decimal Limit {
+            get {
+                return this.limitField;
+            }
+            set {
+                this.limitField = value;
+                this.RaisePropertyChanged("Limit");
             }
         }
         
@@ -659,6 +857,71 @@ namespace ServiceTest.InnaService {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
+    public partial class ReportResponse : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private byte[] contentField;
+        
+        private FileType fileTypeField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(DataType="base64Binary")]
+        public byte[] Content {
+            get {
+                return this.contentField;
+            }
+            set {
+                this.contentField = value;
+                this.RaisePropertyChanged("Content");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public FileType FileType {
+            get {
+                return this.fileTypeField;
+            }
+            set {
+                this.fileTypeField = value;
+                this.RaisePropertyChanged("FileType");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
+    public enum FileType {
+        
+        /// <remarks/>
+        html,
+        
+        /// <remarks/>
+        pdf,
+        
+        /// <remarks/>
+        xls,
+        
+        /// <remarks/>
+        rtf,
     }
     
     /// <remarks/>
@@ -825,33 +1088,51 @@ namespace ServiceTest.InnaService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
-    public partial class ReportResponse : object, System.ComponentModel.INotifyPropertyChanged {
+    public partial class Response : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private byte[] contentField;
+        private object itemField;
         
-        private FileType fileTypeField;
+        private bool hasErrorsField;
+        
+        private string errorMessageField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType="base64Binary")]
-        public byte[] Content {
+        [System.Xml.Serialization.XmlElementAttribute("Deposits", typeof(DepositInfo[]), Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("dogovorInfo", typeof(DogovorInfo), Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("new_id", typeof(int), Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("report", typeof(ReportResponse), Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("result", typeof(string), Order=0)]
+        public object Item {
             get {
-                return this.contentField;
+                return this.itemField;
             }
             set {
-                this.contentField = value;
-                this.RaisePropertyChanged("Content");
+                this.itemField = value;
+                this.RaisePropertyChanged("Item");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public FileType FileType {
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public bool hasErrors {
             get {
-                return this.fileTypeField;
+                return this.hasErrorsField;
             }
             set {
-                this.fileTypeField = value;
-                this.RaisePropertyChanged("FileType");
+                this.hasErrorsField = value;
+                this.RaisePropertyChanged("hasErrors");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string errorMessage {
+            get {
+                return this.errorMessageField;
+            }
+            set {
+                this.errorMessageField = value;
+                this.RaisePropertyChanged("errorMessage");
             }
         }
         
@@ -863,25 +1144,6 @@ namespace ServiceTest.InnaService {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://inna.ru/")]
-    public enum FileType {
-        
-        /// <remarks/>
-        html,
-        
-        /// <remarks/>
-        pdf,
-        
-        /// <remarks/>
-        xls,
-        
-        /// <remarks/>
-        rtf,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -978,6 +1240,41 @@ namespace ServiceTest.InnaService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="CreatePartner", WrapperNamespace="http://inna.ru/", IsWrapped=true)]
+    public partial class CreatePartnerRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://inna.ru/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public ServiceTest.InnaService.PartnerInfo PartnerInfo;
+        
+        public CreatePartnerRequest() {
+        }
+        
+        public CreatePartnerRequest(ServiceTest.InnaService.PartnerInfo PartnerInfo) {
+            this.PartnerInfo = PartnerInfo;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="CreatePartnerResponse", WrapperNamespace="http://inna.ru/", IsWrapped=true)]
+    public partial class CreatePartnerResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://inna.ru/", Order=0)]
+        public ServiceTest.InnaService.Response CreatePartnerResult;
+        
+        public CreatePartnerResponse() {
+        }
+        
+        public CreatePartnerResponse(ServiceTest.InnaService.Response CreatePartnerResult) {
+            this.CreatePartnerResult = CreatePartnerResult;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface BookServiceSoapChannel : ServiceTest.InnaService.BookServiceSoap, System.ServiceModel.IClientChannel {
     }
@@ -1003,10 +1300,6 @@ namespace ServiceTest.InnaService {
         
         public BookServiceSoapClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
-        }
-        
-        public ServiceTest.InnaService.Response GetReportTest(string dogovorCode, string reportGuid) {
-            return base.Channel.GetReportTest(dogovorCode, reportGuid);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1053,6 +1346,22 @@ namespace ServiceTest.InnaService {
         
         public ServiceTest.InnaService.Response GetDepositAndReceivable(int partnerId) {
             return base.Channel.GetDepositAndReceivable(partnerId);
+        }
+        
+        public ServiceTest.InnaService.Response AnnulateDogovor(string dogovorCode, short reason, decimal penalty) {
+            return base.Channel.AnnulateDogovor(dogovorCode, reason, penalty);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ServiceTest.InnaService.CreatePartnerResponse ServiceTest.InnaService.BookServiceSoap.CreatePartner(ServiceTest.InnaService.CreatePartnerRequest request) {
+            return base.Channel.CreatePartner(request);
+        }
+        
+        public ServiceTest.InnaService.Response CreatePartner(ServiceTest.InnaService.PartnerInfo PartnerInfo) {
+            ServiceTest.InnaService.CreatePartnerRequest inValue = new ServiceTest.InnaService.CreatePartnerRequest();
+            inValue.PartnerInfo = PartnerInfo;
+            ServiceTest.InnaService.CreatePartnerResponse retVal = ((ServiceTest.InnaService.BookServiceSoap)(this)).CreatePartner(inValue);
+            return retVal.CreatePartnerResult;
         }
     }
 }

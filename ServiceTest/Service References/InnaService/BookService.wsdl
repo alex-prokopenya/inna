@@ -3,69 +3,6 @@
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://inna.ru/">
       <s:import namespace="http://microsoft.com/wsdl/types/" />
-      <s:element name="GetReportTest">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="dogovorCode" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="reportGuid" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetReportTestResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetReportTestResult" type="tns:Response" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="Response">
-        <s:sequence>
-          <s:choice minOccurs="1" maxOccurs="1">
-            <s:element minOccurs="0" maxOccurs="1" name="report" type="tns:ReportResponse" />
-            <s:element minOccurs="0" maxOccurs="1" name="result" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="Deposits" type="tns:ArrayOfDepositInfo" />
-            <s:element minOccurs="1" maxOccurs="1" name="dogovorInfo" type="tns:DogovorInfo" />
-          </s:choice>
-          <s:element minOccurs="1" maxOccurs="1" name="hasErrors" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="errorMessage" type="s:string" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="ReportResponse">
-        <s:attribute name="Content" type="s:base64Binary" />
-        <s:attribute name="FileType" type="tns:FileType" use="required" />
-      </s:complexType>
-      <s:simpleType name="FileType">
-        <s:restriction base="s:string">
-          <s:enumeration value="html" />
-          <s:enumeration value="pdf" />
-          <s:enumeration value="xls" />
-          <s:enumeration value="rtf" />
-        </s:restriction>
-      </s:simpleType>
-      <s:complexType name="ArrayOfDepositInfo">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="DepositInfo" nillable="true" type="tns:DepositInfo" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="DepositInfo">
-        <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="Deposit" type="s:decimal" />
-          <s:element minOccurs="0" maxOccurs="1" name="RateIsoCode" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="Limit" type="s:decimal" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="DogovorInfo">
-        <s:attribute name="TourDate" type="s:string" />
-        <s:attribute name="DogovorKey" type="s:int" use="required" />
-        <s:attribute name="DogovorCode" type="s:string" />
-        <s:attribute name="StatusKey" type="s:int" use="required" />
-        <s:attribute name="StatusName" type="s:string" />
-        <s:attribute name="AgentKey" type="s:int" use="required" />
-        <s:attribute name="AgentLogin" type="s:string" />
-        <s:attribute name="Price" type="s:decimal" use="required" />
-        <s:attribute name="Paid" type="s:decimal" use="required" />
-        <s:attribute name="RateIsoCode" type="s:string" />
-      </s:complexType>
       <s:element name="GetReport">
         <s:complexType>
           <s:sequence>
@@ -85,6 +22,14 @@
         <s:attribute name="Key" type="s:string" />
         <s:attribute name="Value" type="s:string" />
       </s:complexType>
+      <s:simpleType name="FileType">
+        <s:restriction base="s:string">
+          <s:enumeration value="html" />
+          <s:enumeration value="pdf" />
+          <s:enumeration value="xls" />
+          <s:enumeration value="rtf" />
+        </s:restriction>
+      </s:simpleType>
       <s:element name="GetReportResponse">
         <s:complexType>
           <s:sequence>
@@ -92,6 +37,47 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:complexType name="Response">
+        <s:sequence>
+          <s:choice minOccurs="1" maxOccurs="1">
+            <s:element minOccurs="1" maxOccurs="1" name="dogovorInfo" type="tns:DogovorInfo" />
+            <s:element minOccurs="0" maxOccurs="1" name="report" type="tns:ReportResponse" />
+            <s:element minOccurs="0" maxOccurs="1" name="result" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="new_id" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Deposits" type="tns:ArrayOfDepositInfo" />
+          </s:choice>
+          <s:element minOccurs="1" maxOccurs="1" name="hasErrors" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="errorMessage" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DogovorInfo">
+        <s:attribute name="TourDate" type="s:string" />
+        <s:attribute name="DogovorKey" type="s:int" use="required" />
+        <s:attribute name="DogovorCode" type="s:string" />
+        <s:attribute name="StatusKey" type="s:int" use="required" />
+        <s:attribute name="StatusName" type="s:string" />
+        <s:attribute name="AgentKey" type="s:int" use="required" />
+        <s:attribute name="AgentLogin" type="s:string" />
+        <s:attribute name="Price" type="s:decimal" use="required" />
+        <s:attribute name="Paid" type="s:decimal" use="required" />
+        <s:attribute name="RateIsoCode" type="s:string" />
+      </s:complexType>
+      <s:complexType name="ReportResponse">
+        <s:attribute name="Content" type="s:base64Binary" />
+        <s:attribute name="FileType" type="tns:FileType" use="required" />
+      </s:complexType>
+      <s:complexType name="ArrayOfDepositInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DepositInfo" nillable="true" type="tns:DepositInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DepositInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Deposit" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="RateIsoCode" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Limit" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="GetDogovorInfo">
         <s:complexType>
           <s:sequence>
@@ -241,6 +227,57 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="AnnulateDogovor">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="dogovorCode" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="reason" type="s:short" />
+            <s:element minOccurs="1" maxOccurs="1" name="penalty" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AnnulateDogovorResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AnnulateDogovorResult" type="tns:Response" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreatePartner">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PartnerInfo" nillable="true" type="tns:PartnerInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PartnerInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Properties" type="tns:ArrayOfInt" />
+        </s:sequence>
+        <s:attribute name="Name" type="s:string" />
+        <s:attribute name="Status" type="s:string" />
+        <s:attribute name="RegisterSeries" type="s:string" />
+        <s:attribute name="RegisterNumber" type="s:string" />
+        <s:attribute name="RegistredAddress" type="s:string" />
+        <s:attribute name="RegistredAddressIndex" type="s:string" />
+        <s:attribute name="Address" type="s:string" />
+        <s:attribute name="PostIndex" type="s:string" />
+        <s:attribute name="Boss" type="s:string" />
+        <s:attribute name="BossName" type="s:string" />
+        <s:attribute name="INN" type="s:string" />
+        <s:attribute name="KPP" type="s:string" />
+        <s:attribute name="Email" type="s:string" />
+        <s:attribute name="Site" type="s:string" />
+        <s:attribute name="Phones" type="s:string" />
+        <s:attribute name="Fax" type="s:string" />
+      </s:complexType>
+      <s:element name="CreatePartnerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreatePartnerResult" type="tns:Response" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
     <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
       <s:simpleType name="guid">
@@ -250,12 +287,6 @@
       </s:simpleType>
     </s:schema>
   </wsdl:types>
-  <wsdl:message name="GetReportTestSoapIn">
-    <wsdl:part name="parameters" element="tns:GetReportTest" />
-  </wsdl:message>
-  <wsdl:message name="GetReportTestSoapOut">
-    <wsdl:part name="parameters" element="tns:GetReportTestResponse" />
-  </wsdl:message>
   <wsdl:message name="GetReportSoapIn">
     <wsdl:part name="parameters" element="tns:GetReport" />
   </wsdl:message>
@@ -292,11 +323,19 @@
   <wsdl:message name="GetDepositAndReceivableSoapOut">
     <wsdl:part name="parameters" element="tns:GetDepositAndReceivableResponse" />
   </wsdl:message>
+  <wsdl:message name="AnnulateDogovorSoapIn">
+    <wsdl:part name="parameters" element="tns:AnnulateDogovor" />
+  </wsdl:message>
+  <wsdl:message name="AnnulateDogovorSoapOut">
+    <wsdl:part name="parameters" element="tns:AnnulateDogovorResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreatePartnerSoapIn">
+    <wsdl:part name="parameters" element="tns:CreatePartner" />
+  </wsdl:message>
+  <wsdl:message name="CreatePartnerSoapOut">
+    <wsdl:part name="parameters" element="tns:CreatePartnerResponse" />
+  </wsdl:message>
   <wsdl:portType name="BookServiceSoap">
-    <wsdl:operation name="GetReportTest">
-      <wsdl:input message="tns:GetReportTestSoapIn" />
-      <wsdl:output message="tns:GetReportTestSoapOut" />
-    </wsdl:operation>
     <wsdl:operation name="GetReport">
       <wsdl:input message="tns:GetReportSoapIn" />
       <wsdl:output message="tns:GetReportSoapOut" />
@@ -321,18 +360,17 @@
       <wsdl:input message="tns:GetDepositAndReceivableSoapIn" />
       <wsdl:output message="tns:GetDepositAndReceivableSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="AnnulateDogovor">
+      <wsdl:input message="tns:AnnulateDogovorSoapIn" />
+      <wsdl:output message="tns:AnnulateDogovorSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreatePartner">
+      <wsdl:input message="tns:CreatePartnerSoapIn" />
+      <wsdl:output message="tns:CreatePartnerSoapOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BookServiceSoap" type="tns:BookServiceSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetReportTest">
-      <soap:operation soapAction="http://inna.ru/GetReportTest" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetReport">
       <soap:operation soapAction="http://inna.ru/GetReport" style="document" />
       <wsdl:input>
@@ -387,18 +425,27 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="AnnulateDogovor">
+      <soap:operation soapAction="http://inna.ru/AnnulateDogovor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreatePartner">
+      <soap:operation soapAction="http://inna.ru/CreatePartner" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="BookServiceSoap12" type="tns:BookServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetReportTest">
-      <soap12:operation soapAction="http://inna.ru/GetReportTest" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetReport">
       <soap12:operation soapAction="http://inna.ru/GetReport" style="document" />
       <wsdl:input>
@@ -446,6 +493,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetDepositAndReceivable">
       <soap12:operation soapAction="http://inna.ru/GetDepositAndReceivable" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AnnulateDogovor">
+      <soap12:operation soapAction="http://inna.ru/AnnulateDogovor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreatePartner">
+      <soap12:operation soapAction="http://inna.ru/CreatePartner" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
