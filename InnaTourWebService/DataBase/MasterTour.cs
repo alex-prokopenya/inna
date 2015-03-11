@@ -218,9 +218,12 @@ namespace InnaTourWebService.DataBase
 
             pr.PostIndex = PrepareString(pInfo.PostIndex, 6);
 
-            pr.CreatorKey = Users.GetCurrentUserKey();
+            Users usrs = new Users(new DataContainer());
+            usrs.Fill();
 
-            pr.FilialKey = Users.CurrentUserStatic.DepartmentKey;
+            pr.CreatorKey = usrs.CurrentUser.Key;
+
+            pr.FilialKey = usrs.CurrentUser.DepartmentKey;
 
             pr.GroupKey = 0;
             
