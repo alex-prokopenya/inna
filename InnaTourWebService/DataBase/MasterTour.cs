@@ -94,7 +94,10 @@ namespace InnaTourWebService.DataBase
             var tl = turlists.FindByPKeyValue(tlKey) as TurList;
 
             if (tl == null)
-                Helpers.Logger.WriteToLog("tour not founded for key " + tlKey);
+            {
+                Helpers.Logger.WriteToLog("tour not found for key " + tlKey);
+                throw new Exception("tour not found for key " + tlKey);
+            }
 
             return tl;
         }
@@ -152,7 +155,7 @@ namespace InnaTourWebService.DataBase
         /// <param name="userInfo">информация о покупателе</param>
         /// <param name="services">список услуг</param>
         /// <returns>номер брони</returns>
-        public string CreateNewDogovor(InTourist[] tourists, UserInfo userInfo, InService[] services, string dogovorCode)
+        public string CreateNewDogovor(InTourist[] tourists, UserInfo userInfo, InService[] services, string dogovorCode, string tourKey)
         {
             Array.Sort<InService>(services);
 
@@ -161,7 +164,8 @@ namespace InnaTourWebService.DataBase
                                                  DateTime.ParseExact(services[0].Date, 
                                                                      dateFormat,
                                                                      null),
-                                                 dogovorCode);
+                                                 dogovorCode, 
+                                                 tourKey);
 
             dogovor.NMen = (short)tourists.Length;
             dogovor.DataContainer.Update();
@@ -184,7 +188,35 @@ namespace InnaTourWebService.DataBase
             return dogovor.Code;
         }
 
+        public void AddTouristsToService(Dogovor dogovor, string message)
+        {
+            Histories hsts = new Histories(new DataContainer());
+            Users users = new Users(new DataContainer());
+            users.Fill();
 
+            if (message.Length > 254)
+                message = message.Substring(0, 254);
+
+            History hst = hsts.NewRow();
+
+            hst.DogovorCode = dogovor.Code;
+            hst.Date = DateTime.Now;
+            hst.Text = message;
+            hst.Mode = "MTM";
+            hst.UserKey = users.CurrentUser.FullName;
+
+            hst.Remark = "webservice message";
+            hst.MessEnabled = 0;
+            hsts.Add(hst);
+
+            hst.DataContainer.Update();
+        }
+
+        /// <summary>
+        /// добавляет нового партнера в справочник
+        /// </summary>
+        /// <param name="pInfo">информация о партнере</param>
+        /// <returns>идентификатор новой записи</returns>
         public int AddPartner(PartnerInfo pInfo)
         {
             //создаем новый пустой объект
@@ -263,6 +295,8 @@ namespace InnaTourWebService.DataBase
             return pr.Key;
         }
 
+        #region private methods
+
         private static void AddPartnerPtoperties(int partnerKey, int[] properties)
         {
             PrtTypesToPartners ppts = new PrtTypesToPartners(new DataContainer());
@@ -280,17 +314,15 @@ namespace InnaTourWebService.DataBase
         }
 
         private static string PrepareString(string inp, int maxLength)
-        { 
-            if(string.IsNullOrEmpty(inp)) 
+        {
+            if (string.IsNullOrEmpty(inp))
                 return "";
 
             if (inp.Length > maxLength)
                 return inp.Substring(0, maxLength);
 
-            return inp; 
+            return inp;
         }
-
-        #region private methods
 
         private void AddTouristToDogovor(Dogovor dogovor, InTourist tourist)
         {
@@ -457,6 +489,12 @@ namespace InnaTourWebService.DataBase
             }
         }
 
+        /// <summary>
+        /// добавляет услугу в справочник Мастер-Тура
+        /// </summary>
+        /// <param name="serviceKey">Тип услуги</param>
+        /// <param name="name">Название услуги</param>
+        /// <returns></returns>
         private ServiceList AddServiceList(int serviceKey, string name)
         {
             name = DataBaseProvider.SafeSqlLiteral(name);
@@ -485,7 +523,7 @@ namespace InnaTourWebService.DataBase
         /// </summary>
         /// <param name="userInfo">информация о покупателе</param>
         /// <returns>ссылка на созданную путевку</returns>
-        private Dogovor CreateEmptyDogovor(UserInfo userInfo, DateTime startDate, string dogovorCode)
+        private Dogovor CreateEmptyDogovor(UserInfo userInfo, DateTime startDate, string dogovorCode, string tourKey)
         {
             Dogovors dogs = new Dogovors(new Megatec.Common.BusinessRules.Base.DataContainer());
             Dogovor dog = dogs.NewRow();
@@ -499,7 +537,10 @@ namespace InnaTourWebService.DataBase
             }
 
             //берем информацию о туре, к которму цепляем
-            var turList = this.GetTurlistByKey(Convert.ToInt32(ConfigurationManager.AppSettings["BookingPacketKey"]));
+            if (string.IsNullOrEmpty(tourKey))
+                tourKey = ConfigurationManager.AppSettings["BookingPacketKey"];
+
+            var turList = this.GetTurlistByKey(Convert.ToInt32(tourKey));
             dog.CountryKey = turList.CountryKey; //привязываем к стране 
             dog.CityKey = turList.CTDepartureKey; // ... городу
             dog.TourKey = turList.Key;  // ... пакету
@@ -552,7 +593,6 @@ namespace InnaTourWebService.DataBase
             if (rates.Count > 0) rateCode = rates[0].Code;
             return rateCode;
         }
-
 
         private void MyCalculateCost(Dogovor dog)                             //Расчитываем стоимость
         {

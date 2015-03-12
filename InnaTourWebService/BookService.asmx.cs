@@ -127,11 +127,48 @@ namespace InnaTourWebService
         }
 
         /// <summary>
+        /// Добавляет сообщение от покупателя
+        /// </summary>
+        /// <param name="dogovorCode">код договора</param>
+        /// <param name="message">текст сообщения</param>
+        /// <returns>результат выполнения</returns>
+        [WebMethod]
+        public Response AddMessageForDogovor(string dogovorCode, string message)
+        {
+            try
+            {
+                var masterHelper = new MasterTour();
+
+                var dogovor = masterHelper.GetDogovorByCode(dogovorCode); //ищем путевку по коду
+
+                if (dogovor == null)
+                    throw new Exception(String.Format("Dogovor '{0}' not founded", dogovorCode));
+
+
+
+                return new Response()
+                {
+                    value = "success"
+                };
+            }
+            catch (Exception ex)
+            {
+                Logger.ReportException(ex); //пишем в лог ошибки
+
+                return new Response() //отдаем ответ с ошибкой
+                {
+                    hasErrors = true,
+                    errorMessage = ex.Message + " " + ex.StackTrace
+                };
+            }
+        }
+
+        /// <summary>
         /// Создает бронь в Мастер-Туре.
         /// </summary>
         /// <returns>DogovorCode -- код созданной брони</returns>
         [WebMethod]
-        public Response CreateDogovor(InTourist[] turists, UserInfo userInfo, InService[] services, string dogovorCode)
+        public Response CreateDogovor(InTourist[] turists, UserInfo userInfo, InService[] services, string dogovorCode, string tourKey)
         {
             Logger.WriteToLog("CreateDogovor request " + turists.Length + " turists, " + services.Length + " services, '"+dogovorCode+"' dogovorCode");
             try
@@ -157,7 +194,7 @@ namespace InnaTourWebService
                 //создание путевки
                 return new Response()
                 {
-                    value = mtHelper.CreateNewDogovor(turists, userInfo, services, dogovorCode)
+                    value = mtHelper.CreateNewDogovor(turists, userInfo, services, dogovorCode, tourKey)
                 };
             }
             catch (Exception ex)
