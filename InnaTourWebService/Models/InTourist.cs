@@ -49,15 +49,15 @@ namespace InnaTourWebService.Models
         {
             var errors = new List<string>();
 
-            var latin = new Regex(@"^[a-zA-Z\-]{2,50}$");
+            var latin = new Regex(@"^[a-zA-Z\-\s]{2,50}$");
 
-            //проверяем имя
-            if (!latin.IsMatch(this.FirstName))
-                errors.Add("invalid FirstName");
+            ////проверяем имя
+            //if (!latin.IsMatch(this.FirstName))
+            //    errors.Add("invalid FirstName");
 
-            //проверяем фамилию
-            if (!latin.IsMatch(this.LastName))
-                errors.Add("invalid LastName");
+            ////проверяем фамилию
+            //if (!latin.IsMatch(this.LastName))
+            //    errors.Add("invalid LastName");
 
 
             //проверяем гражданство

@@ -144,7 +144,7 @@ namespace InnaTourWebService
                 if (dogovor == null)
                     throw new Exception(String.Format("Dogovor '{0}' not founded", dogovorCode));
 
-
+                masterHelper.AddToHistory(dogovor, message);
 
                 return new Response()
                 {

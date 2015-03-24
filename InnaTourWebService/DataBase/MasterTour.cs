@@ -188,8 +188,10 @@ namespace InnaTourWebService.DataBase
             return dogovor.Code;
         }
 
-        public void AddTouristsToService(Dogovor dogovor, string message)
+        public void AddToHistory(Dogovor dogovor, string message)
         {
+            message = DataBaseProvider.SafeSqlLiteral(message);
+
             Histories hsts = new Histories(new DataContainer());
             Users users = new Users(new DataContainer());
             users.Fill();
@@ -206,7 +208,7 @@ namespace InnaTourWebService.DataBase
             hst.UserKey = users.CurrentUser.FullName;
 
             hst.Remark = "webservice message";
-            hst.MessEnabled = 0;
+            hst.MessEnabled = 1;
             hsts.Add(hst);
 
             hst.DataContainer.Update();
