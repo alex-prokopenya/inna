@@ -230,7 +230,7 @@ namespace InnaTourWebService.DataBase
 
             pr.Boss = PrepareString(pInfo.Boss, 50);
 
-            pr.BossName = PrepareString(pInfo.Boss, 40);
+            pr.BossName = PrepareString(pInfo.BossName, 40);
 
             pr.Email = PrepareString(pInfo.Email, 50);
 
