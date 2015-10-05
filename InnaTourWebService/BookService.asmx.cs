@@ -233,13 +233,12 @@ namespace InnaTourWebService
 
                 using(var masterFinanceHelper = new MasterFinance())
                 {
-
                     var dogovor = masterHelper.GetDogovorByCode(dogovorCode); //ищем путевку по коду
 
                     if (dogovor == null)
                         throw new Exception(String.Format("Dogovor '{0}' not founded", dogovorCode));
-
-
+                    
+                    
                     if ((paidSum <= 0) && (paymentSys != "deposit"))
                       throw new Exception(String.Format("paidSum <= 0"));
 

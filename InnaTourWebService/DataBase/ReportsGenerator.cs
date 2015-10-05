@@ -58,15 +58,7 @@ namespace InnaTourWebService.DataBase
             Dogovors dogs = new Dogovors(new DataCache());
             dogs.RowFilter = "dg_key = " + dogovor.Key ;
             dogs.Fill();
-
-            ReportDataManager manager = new ReportDataManager();
-
-            NameValueCollection col = new NameValueCollection();
-            foreach(object key in data.Keys)
-                col.Add(key.ToString(), data[key].ToString());
-
-           // manager.FillData(reportGuid.ToString(), null, col);
-
+            
             DataCache dataContainer = new DataCache();
 
             Rep_profiles _profiles = new Rep_profiles(dataContainer)
@@ -81,10 +73,18 @@ namespace InnaTourWebService.DataBase
             };
             templates.Fill();
 
+            ReportDataManager manager = new ReportDataManager();
             this.reportManager = manager.ReportManager;
+
+            NameValueCollection col = new NameValueCollection();
+
+            foreach (object key in data.Keys)
+                this.reportManager.DataSources[key.ToString()] = data[key].ToString();
+           
             this.reportManager.DataSources["DogovorCode"] = dogovor.Code;
             this.reportManager.DataSources["Dogovors"] = dogs;
             this.reportManager.DataSources["Manager"] = "Creator";
+            this.reportManager.DataSources["TestTest"] = "Success!";
             this.reportManager.DataSources["FormatDate"] = "dd.MM.yy";
             manager.ReportSlot.DocumentStream = templates[0].Template;
 
